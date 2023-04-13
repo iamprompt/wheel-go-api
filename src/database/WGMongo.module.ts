@@ -2,22 +2,22 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { User, UserSchema } from './users/user.schema'
-import { UserService } from './users/user.service'
+import { UserDBService } from './users/user.service'
 import { Media, MediaSchema } from './media/media.schema'
-import { MediaService } from './media/media.services'
+import { MediaDBService } from './media/media.services'
 import { Place, PlaceSchema } from './places/place.schema'
-import { PlaceService } from './places/place.services'
+import { PlaceDBService } from './places/place.services'
 import { Facility, FacilitySchema } from './facilities/facility.schema'
 import {
   Announcement,
   AnnouncementSchema,
 } from './announcements/announcement.schema'
 import { Review, ReviewSchema } from './reviews/review.schema'
-import { FacilityService } from './facilities/facility.services'
-import { AnnouncementService } from './announcements/announcement.service'
-import { ReviewService } from './reviews/review.service'
+import { FacilityDBService } from './facilities/facility.services'
+import { AnnouncementDBService } from './announcements/announcement.service'
+import { ReviewDBService } from './reviews/review.service'
 import { Route, RouteSchema } from './routes/route.schema'
-import { RouteService } from './routes/route.service'
+import { RouteDBService } from './routes/route.service'
 import { WGConfigModule } from '~/config/WGConfig.module'
 import type { Config } from '~/config/configuration'
 
@@ -42,13 +42,22 @@ import type { Config } from '~/config/configuration'
     ]),
   ],
   providers: [
-    PlaceService,
-    UserService,
-    MediaService,
-    FacilityService,
-    AnnouncementService,
-    ReviewService,
-    RouteService,
+    PlaceDBService,
+    UserDBService,
+    MediaDBService,
+    FacilityDBService,
+    AnnouncementDBService,
+    ReviewDBService,
+    RouteDBService,
+  ],
+  exports: [
+    PlaceDBService,
+    UserDBService,
+    MediaDBService,
+    FacilityDBService,
+    AnnouncementDBService,
+    ReviewDBService,
+    RouteDBService,
   ],
 })
 export class WGMongoModule {}

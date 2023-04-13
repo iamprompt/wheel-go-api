@@ -5,7 +5,7 @@ import type { RouteDocument } from './route.schema'
 import { Route } from './route.schema'
 
 @Injectable()
-export class RouteService {
+export class RouteDBService {
   constructor(
     @InjectModel(Route.name)
     private readonly routeModel: Model<RouteDocument>

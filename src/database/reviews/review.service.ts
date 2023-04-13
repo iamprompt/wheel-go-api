@@ -5,7 +5,7 @@ import type { ReviewDocument } from './review.schema'
 import { Review } from './review.schema'
 
 @Injectable()
-export class ReviewService {
+export class ReviewDBService {
   constructor(
     @InjectModel(Review.name)
     private readonly reviewModel: Model<ReviewDocument>

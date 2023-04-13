@@ -5,7 +5,7 @@ import type { PlaceDocument } from './place.schema'
 import { Place } from './place.schema'
 
 @Injectable()
-export class PlaceService {
+export class PlaceDBService {
   constructor(
     @InjectModel(Place.name) private readonly placeModel: Model<PlaceDocument>
   ) {}
