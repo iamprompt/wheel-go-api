@@ -8,16 +8,4 @@ export class UserService {
   getHello(): string {
     return 'Hello World! from UserService'
   }
-
-  async login(email: string, password: string): Promise<boolean> {
-    const user = await this.userService.findUserByEmail(email)
-    if (!user) {
-      return false
-    }
-
-    if (user.password === password) {
-      return true
-    }
-    return false
-  }
 }
