@@ -1,7 +1,11 @@
-const configuration = () => ({
-  PORT: parseInt(process.env.PORT, 10) || 3000,
-  MONGO_URI: process.env.MONGO_URI,
-})
+function configuration() {
+  return {
+    PORT: parseInt(process.env.PORT, 10) || 3000,
+    MONGO_URI: process.env.MONGO_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
+  }
+}
 
 export type Config = ReturnType<typeof configuration>
 
