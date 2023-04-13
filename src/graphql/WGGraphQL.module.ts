@@ -1,7 +1,7 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
-import { UserModule } from 'src/modules/user/user.module'
+import { UserModule } from '~/modules/user/user.module'
 
 @Module({
   imports: [

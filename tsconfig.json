@@ -2,6 +2,9 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"]
+    },
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
-import { WGConfigModule } from 'src/config/WGConfig.module'
-import { Config } from 'src/config/configuration'
+import { WGConfigModule } from '~/config/WGConfig.module'
+import { Config } from '~/config/configuration'
 
 @Module({
   imports: [
