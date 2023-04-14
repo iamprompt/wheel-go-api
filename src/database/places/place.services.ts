@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
 import type { PlaceDocument } from './place.schema'
 import { Place } from './place.schema'
-import { CreatePlaceInput } from '~/modules/place/dto/createPlace.dto'
 
 @Injectable()
 export class PlaceDBService {
@@ -25,20 +24,8 @@ export class PlaceDBService {
     return place
   }
 
-  async createPlace(data: CreatePlaceInput): Promise<PlaceDocument> {
-    const createdPlace = new this.PlaceModel<Place>({
-      type: data.type,
-      name: data.name,
-      address: data.address,
-      location: {
-        type: 'Point',
-        coordinates: [data.location.lng, data.location.lat],
-      },
-      images: [],
-      internalCode: data.internalCode,
-      metadata: data.metadata,
-      status: data.status,
-    })
+  async createPlace(data: Place): Promise<PlaceDocument> {
+    const createdPlace = new this.PlaceModel<Place>(data)
     return createdPlace.save()
   }
 }

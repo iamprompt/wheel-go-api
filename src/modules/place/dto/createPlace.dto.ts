@@ -26,6 +26,6 @@ export class CreatePlaceInput {
   @Field(() => PlaceMetaInput, { nullable: true })
   metadata: PlaceMetaInput
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, defaultValue: 'draft' })
   status: string
 }

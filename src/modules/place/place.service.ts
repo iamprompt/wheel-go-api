@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { CreatePlaceInput } from './dto/createPlace.dto'
+import { PlaceFactory } from './place.factory'
 import { PlaceDBService } from '~/database/places/place.services'
 import { PlaceDocument } from '~/database/places/place.schema'
 
@@ -12,6 +13,8 @@ export class PlaceService {
   }
 
   async createPlace(data: CreatePlaceInput): Promise<PlaceDocument> {
-    return this.placeDBService.createPlace(data)
+    const place = PlaceFactory.createToSave(data)
+    const result = await this.placeDBService.createPlace(place)
+    return result
   }
 }
