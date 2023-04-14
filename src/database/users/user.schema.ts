@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import type { HydratedDocument } from 'mongoose'
+import { genSaltSync, hashSync } from 'bcrypt'
 import type { UserMetadata } from '../object/UserMetadataObject'
 import { UserMetadataObject } from '../object/UserMetadataObject'
 
@@ -21,13 +22,13 @@ export class User {
   email: string
 
   @Prop(Date)
-  birthdate: Date
+  birthdate?: Date
 
   @Prop()
   role: string
 
   @Prop({ type: UserMetadataObject })
-  metadata: UserMetadata
+  metadata?: UserMetadata
 }
 
 export type UserDocument = HydratedDocument<
@@ -37,4 +38,14 @@ export type UserDocument = HydratedDocument<
     updatedAt: Date
   }
 >
-export const UserSchema = SchemaFactory.createForClass(User)
+
+const UserSchema = SchemaFactory.createForClass(User)
+UserSchema.pre<UserDocument>('save', function (next) {
+  if (this.isModified('password')) {
+    this.password = hashSync(this.password, genSaltSync())
+  }
+
+  next()
+})
+
+export { UserSchema }
