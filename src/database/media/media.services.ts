@@ -10,7 +10,7 @@ export class MediaDBService {
     @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>
   ) {}
 
-  async findAll(): Promise<Media[]> {
+  async findAllMedia(): Promise<MediaDocument[]> {
     return this.MediaModel.find().exec()
   }
 

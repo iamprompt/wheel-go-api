@@ -9,7 +9,7 @@ export class MediaResolver {
 
   @Query(() => [Media])
   async getMedia(): Promise<Media[]> {
-    return []
+    return this.mediaService.getMedia()
   }
 
   @Query(() => Media)

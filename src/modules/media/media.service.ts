@@ -12,7 +12,10 @@ import { MediaDBService } from '~/database/media/media.services'
 export class MediaService {
   constructor(private readonly mediaService: MediaDBService) {}
 
-  // async getMedia(): Promise<Media[]> {}
+  async getMedia(): Promise<Media[]> {
+    const media = await this.mediaService.findAllMedia()
+    return media.map((media) => MediaFactory.createMediaFromDatabase(media))
+  }
 
   async getMediaById(id: string): Promise<Media> {
     const media = await this.mediaService.findMediaById(id)
