@@ -15,10 +15,10 @@ export class User {
   username: string
 
   @Field()
-  email: string
+  role: string
 
   @Field()
-  password: string
+  email: string
 
   @Field()
   createdAt: Date

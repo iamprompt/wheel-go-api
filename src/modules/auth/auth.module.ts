@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AuthResolver } from './auth.resolver'
 import { AuthService } from './auth.service'
+import { JwtStrategy } from './strategies/jwt.strategy'
 import { WGMongoModule } from '~/database/WGMongo.module'
 import { Config } from '~/config/configuration'
 
@@ -19,6 +20,6 @@ import { Config } from '~/config/configuration'
       }),
     }),
   ],
-  providers: [AuthResolver, AuthService, ConfigService],
+  providers: [AuthResolver, AuthService, ConfigService, JwtStrategy],
 })
 export class AuthModule {}
