@@ -1,11 +1,8 @@
 import { SchemaTimestampsConfig } from 'mongoose'
 
 export interface Timestamp {
-  createdAt: number
-  updatedAt: number
+  createdAt: Date
+  updatedAt: Date
 }
 
-export const TimestampConfig: SchemaTimestampsConfig = {
-  // Store as Epoch time
-  currentTime: () => Math.floor(Date.now() / 1000),
-}
+export const TimestampConfig: boolean | SchemaTimestampsConfig = true

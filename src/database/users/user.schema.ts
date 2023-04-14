@@ -3,8 +3,9 @@ import type { HydratedDocument } from 'mongoose'
 import { genSaltSync, hashSync } from 'bcrypt'
 import type { UserMetadata } from '../object/UserMetadataObject'
 import { UserMetadataObject } from '../object/UserMetadataObject'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
-@Schema({ collection: 'users', timestamps: true })
+@Schema({ collection: 'users', timestamps: TimestampConfig })
 export class User {
   @Prop()
   firstname: string
@@ -31,13 +32,7 @@ export class User {
   metadata?: UserMetadata
 }
 
-export type UserDocument = HydratedDocument<
-  User,
-  {
-    createdAt: Date
-    updatedAt: Date
-  }
->
+export type UserDocument = HydratedDocument<User, Timestamp>
 
 const UserSchema = SchemaFactory.createForClass(User)
 UserSchema.pre<UserDocument>('save', function (next) {

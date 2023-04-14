@@ -41,7 +41,10 @@ export class AuthService {
   async sign(user: FlattenMaps<Omit<UserDocument, 'password'>>) {
     const payload = { email: user.email, sub: user._id }
     return {
-      accessToken: this.jwtService.sign(payload, { expiresIn: '15m' }),
+      accessToken: this.jwtService.sign(payload, {
+        expiresIn: '15m',
+        secret: this.configService.get<Config['JWT_SECRET']>('JWT_SECRET'),
+      }),
       refreshToken: this.jwtService.sign(payload, {
         expiresIn: '7d',
         secret:

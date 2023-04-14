@@ -7,10 +7,15 @@ import { Media } from './media.schema'
 @Injectable()
 export class MediaDBService {
   constructor(
-    @InjectModel(Media.name) private readonly mediaModel: Model<MediaDocument>
+    @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>
   ) {}
 
   async findAll(): Promise<Media[]> {
-    return this.mediaModel.find().exec()
+    return this.MediaModel.find().exec()
+  }
+
+  async createMedia(media: Media): Promise<MediaDocument> {
+    const createdMedia = new this.MediaModel(media)
+    return createdMedia.save()
   }
 }

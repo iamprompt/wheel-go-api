@@ -19,7 +19,8 @@
     "sourceMap": true,
     "strictBindCallApply": false,
     "strictNullChecks": false,
-    "target": "ESNext"
+    "target": "ESNext",
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "test/**/*", "jest.config.js"],
   "exclude": ["node_modules", "dist"]
