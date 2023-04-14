@@ -3,6 +3,7 @@ import { Media as MediaDB, MediaDocument } from '~/database/media/media.schema'
 
 export class MediaFactory {
   static createMediaFromDatabase({
+    _id,
     filename,
     filesize,
     height,
@@ -11,6 +12,7 @@ export class MediaFactory {
     width,
   }: MediaDocument): Media {
     return {
+      id: _id.toString(),
       filename,
       filesize,
       height,

@@ -14,6 +14,10 @@ export class MediaDBService {
     return this.MediaModel.find().exec()
   }
 
+  async findMediaById(id: string): Promise<MediaDocument> {
+    return this.MediaModel.findById(id).exec()
+  }
+
   async createMedia(media: Media): Promise<MediaDocument> {
     const createdMedia = new this.MediaModel(media)
     return createdMedia.save()

@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Location } from '../object/location.schema'
 import { PlaceMetadata } from '../object/placeMeta.schema'
+import { Media } from '../media/media.schema'
 
 @ObjectType()
 export class Place {
@@ -19,8 +20,8 @@ export class Place {
   @Field(() => Location)
   location: Location
 
-  @Field(() => [String])
-  images: string[]
+  @Field(() => [Media])
+  images: Media[]
 
   @Field()
   internalCode: string

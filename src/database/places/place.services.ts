@@ -16,7 +16,13 @@ export class PlaceDBService {
   }
 
   async findPlaceById(id: string): Promise<PlaceDocument> {
-    return this.PlaceModel.findById(id).exec()
+    const place = await this.PlaceModel.findById(id).populate('images').exec()
+
+    if (!place) {
+      throw new Error('Place not found')
+    }
+
+    return place
   }
 
   async createPlace(data: CreatePlaceInput): Promise<PlaceDocument> {

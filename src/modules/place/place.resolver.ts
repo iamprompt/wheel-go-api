@@ -15,6 +15,8 @@ export class PlaceResolver {
     Logger.log(context.req.headers)
 
     const result = await this.placeService.findPlaceById(id)
+    Logger.log(result)
+
     return PlaceFactory.createFromDatabase(
       result,
       getActiveLanguage(context.req)

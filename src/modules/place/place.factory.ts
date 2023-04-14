@@ -1,3 +1,4 @@
+import { MediaFactory } from '../media/media.factory'
 import { Place } from './place.schema'
 import { PlaceDocument } from '~/database/places/place.schema'
 
@@ -12,7 +13,9 @@ export class PlaceFactory {
         lat: place.location.coordinates[1],
         lng: place.location.coordinates[0],
       },
-      images: place.images.map((image) => image._id.toString()),
+      images: place.images.map((image) =>
+        MediaFactory.createMediaFromDatabase(image)
+      ),
       internalCode: place.internalCode,
       metadata: place.metadata,
       status: place.status,
