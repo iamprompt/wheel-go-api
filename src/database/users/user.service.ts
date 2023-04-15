@@ -5,7 +5,7 @@ import type { UserDocument } from './user.schema'
 import { User } from './user.schema'
 
 @Injectable()
-export class UserDBService {
+export class UserRepository {
   constructor(
     @InjectModel(User.name) private readonly UserModel: Model<UserDocument>
   ) {}

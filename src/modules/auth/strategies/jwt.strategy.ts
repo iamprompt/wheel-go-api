@@ -3,14 +3,14 @@ import { PassportStrategy } from '@nestjs/passport'
 import { HttpException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Config } from '~/config/configuration'
-import { UserDBService } from '~/database/users/user.service'
+import { UserRepository } from '~/database/users/user.service'
 import { UserFactory } from '~/modules/user/user.factory'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly configService: ConfigService,
-    private readonly userService: UserDBService
+    private readonly userService: UserRepository
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

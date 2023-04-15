@@ -5,7 +5,7 @@ import type { FacilityDocument } from './facility.schema'
 import { Facility } from './facility.schema'
 
 @Injectable()
-export class FacilityDBService {
+export class FacilityRepository {
   constructor(
     @InjectModel(Facility.name)
     private readonly facilityModel: Model<FacilityDocument>

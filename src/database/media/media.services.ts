@@ -5,7 +5,7 @@ import type { MediaDocument } from './media.schema'
 import { Media } from './media.schema'
 
 @Injectable()
-export class MediaDBService {
+export class MediaRepository {
   constructor(
     @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>
   ) {}

@@ -9,12 +9,12 @@ import { compare } from 'bcrypt'
 import { FlattenMaps } from 'mongoose'
 import { Config } from '~/config/configuration'
 import { UserDocument } from '~/database/users/user.schema'
-import { UserDBService } from '~/database/users/user.service'
+import { UserRepository } from '~/database/users/user.service'
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserDBService,
+    private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {}
@@ -23,7 +23,7 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<FlattenMaps<Omit<UserDocument, 'password'>>> {
-    const user = await this.userService.findUserByEmail(email)
+    const user = await this.userRepository.findUserByEmail(email)
     if (user) {
       const isPasswordValid = await compare(password, user.password)
 
@@ -64,7 +64,7 @@ export class AuthService {
           ),
       })
 
-      const user = await this.userService.findUserByEmail(payload.email)
+      const user = await this.userRepository.findUserByEmail(payload.email)
       if (!user) {
         return new UnauthorizedException()
       }

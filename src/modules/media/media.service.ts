@@ -6,19 +6,19 @@ import { FileUpload } from 'graphql-upload'
 import sharp from 'sharp'
 import { MediaFactory } from './media.factory'
 import { Media } from './media.schema'
-import { MediaDBService } from '~/database/media/media.services'
+import { MediaRepository } from '~/database/media/media.services'
 
 @Injectable()
 export class MediaService {
-  constructor(private readonly mediaService: MediaDBService) {}
+  constructor(private readonly mediaRepository: MediaRepository) {}
 
   async getMedia(): Promise<Media[]> {
-    const media = await this.mediaService.findAllMedia()
+    const media = await this.mediaRepository.findAllMedia()
     return media.map((media) => MediaFactory.createMediaFromDatabase(media))
   }
 
   async getMediaById(id: string): Promise<Media> {
-    const media = await this.mediaService.findMediaById(id)
+    const media = await this.mediaRepository.findMediaById(id)
 
     if (!media) {
       throw new HttpException(`Media with id ${id} not found`, 404)
@@ -54,7 +54,7 @@ export class MediaService {
       size,
     })
 
-    const result = await this.mediaService.createMedia(media)
+    const result = await this.mediaRepository.createMedia(media)
 
     return MediaFactory.createMediaFromDatabase(result)
   }

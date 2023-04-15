@@ -5,7 +5,7 @@ import type { AnnouncementDocument } from './announcement.schema'
 import { Announcement } from './announcement.schema'
 
 @Injectable()
-export class AnnouncementDBService {
+export class AnnouncementRepository {
   constructor(
     @InjectModel(Announcement.name)
     private readonly announcementModel: Model<AnnouncementDocument>
