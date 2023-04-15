@@ -2,10 +2,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
-import { AuthModule } from '~/modules/auth/auth.module'
-import { PlaceModule } from '~/modules/place/place.module'
-import { UserModule } from '~/modules/user/user.module'
-import { MediaModule } from '~/modules/media/media.module'
+import * as Modules from '~/modules'
 
 @Module({
   imports: [
@@ -19,10 +16,7 @@ import { MediaModule } from '~/modules/media/media.module'
         csrfPrevention: false,
       }),
     }),
-    AuthModule,
-    UserModule,
-    PlaceModule,
-    MediaModule,
+    ...Object.values(Modules),
   ],
 })
 export class WGGraphQLModule {}

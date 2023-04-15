@@ -5,7 +5,7 @@ import { Media } from '../media/media.schema'
 
 @ObjectType()
 export class Place {
-  @Field(() => ID)
+  @Field(() => ID!)
   id: string
 
   @Field()
