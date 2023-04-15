@@ -1,7 +1,9 @@
 import { MediaFactory } from '../media/media.factory'
+import { LocationFactory } from '../object/factory/location.factory'
 import { Place } from './place.schema'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { Place as PlaceDB, PlaceDocument } from '~/database/places/place.schema'
+import { createRefToSave } from '~/utils/factory'
 
 type ReturnPlaceOrArray<
   T extends PlaceDocument | PlaceDocument[] | undefined | null
@@ -30,13 +32,8 @@ export class PlaceFactory {
       type: place.type,
       name: place.name[language],
       address: place.address[language],
-      location: {
-        lat: place.location.coordinates[1],
-        lng: place.location.coordinates[0],
-      },
-      images: place.images.map((image) =>
-        MediaFactory.createFromDatabase(image)
-      ),
+      location: LocationFactory.createFromDatabase(place.location),
+      images: MediaFactory.createFromDatabase(place.images),
       internalCode: place.internalCode,
       metadata: place.metadata,
       status: place.status,
@@ -48,12 +45,9 @@ export class PlaceFactory {
       type: data.type,
       name: data.name,
       address: data.address,
-      location: {
-        type: 'Point',
-        coordinates: [data.location.lng, data.location.lat],
-      },
-      // @ts-expect-error Only _id is required
-      images: data.images.map((image) => ({ _id: image })),
+      location: LocationFactory.createToSave(data.location),
+      // @ts-expect-error Only ObjectId is required
+      images: createRefToSave(data.images),
       internalCode: data.internalCode,
       metadata: data.metadata,
       status: data.status,

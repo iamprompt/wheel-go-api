@@ -1,13 +1,14 @@
-import { Types } from 'mongoose'
 import { MediaFactory } from '../media/media.factory'
 import { PlaceFactory } from '../place/place.factory'
 import { UserFactory } from '../user/user.factory'
+import { LocationFactory } from '../object/factory/location.factory'
 import { Announcement } from './announcement.schema'
 import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
 import {
   Announcement as AnnouncementDB,
   AnnouncementDocument,
 } from '~/database/announcements/announcement.schema'
+import { createRefToSave } from '~/utils/factory'
 
 type ReturnAnnouncementOrArray<
   T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null
@@ -38,17 +39,9 @@ export class AnnouncementFactory {
       title: announcements.title[language],
       content: announcements.content[language],
       metadata: announcements.metadata,
-      images: announcements.images.map((image) =>
-        MediaFactory.createFromDatabase(image)
-      ),
+      images: MediaFactory.createFromDatabase(announcements.images),
       place: PlaceFactory.createFromDatabase(announcements.place, language),
-      location:
-        announcements.location && announcements.location.coordinates
-          ? {
-              lat: announcements.location.coordinates[1],
-              lng: announcements.location.coordinates[0],
-            }
-          : undefined,
+      location: LocationFactory.createFromDatabase(announcements.location),
       tags: announcements.tags,
       user: UserFactory.createFromDatabase(announcements.user),
       status: announcements.status,
@@ -63,19 +56,14 @@ export class AnnouncementFactory {
       title: data.title,
       content: data.content,
       metadata: data.metadata,
-      // @ts-expect-error Only _id is required
-      images: data.images.map((image) => new Types.ObjectId(image)),
-      // @ts-expect-error Only _id is required
-      place: data.place ? new Types.ObjectId(data.place) : undefined,
-      location: data.location
-        ? {
-            type: 'Point',
-            coordinates: [data.location.lng, data.location.lat],
-          }
-        : undefined,
+      // @ts-expect-error Only ObjectId is required
+      images: createRefToSave(data.images),
+      // @ts-expect-error Only ObjectId is required
+      place: createRefToSave(data.place),
+      location: LocationFactory.createToSave(data.location),
       tags: data.tags,
       // @ts-expect-error Only _id is required
-      user: new Types.ObjectId(userId),
+      user: createRefToSave(userId),
       status: data.status,
     }
   }
