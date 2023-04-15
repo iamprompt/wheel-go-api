@@ -8,7 +8,7 @@ export const ActiveLang = createParamDecorator(
     const ctx = GqlExecutionContext.create(context)
     const reqLang = ctx
       .getContext()
-      .req.headers['x-wheel-go-language'].toString()
+      .req.headers['x-wheel-go-language']?.toString()
 
     const isSupportedLang = WHEEL_GO_ACCEPTED_LANGUAGES.includes(reqLang)
 

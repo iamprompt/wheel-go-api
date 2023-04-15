@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import type { PlaceDocument } from '../places/place.schema'
+import { Place, PlaceDocument } from '../places/place.schema'
 import type { LangObject } from '../object/LangObject'
 import { LangObjectDefinition } from '../object/LangObject'
 import type { Location } from '../object/LocationObject'
@@ -9,7 +9,7 @@ import { LocationObject } from '../object/LocationObject'
 import type { AnnouncementMetadata } from '../object/AnnouncementMetadataObject'
 import { AnnouncementMetadataObject } from '../object/AnnouncementMetadataObject'
 import type { UserDocument } from '../users/user.schema'
-import { MediaDocument } from '../media/media.schema'
+import { Media, MediaDocument } from '../media/media.schema'
 
 @Schema({ collection: 'announcements' })
 export class Announcement {
@@ -19,13 +19,13 @@ export class Announcement {
   @Prop({ type: LangObjectDefinition })
   content: LangObject
 
-  @Prop({ type: Types.ObjectId, ref: 'Place' })
+  @Prop({ type: Types.ObjectId, ref: Place.name })
   place: PlaceDocument
 
   @Prop(LocationObject)
   location: Location
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Media' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: Media.name }] })
   images: MediaDocument[]
 
   @Prop([String])

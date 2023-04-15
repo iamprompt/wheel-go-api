@@ -3,8 +3,8 @@ import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
 import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
-import type { User } from '../users/user.schema'
-import type { Place } from '../places/place.schema'
+import { User } from '../users/user.schema'
+import { Place } from '../places/place.schema'
 
 @Schema({ collection: 'routes' })
 export class Route {
@@ -17,13 +17,13 @@ export class Route {
   @Prop()
   internalCode: string
 
-  @Prop({ type: Types.ObjectId, ref: 'Place' })
+  @Prop({ type: Types.ObjectId, ref: Place.name })
   origin: Place
 
-  @Prop({ type: Types.ObjectId, ref: 'Place' })
+  @Prop({ type: Types.ObjectId, ref: Place.name })
   destination: Place
 
-  @Prop({ type: Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: User.name })
   user: User
 
   @Prop()

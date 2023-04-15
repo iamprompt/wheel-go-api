@@ -8,10 +8,35 @@ import { Facility } from './facility.schema'
 export class FacilityRepository {
   constructor(
     @InjectModel(Facility.name)
-    private readonly facilityModel: Model<FacilityDocument>
+    private readonly FacilityModel: Model<FacilityDocument>
   ) {}
 
-  async findAll(): Promise<Facility[]> {
-    return this.facilityModel.find().exec()
+  FacilityPopulateOptions: Parameters<
+    (typeof this.FacilityModel)['populate']
+  >['0'] = [
+    {
+      path: 'parent',
+      populate: {
+        path: 'images',
+      },
+    },
+  ]
+
+  async findAllFacilities(): Promise<FacilityDocument[]> {
+    return await this.FacilityModel.find()
+      .populate(this.FacilityPopulateOptions)
+      .exec()
+  }
+
+  async findFacilityById(id: string): Promise<FacilityDocument> {
+    return this.FacilityModel.findById(id)
+      .populate(this.FacilityPopulateOptions)
+      .exec()
+  }
+
+  async createFacility(data: Facility): Promise<FacilityDocument> {
+    const facility = new this.FacilityModel(data)
+    const saveResult = await facility.save()
+    return saveResult.populate(this.FacilityPopulateOptions)
   }
 }

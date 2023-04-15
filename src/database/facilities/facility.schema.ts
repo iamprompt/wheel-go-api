@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import type { Place } from '../places/place.schema'
+import { Place, PlaceDocument } from '../places/place.schema'
 import type { LangObject } from '../object/LangObject'
 import { LangObjectDefinition } from '../object/LangObject'
 import type { Location } from '../object/LocationObject'
@@ -11,8 +11,8 @@ import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
 
 @Schema({ collection: 'facilities' })
 export class Facility {
-  @Prop({ type: Types.ObjectId, ref: 'places' })
-  parent: Place
+  @Prop({ type: Types.ObjectId, ref: Place.name })
+  parent: PlaceDocument
 
   @Prop()
   type: string

@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose'
+import { Place } from '../places/place.schema'
 import type { FavoritePlace } from './FavoritePlaceObject'
 
 export const UserMetadataObject = {
@@ -7,7 +8,7 @@ export const UserMetadataObject = {
   favorites: [
     {
       addedAt: { type: Date, default: Date.now },
-      place: { type: Schema.Types.ObjectId, ref: 'Place' },
+      place: { type: Schema.Types.ObjectId, ref: Place.name },
     },
   ],
 }
