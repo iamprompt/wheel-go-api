@@ -8,8 +8,9 @@ import { UserRepository } from '~/database/users/user.service'
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  getHello(): string {
-    return 'Hello World! from UserService'
+  async findAllUsers() {
+    const users = await this.userRepository.findAllUsers()
+    return UserFactory.createFromDatabase(users)
   }
 
   async createUser(data: CreateUserInput) {

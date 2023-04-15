@@ -10,7 +10,7 @@ export class PlaceRepository {
     @InjectModel(Place.name) private readonly PlaceModel: Model<PlaceDocument>
   ) {}
 
-  async findAll(): Promise<Place[]> {
+  async findAllPlaces(): Promise<PlaceDocument[]> {
     return this.PlaceModel.find().exec()
   }
 

@@ -8,6 +8,10 @@ import { PlaceDocument } from '~/database/places/place.schema'
 export class PlaceService {
   constructor(private readonly placeRepository: PlaceRepository) {}
 
+  async findAllPlaces(): Promise<PlaceDocument[]> {
+    return this.placeRepository.findAllPlaces()
+  }
+
   async findPlaceById(id: string): Promise<PlaceDocument> {
     return this.placeRepository.findPlaceById(id)
   }

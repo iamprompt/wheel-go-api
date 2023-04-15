@@ -14,7 +14,7 @@ export class MediaService {
 
   async getMedia(): Promise<Media[]> {
     const media = await this.mediaRepository.findAllMedia()
-    return media.map((media) => MediaFactory.createMediaFromDatabase(media))
+    return media.map((media) => MediaFactory.createFromDatabase(media))
   }
 
   async getMediaById(id: string): Promise<Media> {
@@ -24,7 +24,7 @@ export class MediaService {
       throw new HttpException(`Media with id ${id} not found`, 404)
     }
 
-    return MediaFactory.createMediaFromDatabase(media)
+    return MediaFactory.createFromDatabase(media)
   }
 
   async uploadMedia(file: FileUpload): Promise<Media> {
@@ -47,7 +47,7 @@ export class MediaService {
     // Write the file to the uploads directory
     await writeFile(join(__dirname, '../../../uploads', filename), buffer)
 
-    const media = MediaFactory.createMediaToSave(filename, {
+    const media = MediaFactory.createToSave(filename, {
       width,
       height,
       format,
@@ -56,6 +56,6 @@ export class MediaService {
 
     const result = await this.mediaRepository.createMedia(media)
 
-    return MediaFactory.createMediaFromDatabase(result)
+    return MediaFactory.createFromDatabase(result)
   }
 }

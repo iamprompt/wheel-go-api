@@ -5,7 +5,7 @@ export const AnnouncementMetadataObject = {
 }
 
 export interface AnnouncementMetadata {
-  line: string
-  email: string
-  phone: string
+  line?: string
+  email?: string
+  phone?: string
 }

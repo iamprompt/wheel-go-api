@@ -10,7 +10,7 @@ export class UserRepository {
     @InjectModel(User.name) private readonly UserModel: Model<UserDocument>
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAllUsers(): Promise<UserDocument[]> {
     return this.UserModel.find().exec()
   }
 

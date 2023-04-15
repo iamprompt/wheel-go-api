@@ -3,9 +3,29 @@ import { Place } from './place.schema'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { Place as PlaceDB, PlaceDocument } from '~/database/places/place.schema'
 
+type ReturnPlaceOrArray<
+  T extends PlaceDocument | PlaceDocument[] | undefined | null
+> = T extends PlaceDocument[]
+  ? Place[]
+  : T extends PlaceDocument
+  ? Place
+  : undefined
+
 export class PlaceFactory {
-  static createFromDatabase(place: PlaceDocument, language = 'th'): Place {
-    return {
+  static createFromDatabase<
+    T extends PlaceDocument | PlaceDocument[] | undefined | null
+  >(place: T, language = 'th'): ReturnPlaceOrArray<T> {
+    if (!place) {
+      return undefined
+    }
+
+    if (Array.isArray(place)) {
+      return <ReturnPlaceOrArray<T>>(
+        place.map((p) => PlaceFactory.createFromDatabase(p, language))
+      )
+    }
+
+    return <ReturnPlaceOrArray<T>>{
       id: place._id.toString(),
       type: place.type,
       name: place.name[language],
@@ -15,7 +35,7 @@ export class PlaceFactory {
         lng: place.location.coordinates[0],
       },
       images: place.images.map((image) =>
-        MediaFactory.createMediaFromDatabase(image)
+        MediaFactory.createFromDatabase(image)
       ),
       internalCode: place.internalCode,
       metadata: place.metadata,

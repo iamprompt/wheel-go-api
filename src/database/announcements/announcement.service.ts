@@ -8,10 +8,27 @@ import { Announcement } from './announcement.schema'
 export class AnnouncementRepository {
   constructor(
     @InjectModel(Announcement.name)
-    private readonly announcementModel: Model<AnnouncementDocument>
+    private readonly AnnouncementModel: Model<AnnouncementDocument>
   ) {}
 
-  async findAll(): Promise<Announcement[]> {
-    return this.announcementModel.find().exec()
+  async findAllAnnouncements(): Promise<AnnouncementDocument[]> {
+    return this.AnnouncementModel.find()
+      .populate(['user', 'place', 'images'])
+      .exec()
+  }
+
+  async findAnnouncementById(id: string): Promise<AnnouncementDocument> {
+    return this.AnnouncementModel.findById(id)
+      .populate(['user', 'place', 'images'])
+      .exec()
+  }
+
+  async createAnnouncement(
+    announcement: Announcement
+  ): Promise<AnnouncementDocument> {
+    const createdAnnouncement = new this.AnnouncementModel(announcement)
+    const saveResult = await createdAnnouncement.save()
+
+    return saveResult.populate(['user', 'place', 'images'])
   }
 }

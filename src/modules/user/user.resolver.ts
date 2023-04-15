@@ -14,14 +14,15 @@ import { HasRoles } from '~/decorators/hasRoles.decorator'
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => String)
-  hello() {
-    return this.userService.getHello()
-  }
-
   @Query(() => User)
   me(@CurrentUser() user: User) {
     return user
+  }
+
+  @Query(() => [User])
+  @HasRoles('ADMIN')
+  async users() {
+    return this.userService.findAllUsers()
   }
 
   @Mutation(() => Boolean)
