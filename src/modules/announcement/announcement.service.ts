@@ -38,4 +38,22 @@ export class AnnouncementService {
 
     return AnnouncementFactory.createFromDatabase(result, lang)
   }
+
+  async updateAnnouncement(
+    id: string,
+    announcement: CreateAnnouncementInput,
+    userId?: string,
+    lang = 'th'
+  ) {
+    const announcementToSave = AnnouncementFactory.createToSave(
+      announcement,
+      userId
+    )
+    const result = await this.announcementRepository.updateAnnouncement(
+      id,
+      announcementToSave
+    )
+
+    return AnnouncementFactory.createFromDatabase(result, lang)
+  }
 }

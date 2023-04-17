@@ -37,4 +37,16 @@ export class AnnouncementResolver {
   ) {
     return this.announcementService.createAnnouncement(data, user.id, lang)
   }
+
+  @Mutation(() => Announcement)
+  @HasRoles('ADMIN')
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  async updateAnnouncement(
+    @Args('id', { type: () => String }) id: string,
+    @Args('data') data: CreateAnnouncementInput,
+    @CurrentUser() user: User,
+    @ActiveLang() lang: string
+  ) {
+    return this.announcementService.updateAnnouncement(id, data, user.id, lang)
+  }
 }

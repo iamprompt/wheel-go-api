@@ -22,4 +22,11 @@ export class MediaRepository {
     const createdMedia = new this.MediaModel(media)
     return createdMedia.save()
   }
+
+  async updateMedia(id: string, media: Media): Promise<MediaDocument> {
+    const updatedMedia = await this.MediaModel.findByIdAndUpdate(id, media, {
+      new: true,
+    })
+    return updatedMedia
+  }
 }

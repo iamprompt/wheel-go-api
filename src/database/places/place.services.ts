@@ -37,4 +37,16 @@ export class PlaceRepository {
     const createdPlace = new this.PlaceModel<Place>(data)
     return (await createdPlace.save()).populate(this.PlacePopulateOptions)
   }
+
+  async updatePlace(id: string, data: Place): Promise<PlaceDocument> {
+    const updatedPlace = await this.PlaceModel.findByIdAndUpdate(id, data, {
+      new: true,
+    })
+
+    if (!updatedPlace) {
+      throw new Error('Place not found')
+    }
+
+    return updatedPlace.populate(this.PlacePopulateOptions)
+  }
 }

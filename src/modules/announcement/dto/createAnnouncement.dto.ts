@@ -26,6 +26,9 @@ export class CreateAnnouncementInput {
   @Field(() => AnnouncementMetaInput, { nullable: true })
   metadata?: AnnouncementMetaInput
 
+  @Field(() => String, { nullable: true })
+  user?: string
+
   @Field({ nullable: true })
   status?: string
 }

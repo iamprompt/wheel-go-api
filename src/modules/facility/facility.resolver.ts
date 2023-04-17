@@ -25,4 +25,13 @@ export class FacilityResolver {
   ) {
     return await this.facilityService.createFacility(data, language)
   }
+
+  @Mutation(() => Facility)
+  async updateFacility(
+    @Args('id') id: string,
+    @Args('data') data: CreateFacilityInput,
+    @ActiveLang() language: string
+  ) {
+    return await this.facilityService.updateFacility(id, data, language)
+  }
 }

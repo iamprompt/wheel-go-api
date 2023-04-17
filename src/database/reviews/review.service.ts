@@ -42,4 +42,16 @@ export class ReviewRepository {
     const createdReview = new this.ReviewModel(review)
     return (await createdReview.save()).populate(this.ReviewPopulateOptions)
   }
+
+  async update(id: string, review: Review): Promise<ReviewDocument> {
+    const updatedReview = await this.ReviewModel.findByIdAndUpdate(id, review, {
+      new: true,
+    })
+
+    if (!updatedReview) {
+      throw new Error('Review not found')
+    }
+
+    return updatedReview.populate(this.ReviewPopulateOptions)
+  }
 }

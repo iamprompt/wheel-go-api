@@ -63,7 +63,7 @@ export class AnnouncementFactory {
       location: LocationFactory.createToSave(data.location),
       tags: data.tags,
       // @ts-expect-error Only _id is required
-      user: createRefToSave(userId),
+      user: data.user ? createRefToSave(data.user) : createRefToSave(userId),
       status: data.status,
     }
   }

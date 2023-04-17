@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { PlaceService } from './place.service'
-import { PlaceFactory } from './place.factory'
 import { Place } from './place.schema'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
 
@@ -11,14 +10,12 @@ export class PlaceResolver {
 
   @Query(() => Place)
   async place(@Args('id') id: string, @ActiveLang() lang: string) {
-    const result = await this.placeService.findPlaceById(id)
-    return PlaceFactory.createFromDatabase(result, lang)
+    return this.placeService.findPlaceById(id, lang)
   }
 
   @Query(() => [Place])
   async places(@ActiveLang() lang: string) {
-    const result = await this.placeService.findAllPlaces()
-    return PlaceFactory.createFromDatabase(result, lang)
+    return this.placeService.findAllPlaces(lang)
   }
 
   @Mutation(() => Place)
@@ -26,7 +23,15 @@ export class PlaceResolver {
     @Args('data') data: CreatePlaceInput,
     @ActiveLang() lang: string
   ) {
-    const result = await this.placeService.createPlace(data)
-    return PlaceFactory.createFromDatabase(result, lang)
+    return this.placeService.createPlace(data, lang)
+  }
+
+  @Mutation(() => Place)
+  async updatePlace(
+    @Args('id') id: string,
+    @Args('data') data: CreatePlaceInput,
+    @ActiveLang() lang: string
+  ) {
+    return this.placeService.updatePlace(id, data, lang)
   }
 }

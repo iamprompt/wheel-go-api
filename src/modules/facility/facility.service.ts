@@ -23,4 +23,12 @@ export class FacilityService {
     )
     return FacilityFactory.createFromDatabase(facility, language)
   }
+
+  async updateFacility(id: string, data: CreateFacilityInput, language = 'th') {
+    const facility = await this.facilityRepository.updateFacility(
+      id,
+      FacilityFactory.createToSave(data)
+    )
+    return FacilityFactory.createFromDatabase(facility, language)
+  }
 }

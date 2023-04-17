@@ -39,4 +39,13 @@ export class FacilityRepository {
     const saveResult = await facility.save()
     return saveResult.populate(this.FacilityPopulateOptions)
   }
+
+  async updateFacility(id: string, data: Facility): Promise<FacilityDocument> {
+    const updatedFacility = await this.FacilityModel.findByIdAndUpdate(
+      id,
+      data,
+      { new: true }
+    )
+    return updatedFacility.populate(this.FacilityPopulateOptions)
+  }
 }

@@ -31,4 +31,17 @@ export class AnnouncementRepository {
 
     return saveResult.populate(['user', 'place', 'images'])
   }
+
+  async updateAnnouncement(
+    id: string,
+    announcement: Announcement
+  ): Promise<AnnouncementDocument> {
+    const updatedAnnouncement = await this.AnnouncementModel.findByIdAndUpdate(
+      id,
+      announcement,
+      { new: true }
+    )
+
+    return updatedAnnouncement.populate(['user', 'place', 'images'])
+  }
 }

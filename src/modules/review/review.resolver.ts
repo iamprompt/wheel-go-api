@@ -28,4 +28,13 @@ export class ReviewResolver {
   ): Promise<Review> {
     return this.reviewService.create(review, language)
   }
+
+  @Mutation(() => Review)
+  async updateReview(
+    @Args('id', { type: () => ID }) id: string,
+    @Args('review') review: CreateReviewInput,
+    @ActiveLang() language: string
+  ): Promise<Review> {
+    return this.reviewService.update(id, review, language)
+  }
 }
