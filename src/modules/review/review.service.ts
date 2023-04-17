@@ -8,13 +8,13 @@ import { ReviewRepository } from '~/database/reviews/review.service'
 export class ReviewService {
   constructor(private readonly reviewRepository: ReviewRepository) {}
 
-  async findAll(language = 'th'): Promise<Review[]> {
-    const reviews = await this.reviewRepository.findAll()
+  async find(language = 'th'): Promise<Review[]> {
+    const reviews = await this.reviewRepository.find()
     return ReviewFactory.createFromDatabase(reviews, language)
   }
 
-  async findOne(id: string, language = 'th'): Promise<Review> {
-    const review = await this.reviewRepository.findOne(id)
+  async findById(id: string, language = 'th'): Promise<Review> {
+    const review = await this.reviewRepository.findById(id)
     return ReviewFactory.createFromDatabase(review, language)
   }
 

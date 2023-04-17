@@ -7,27 +7,25 @@ import { RouteRepository } from '~/database/routes/route.service'
 export class RouteService {
   constructor(private readonly routeRepository: RouteRepository) {}
 
-  async findAllRoutes(lang = 'th') {
-    const routes = await this.routeRepository.findAll()
+  async find(lang = 'th') {
+    const routes = await this.routeRepository.find()
     return RouteFactory.createFromDatabase(routes, lang)
   }
 
-  async findRouteById(id: string, lang = 'th') {
-    const route = await this.routeRepository.findOne(id)
+  async findById(id: string, lang = 'th') {
+    const route = await this.routeRepository.findById(id)
     return RouteFactory.createFromDatabase(route, lang)
   }
 
-  async createRoute(route: CreateRouteInput, lang = 'th') {
+  async create(route: CreateRouteInput, lang = 'th') {
     const routeToSave = RouteFactory.createToSave(route)
     const result = await this.routeRepository.create(routeToSave)
-
     return RouteFactory.createFromDatabase(result, lang)
   }
 
-  async updateRoute(id: string, route: CreateRouteInput, lang = 'th') {
+  async update(id: string, route: CreateRouteInput, lang = 'th') {
     const routeToSave = RouteFactory.createToSave(route)
     const result = await this.routeRepository.update(id, routeToSave)
-
     return RouteFactory.createFromDatabase(result, lang)
   }
 }

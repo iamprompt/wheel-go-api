@@ -22,13 +22,13 @@ export class UserResolver {
   @Query(() => [User])
   @HasRoles('ADMIN')
   async users() {
-    return this.userService.findAllUsers()
+    return this.userService.find()
   }
 
   @Mutation(() => Boolean)
   @HasRoles('ADMIN')
   async createUser(@Args('data') data: CreateUserInput) {
-    return this.userService.createUser(data)
+    return this.userService.create(data)
   }
 
   @Mutation(() => User)
@@ -37,6 +37,6 @@ export class UserResolver {
     @Args('data') data: UpdateUserInput,
     @CurrentUser() user: User
   ) {
-    return this.userService.updateUser(id || user.id, data)
+    return this.userService.update(id || user.id, data)
   }
 }

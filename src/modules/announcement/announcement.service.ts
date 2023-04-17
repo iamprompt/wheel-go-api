@@ -9,21 +9,17 @@ export class AnnouncementService {
     private readonly announcementRepository: AnnouncementRepository
   ) {}
 
-  async findAllAnnouncements(lang = 'th') {
-    const announcements =
-      await this.announcementRepository.findAllAnnouncements()
-
+  async find(lang = 'th') {
+    const announcements = await this.announcementRepository.find()
     return AnnouncementFactory.createFromDatabase(announcements, lang)
   }
 
-  async findAnnouncementById(id: string, lang = 'th') {
-    const announcement = await this.announcementRepository.findAnnouncementById(
-      id
-    )
+  async findById(id: string, lang = 'th') {
+    const announcement = await this.announcementRepository.findById(id)
     return AnnouncementFactory.createFromDatabase(announcement, lang)
   }
 
-  async createAnnouncement(
+  async create(
     announcement: CreateAnnouncementInput,
     userId: string,
     lang = 'th'
@@ -32,14 +28,12 @@ export class AnnouncementService {
       announcement,
       userId
     )
-    const result = await this.announcementRepository.createAnnouncement(
-      announcementToSave
-    )
+    const result = await this.announcementRepository.create(announcementToSave)
 
     return AnnouncementFactory.createFromDatabase(result, lang)
   }
 
-  async updateAnnouncement(
+  async update(
     id: string,
     announcement: CreateAnnouncementInput,
     userId?: string,
@@ -49,7 +43,7 @@ export class AnnouncementService {
       announcement,
       userId
     )
-    const result = await this.announcementRepository.updateAnnouncement(
+    const result = await this.announcementRepository.update(
       id,
       announcementToSave
     )

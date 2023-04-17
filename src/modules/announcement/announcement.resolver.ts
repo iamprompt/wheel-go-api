@@ -16,7 +16,7 @@ export class AnnouncementResolver {
 
   @Query(() => [Announcement])
   async getAnnouncements(@ActiveLang() lang: string) {
-    return this.announcementService.findAllAnnouncements(lang)
+    return this.announcementService.find(lang)
   }
 
   @Query(() => Announcement)
@@ -24,7 +24,7 @@ export class AnnouncementResolver {
     @Args('id', { type: () => String }) id: string,
     @ActiveLang() lang: string
   ) {
-    return this.announcementService.findAnnouncementById(id, lang)
+    return this.announcementService.findById(id, lang)
   }
 
   @Mutation(() => Announcement)
@@ -35,7 +35,7 @@ export class AnnouncementResolver {
     @CurrentUser() user: User,
     @ActiveLang() lang: string
   ) {
-    return this.announcementService.createAnnouncement(data, user.id, lang)
+    return this.announcementService.create(data, user.id, lang)
   }
 
   @Mutation(() => Announcement)
@@ -47,6 +47,6 @@ export class AnnouncementResolver {
     @CurrentUser() user: User,
     @ActiveLang() lang: string
   ) {
-    return this.announcementService.updateAnnouncement(id, data, user.id, lang)
+    return this.announcementService.update(id, data, user.id, lang)
   }
 }

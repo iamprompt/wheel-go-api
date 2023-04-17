@@ -10,20 +10,20 @@ export class UserRepository {
     @InjectModel(User.name) private readonly UserModel: Model<UserDocument>
   ) {}
 
-  async findAllUsers(): Promise<UserDocument[]> {
+  async find(): Promise<UserDocument[]> {
     return this.UserModel.find().exec()
   }
 
-  async findUserByEmail(email: string): Promise<UserDocument> {
+  async findByEmail(email: string): Promise<UserDocument> {
     return this.UserModel.findOne({ email }).exec()
   }
 
-  async createUser(data: User) {
+  async create(data: User) {
     const newUser = new this.UserModel(data)
     return newUser.save()
   }
 
-  async updateUser(id: string, data: Partial<User>): Promise<UserDocument> {
+  async update(id: string, data: Partial<User>): Promise<UserDocument> {
     const user = await this.UserModel.findById(id).exec()
     if (!user) {
       throw new HttpException('User not found', 404)

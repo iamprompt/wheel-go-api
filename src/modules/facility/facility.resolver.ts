@@ -10,12 +10,12 @@ export class FacilityResolver {
 
   @Query(() => [Facility])
   async facilities(@ActiveLang() language: string) {
-    return await this.facilityService.findAllFacilities(language)
+    return await this.facilityService.find(language)
   }
 
   @Query(() => Facility)
   async facility(@Args('id') id: string, @ActiveLang() language: string) {
-    return await this.facilityService.findFacilityById(id, language)
+    return await this.facilityService.findById(id, language)
   }
 
   @Mutation(() => Facility)
@@ -23,7 +23,7 @@ export class FacilityResolver {
     @Args('data') data: CreateFacilityInput,
     @ActiveLang() language: string
   ) {
-    return await this.facilityService.createFacility(data, language)
+    return await this.facilityService.create(data, language)
   }
 
   @Mutation(() => Facility)
@@ -32,6 +32,6 @@ export class FacilityResolver {
     @Args('data') data: CreateFacilityInput,
     @ActiveLang() language: string
   ) {
-    return await this.facilityService.updateFacility(id, data, language)
+    return await this.facilityService.update(id, data, language)
   }
 }

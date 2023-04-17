@@ -10,12 +10,12 @@ export class PlaceResolver {
 
   @Query(() => Place)
   async place(@Args('id') id: string, @ActiveLang() lang: string) {
-    return this.placeService.findPlaceById(id, lang)
+    return this.placeService.findById(id, lang)
   }
 
   @Query(() => [Place])
   async places(@ActiveLang() lang: string) {
-    return this.placeService.findAllPlaces(lang)
+    return this.placeService.find(lang)
   }
 
   @Mutation(() => Place)
@@ -23,7 +23,7 @@ export class PlaceResolver {
     @Args('data') data: CreatePlaceInput,
     @ActiveLang() lang: string
   ) {
-    return this.placeService.createPlace(data, lang)
+    return this.placeService.create(data, lang)
   }
 
   @Mutation(() => Place)
@@ -32,6 +32,6 @@ export class PlaceResolver {
     @Args('data') data: CreatePlaceInput,
     @ActiveLang() lang: string
   ) {
-    return this.placeService.updatePlace(id, data, lang)
+    return this.placeService.update(id, data, lang)
   }
 }

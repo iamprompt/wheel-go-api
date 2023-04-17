@@ -10,12 +10,12 @@ export class RouteResolver {
 
   @Query(() => [Route])
   async routes(@ActiveLang() language: string) {
-    return this.routeService.findAllRoutes(language)
+    return this.routeService.find(language)
   }
 
   @Query(() => Route)
   async route(@Args('id') id: string, @ActiveLang() language: string) {
-    return this.routeService.findRouteById(id, language)
+    return this.routeService.findById(id, language)
   }
 
   @Mutation(() => Route)
@@ -23,7 +23,7 @@ export class RouteResolver {
     @Args('data') data: CreateRouteInput,
     @ActiveLang() language: string
   ) {
-    return this.routeService.createRoute(data, language)
+    return this.routeService.create(data, language)
   }
 
   @Mutation(() => Route)
@@ -32,6 +32,6 @@ export class RouteResolver {
     @Args('data') data: CreateRouteInput,
     @ActiveLang() language: string
   ) {
-    return this.routeService.updateRoute(id, data, language)
+    return this.routeService.update(id, data, language)
   }
 }

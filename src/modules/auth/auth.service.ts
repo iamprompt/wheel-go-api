@@ -20,7 +20,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.userRepository.findUserByEmail(email)
+    const user = await this.userRepository.findByEmail(email)
     if (user) {
       const isPasswordValid = await compare(password, user.password)
 
@@ -59,7 +59,7 @@ export class AuthService {
           ),
       })
 
-      const user = await this.userRepository.findUserByEmail(payload.email)
+      const user = await this.userRepository.findByEmail(payload.email)
       if (!user) {
         return new UnauthorizedException()
       }

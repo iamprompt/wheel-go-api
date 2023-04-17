@@ -13,11 +13,11 @@ export class RouteRepository {
 
   PopulateOptions: Parameters<(typeof this.RouteModel)['populate']>['0'] = []
 
-  async findAll(): Promise<RouteDocument[]> {
+  async find(): Promise<RouteDocument[]> {
     return this.RouteModel.find().populate(this.PopulateOptions).exec()
   }
 
-  async findOne(id: string): Promise<RouteDocument> {
+  async findById(id: string): Promise<RouteDocument> {
     return (await this.RouteModel.findById(id))
       .populated(this.PopulateOptions)
       .exec()

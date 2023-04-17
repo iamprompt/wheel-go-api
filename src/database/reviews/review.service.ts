@@ -28,11 +28,11 @@ export class ReviewRepository {
     },
   ]
 
-  async findAll(): Promise<ReviewDocument[]> {
+  async find(): Promise<ReviewDocument[]> {
     return this.ReviewModel.find().populate(this.ReviewPopulateOptions).exec()
   }
 
-  async findOne(id: string): Promise<ReviewDocument> {
+  async findById(id: string): Promise<ReviewDocument> {
     return this.ReviewModel.findById(id)
       .populate(this.ReviewPopulateOptions)
       .exec()

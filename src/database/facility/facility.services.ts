@@ -22,25 +22,25 @@ export class FacilityRepository {
     },
   ]
 
-  async findAllFacilities(): Promise<FacilityDocument[]> {
+  async find(): Promise<FacilityDocument[]> {
     return await this.FacilityModel.find()
       .populate(this.FacilityPopulateOptions)
       .exec()
   }
 
-  async findFacilityById(id: string): Promise<FacilityDocument> {
+  async findById(id: string): Promise<FacilityDocument> {
     return this.FacilityModel.findById(id)
       .populate(this.FacilityPopulateOptions)
       .exec()
   }
 
-  async createFacility(data: Facility): Promise<FacilityDocument> {
+  async create(data: Facility): Promise<FacilityDocument> {
     const facility = new this.FacilityModel(data)
     const saveResult = await facility.save()
     return saveResult.populate(this.FacilityPopulateOptions)
   }
 
-  async updateFacility(id: string, data: Facility): Promise<FacilityDocument> {
+  async update(id: string, data: Facility): Promise<FacilityDocument> {
     const updatedFacility = await this.FacilityModel.findByIdAndUpdate(
       id,
       data,

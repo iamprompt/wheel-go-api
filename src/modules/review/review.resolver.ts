@@ -10,7 +10,7 @@ export class ReviewResolver {
 
   @Query(() => [Review])
   async reviews(@ActiveLang() language: string): Promise<Review[]> {
-    return this.reviewService.findAll(language)
+    return this.reviewService.find(language)
   }
 
   @Query(() => Review)
@@ -18,7 +18,7 @@ export class ReviewResolver {
     @Args('id', { type: () => ID }) id: string,
     @ActiveLang() language: string
   ): Promise<Review> {
-    return this.reviewService.findOne(id, language)
+    return this.reviewService.findById(id, language)
   }
 
   @Mutation(() => Review)

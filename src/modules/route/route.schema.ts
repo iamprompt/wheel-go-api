@@ -8,10 +8,10 @@ export class Route {
   @Field(() => ID!)
   id: string
 
-  @Field()
+  @Field({ nullable: true })
   type: string
 
-  @Field(() => [Location])
+  @Field(() => [Location], { nullable: true })
   paths: Location[]
 
   @Field({ nullable: true })
@@ -23,7 +23,7 @@ export class Route {
   @Field({ nullable: true })
   destination: Place
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   user: User
 
   @Field(() => Number, { nullable: true })
@@ -32,6 +32,6 @@ export class Route {
   @Field(() => Number, { nullable: true })
   duration: number
 
-  @Field()
+  @Field({ nullable: true })
   status: string
 }

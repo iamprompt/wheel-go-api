@@ -9,20 +9,20 @@ export class MediaResolver {
 
   @Query(() => [Media])
   async getMedia(): Promise<Media[]> {
-    return this.mediaService.getMedia()
+    return this.mediaService.find()
   }
 
   @Query(() => Media)
   async getMediaById(
     @Args('id', { type: () => String }) id: string
   ): Promise<Media> {
-    return this.mediaService.getMediaById(id)
+    return this.mediaService.findById(id)
   }
 
   @Mutation(() => Media)
   async uploadMedia(
     @Args('file', { type: () => GraphQLUpload }) file: FileUpload
   ): Promise<Media> {
-    return this.mediaService.uploadMedia(file)
+    return this.mediaService.upload(file)
   }
 }

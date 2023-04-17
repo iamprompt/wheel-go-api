@@ -11,28 +11,26 @@ export class AnnouncementRepository {
     private readonly AnnouncementModel: Model<AnnouncementDocument>
   ) {}
 
-  async findAllAnnouncements(): Promise<AnnouncementDocument[]> {
+  async find(): Promise<AnnouncementDocument[]> {
     return this.AnnouncementModel.find()
       .populate(['user', 'place', 'images'])
       .exec()
   }
 
-  async findAnnouncementById(id: string): Promise<AnnouncementDocument> {
+  async findById(id: string): Promise<AnnouncementDocument> {
     return this.AnnouncementModel.findById(id)
       .populate(['user', 'place', 'images'])
       .exec()
   }
 
-  async createAnnouncement(
-    announcement: Announcement
-  ): Promise<AnnouncementDocument> {
+  async create(announcement: Announcement): Promise<AnnouncementDocument> {
     const createdAnnouncement = new this.AnnouncementModel(announcement)
     const saveResult = await createdAnnouncement.save()
 
     return saveResult.populate(['user', 'place', 'images'])
   }
 
-  async updateAnnouncement(
+  async update(
     id: string,
     announcement: Announcement
   ): Promise<AnnouncementDocument> {

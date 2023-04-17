@@ -7,28 +7,25 @@ import { FacilityRepository } from '~/database/facility/facility.services'
 export class FacilityService {
   constructor(private readonly facilityRepository: FacilityRepository) {}
 
-  async findAllFacilities(language = 'th') {
-    const facilities = await this.facilityRepository.findAllFacilities()
-    return FacilityFactory.createFromDatabase(facilities, language)
+  async find(lang = 'th') {
+    const facilities = await this.facilityRepository.find()
+    return FacilityFactory.createFromDatabase(facilities, lang)
   }
 
-  async findFacilityById(id: string, language = 'th') {
-    const facility = await this.facilityRepository.findFacilityById(id)
-    return FacilityFactory.createFromDatabase(facility, language)
+  async findById(id: string, lang = 'th') {
+    const facility = await this.facilityRepository.findById(id)
+    return FacilityFactory.createFromDatabase(facility, lang)
   }
 
-  async createFacility(data: CreateFacilityInput, language = 'th') {
-    const facility = await this.facilityRepository.createFacility(
-      FacilityFactory.createToSave(data)
-    )
-    return FacilityFactory.createFromDatabase(facility, language)
+  async create(data: CreateFacilityInput, lang = 'th') {
+    const facilityToSave = FacilityFactory.createToSave(data)
+    const facility = await this.facilityRepository.create(facilityToSave)
+    return FacilityFactory.createFromDatabase(facility, lang)
   }
 
-  async updateFacility(id: string, data: CreateFacilityInput, language = 'th') {
-    const facility = await this.facilityRepository.updateFacility(
-      id,
-      FacilityFactory.createToSave(data)
-    )
-    return FacilityFactory.createFromDatabase(facility, language)
+  async update(id: string, data: CreateFacilityInput, lang = 'th') {
+    const facilityToUpdate = FacilityFactory.createToSave(data)
+    const facility = await this.facilityRepository.update(id, facilityToUpdate)
+    return FacilityFactory.createFromDatabase(facility, lang)
   }
 }

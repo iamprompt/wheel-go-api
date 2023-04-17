@@ -10,15 +10,15 @@ export class MediaRepository {
     @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>
   ) {}
 
-  async findAllMedia(): Promise<MediaDocument[]> {
+  async find(): Promise<MediaDocument[]> {
     return this.MediaModel.find().exec()
   }
 
-  async findMediaById(id: string): Promise<MediaDocument> {
+  async findById(id: string): Promise<MediaDocument> {
     return this.MediaModel.findById(id).exec()
   }
 
-  async createMedia(media: Media): Promise<MediaDocument> {
+  async create(media: Media): Promise<MediaDocument> {
     const createdMedia = new this.MediaModel(media)
     return createdMedia.save()
   }

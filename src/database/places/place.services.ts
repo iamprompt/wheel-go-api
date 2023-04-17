@@ -17,11 +17,11 @@ export class PlaceRepository {
       },
     ]
 
-  async findAllPlaces(): Promise<PlaceDocument[]> {
+  async find(): Promise<PlaceDocument[]> {
     return this.PlaceModel.find().populate(this.PlacePopulateOptions).exec()
   }
 
-  async findPlaceById(id: string): Promise<PlaceDocument> {
+  async findById(id: string): Promise<PlaceDocument> {
     const place = await this.PlaceModel.findById(id)
       .populate(this.PlacePopulateOptions)
       .exec()
@@ -33,12 +33,12 @@ export class PlaceRepository {
     return place
   }
 
-  async createPlace(data: Place): Promise<PlaceDocument> {
+  async create(data: Place): Promise<PlaceDocument> {
     const createdPlace = new this.PlaceModel<Place>(data)
     return (await createdPlace.save()).populate(this.PlacePopulateOptions)
   }
 
-  async updatePlace(id: string, data: Place): Promise<PlaceDocument> {
+  async update(id: string, data: Place): Promise<PlaceDocument> {
     const updatedPlace = await this.PlaceModel.findByIdAndUpdate(id, data, {
       new: true,
     })

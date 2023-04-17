@@ -2,23 +2,32 @@ import { Injectable } from '@nestjs/common'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { UserFactory } from './user.factory'
+import { User } from './user.schema'
 import { UserRepository } from '~/database/users/user.service'
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findAllUsers() {
-    const users = await this.userRepository.findAllUsers()
-    return UserFactory.createFromDatabase(users)
+  async find(lang = 'th'): Promise<User[]> {
+    const users = await this.userRepository.find()
+    return UserFactory.createFromDatabase(users, lang)
   }
 
-  async createUser(data: CreateUserInput) {
-    return this.userRepository.createUser(data)
+  async findByEmail(email: string, lang = 'th'): Promise<User> {
+    const user = await this.userRepository.findByEmail(email)
+    return UserFactory.createFromDatabase(user, lang)
   }
 
-  async updateUser(id: string, data: UpdateUserInput) {
-    const updateResult = await this.userRepository.updateUser(id, data)
-    return UserFactory.createFromDatabase(updateResult)
+  async create(data: CreateUserInput, lang = 'th'): Promise<User> {
+    const userToSave = UserFactory.createToSave(data)
+    const user = await this.userRepository.create(userToSave)
+    return UserFactory.createFromDatabase(user, lang)
+  }
+
+  async update(id: string, data: UpdateUserInput, lang = 'th'): Promise<User> {
+    const userToUpdate = UserFactory.createToSave(data)
+    const updateResult = await this.userRepository.update(id, userToUpdate)
+    return UserFactory.createFromDatabase(updateResult, lang)
   }
 }

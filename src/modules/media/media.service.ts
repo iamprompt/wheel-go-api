@@ -12,13 +12,13 @@ import { MediaRepository } from '~/database/media/media.services'
 export class MediaService {
   constructor(private readonly mediaRepository: MediaRepository) {}
 
-  async getMedia(): Promise<Media[]> {
-    const media = await this.mediaRepository.findAllMedia()
-    return media.map((media) => MediaFactory.createFromDatabase(media))
+  async find(): Promise<Media[]> {
+    const media = await this.mediaRepository.find()
+    return MediaFactory.createFromDatabase(media)
   }
 
-  async getMediaById(id: string): Promise<Media> {
-    const media = await this.mediaRepository.findMediaById(id)
+  async findById(id: string): Promise<Media> {
+    const media = await this.mediaRepository.findById(id)
 
     if (!media) {
       throw new HttpException(`Media with id ${id} not found`, 404)
@@ -27,7 +27,7 @@ export class MediaService {
     return MediaFactory.createFromDatabase(media)
   }
 
-  async uploadMedia(file: FileUpload): Promise<Media> {
+  async upload(file: FileUpload): Promise<Media> {
     const { createReadStream, filename } = file
 
     Logger.log(`Uploading file: ${filename}`)
@@ -54,7 +54,7 @@ export class MediaService {
       size,
     })
 
-    const result = await this.mediaRepository.createMedia(media)
+    const result = await this.mediaRepository.create(media)
 
     return MediaFactory.createFromDatabase(result)
   }
