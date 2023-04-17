@@ -14,7 +14,7 @@ export class UserRepository {
     return this.UserModel.find().exec()
   }
 
-  async findUserByEmail(email: string) {
+  async findUserByEmail(email: string): Promise<UserDocument> {
     return this.UserModel.findOne({ email }).exec()
   }
 

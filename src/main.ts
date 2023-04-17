@@ -7,10 +7,9 @@ import { Config } from './config/configuration'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const configService = app.get(ConfigService)
 
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }))
-
-  const configService = app.get(ConfigService)
 
   await app.listen(configService.get<Config['PORT']>('PORT'))
 }

@@ -6,9 +6,9 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcrypt'
-import { FlattenMaps } from 'mongoose'
+import { UserFactory } from '../user/user.factory'
+import { User } from '../user/user.schema'
 import { Config } from '~/config/configuration'
-import { UserDocument } from '~/database/users/user.schema'
 import { UserRepository } from '~/database/users/user.service'
 
 @Injectable()
@@ -19,10 +19,7 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async validateUser(
-    email: string,
-    password: string
-  ): Promise<FlattenMaps<Omit<UserDocument, 'password'>>> {
+  async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userRepository.findUserByEmail(email)
     if (user) {
       const isPasswordValid = await compare(password, user.password)
@@ -31,15 +28,13 @@ export class AuthService {
         return null
       }
 
-      const userJson = user.toJSON()
-      const { password: _password, ...result } = userJson
-      return result
+      return UserFactory.createFromDatabase(user)
     }
     return null
   }
 
-  async sign(user: FlattenMaps<Omit<UserDocument, 'password'>>) {
-    const payload = { email: user.email, sub: user._id }
+  async sign(user: User) {
+    const payload = { email: user.email, sub: user.id }
     return {
       accessToken: this.jwtService.sign(payload, {
         expiresIn: '15m',
@@ -69,7 +64,8 @@ export class AuthService {
         return new UnauthorizedException()
       }
 
-      return this.sign(user)
+      const formattedUser = UserFactory.createFromDatabase(user)
+      return this.sign(formattedUser)
     } catch (error) {
       return new BadRequestException(error.message)
     }
