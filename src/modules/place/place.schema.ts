@@ -29,6 +29,6 @@ export class Place {
   @Field(() => PlaceMetadata)
   metadata: PlaceMetadata
 
-  @Field()
+  @Field({ nullable: true })
   status: string
 }

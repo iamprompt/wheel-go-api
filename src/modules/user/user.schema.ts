@@ -5,24 +5,24 @@ export class User {
   @Field(() => ID!)
   id: string
 
-  @Field()
+  @Field({ nullable: true })
   firstname: string
 
-  @Field()
+  @Field({ nullable: true })
   lastname: string
 
-  @Field()
+  @Field({ nullable: true })
   username: string
 
-  @Field()
+  @Field({ nullable: true })
   role: string
 
-  @Field()
+  @Field({ nullable: true })
   email: string
 
-  @Field()
+  @Field({ nullable: true })
   createdAt: Date
 
-  @Field()
+  @Field({ nullable: true })
   updatedAt: Date
 }

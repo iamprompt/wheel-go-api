@@ -5,21 +5,21 @@ export class Media {
   @Field(() => ID!)
   id: string
 
-  @Field()
+  @Field({ nullable: true })
   filename: string
 
-  @Field()
+  @Field({ nullable: true })
   mimetype: string
 
-  @Field()
+  @Field({ nullable: true })
   filesize: number
 
-  @Field()
+  @Field({ nullable: true })
   width: number
 
-  @Field()
+  @Field({ nullable: true })
   height: number
 
-  @Field()
+  @Field({ nullable: true })
   url: string
 }

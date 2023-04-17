@@ -11,16 +11,35 @@ export class ReviewRepository {
     private readonly ReviewModel: Model<ReviewDocument>
   ) {}
 
+  ReviewPopulateOptions: Parameters<
+    (typeof this.ReviewModel)['populate']
+  >['0'] = [
+    {
+      path: 'place',
+      populate: {
+        path: 'images',
+      },
+    },
+    {
+      path: 'user',
+    },
+    {
+      path: 'images',
+    },
+  ]
+
   async findAll(): Promise<ReviewDocument[]> {
-    return this.ReviewModel.find().exec()
+    return this.ReviewModel.find().populate(this.ReviewPopulateOptions).exec()
   }
 
   async findOne(id: string): Promise<ReviewDocument> {
-    return this.ReviewModel.findById(id).exec()
+    return this.ReviewModel.findById(id)
+      .populate(this.ReviewPopulateOptions)
+      .exec()
   }
 
   async create(review: Review): Promise<ReviewDocument> {
     const createdReview = new this.ReviewModel(review)
-    return createdReview.save()
+    return (await createdReview.save()).populate(this.ReviewPopulateOptions)
   }
 }

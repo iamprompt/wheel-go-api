@@ -10,12 +10,21 @@ export class PlaceRepository {
     @InjectModel(Place.name) private readonly PlaceModel: Model<PlaceDocument>
   ) {}
 
+  PlacePopulateOptions: Parameters<(typeof this.PlaceModel)['populate']>['0'] =
+    [
+      {
+        path: 'images',
+      },
+    ]
+
   async findAllPlaces(): Promise<PlaceDocument[]> {
-    return this.PlaceModel.find().exec()
+    return this.PlaceModel.find().populate(this.PlacePopulateOptions).exec()
   }
 
   async findPlaceById(id: string): Promise<PlaceDocument> {
-    const place = await this.PlaceModel.findById(id).populate('images').exec()
+    const place = await this.PlaceModel.findById(id)
+      .populate(this.PlacePopulateOptions)
+      .exec()
 
     if (!place) {
       throw new Error('Place not found')
@@ -26,6 +35,6 @@ export class PlaceRepository {
 
   async createPlace(data: Place): Promise<PlaceDocument> {
     const createdPlace = new this.PlaceModel<Place>(data)
-    return createdPlace.save()
+    return (await createdPlace.save()).populate(this.PlacePopulateOptions)
   }
 }
