@@ -21,7 +21,7 @@ export class UserResolver {
 
   @Query(() => [User])
   @HasRoles('ADMIN')
-  async users() {
+  async getUsers() {
     return this.userService.find()
   }
 

@@ -8,14 +8,14 @@ import { ActiveLang } from '~/decorators/activeLang.decorator'
 export class PlaceResolver {
   constructor(private readonly placeService: PlaceService) {}
 
-  @Query(() => Place)
-  async place(@Args('id') id: string, @ActiveLang() lang: string) {
-    return this.placeService.findById(id, lang)
+  @Query(() => [Place])
+  async getPlaces(@ActiveLang() lang: string) {
+    return this.placeService.find(lang)
   }
 
-  @Query(() => [Place])
-  async places(@ActiveLang() lang: string) {
-    return this.placeService.find(lang)
+  @Query(() => Place)
+  async getPlaceById(@Args('id') id: string, @ActiveLang() lang: string) {
+    return this.placeService.findById(id, lang)
   }
 
   @Mutation(() => Place)

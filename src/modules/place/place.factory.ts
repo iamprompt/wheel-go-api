@@ -16,22 +16,22 @@ type ReturnPlaceOrArray<
 export class PlaceFactory {
   static createFromDatabase<
     T extends PlaceDocument | PlaceDocument[] | undefined | null
-  >(place: T, language = 'th'): ReturnPlaceOrArray<T> {
+  >(place: T, lang = 'th'): ReturnPlaceOrArray<T> {
     if (!place) {
       return undefined
     }
 
     if (Array.isArray(place)) {
       return <ReturnPlaceOrArray<T>>(
-        place.map((p) => PlaceFactory.createFromDatabase(p, language))
+        place.map((p) => PlaceFactory.createFromDatabase(p, lang))
       )
     }
 
     return <ReturnPlaceOrArray<T>>{
       id: place._id.toString(),
       type: place.type,
-      name: place.name[language],
-      address: place.address[language],
+      name: place.name[lang],
+      address: place.address[lang],
       location: LocationFactory.createFromDatabase(place.location),
       images: MediaFactory.createFromDatabase(place.images),
       internalCode: place.internalCode,

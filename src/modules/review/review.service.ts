@@ -8,29 +8,29 @@ import { ReviewRepository } from '~/database/reviews/review.service'
 export class ReviewService {
   constructor(private readonly reviewRepository: ReviewRepository) {}
 
-  async find(language = 'th'): Promise<Review[]> {
+  async find(lang = 'th'): Promise<Review[]> {
     const reviews = await this.reviewRepository.find()
-    return ReviewFactory.createFromDatabase(reviews, language)
+    return ReviewFactory.createFromDatabase(reviews, lang)
   }
 
-  async findById(id: string, language = 'th'): Promise<Review> {
+  async findById(id: string, lang = 'th'): Promise<Review> {
     const review = await this.reviewRepository.findById(id)
-    return ReviewFactory.createFromDatabase(review, language)
+    return ReviewFactory.createFromDatabase(review, lang)
   }
 
-  async create(review: CreateReviewInput, language = 'th'): Promise<Review> {
+  async create(review: CreateReviewInput, lang = 'th'): Promise<Review> {
     const reviewToSave = ReviewFactory.createToSave(review)
     const createdReview = await this.reviewRepository.create(reviewToSave)
-    return ReviewFactory.createFromDatabase(createdReview, language)
+    return ReviewFactory.createFromDatabase(createdReview, lang)
   }
 
   async update(
     id: string,
     review: CreateReviewInput,
-    language = 'th'
+    lang = 'th'
   ): Promise<Review> {
     const reviewToSave = ReviewFactory.createToSave(review)
     const updatedReview = await this.reviewRepository.update(id, reviewToSave)
-    return ReviewFactory.createFromDatabase(updatedReview, language)
+    return ReviewFactory.createFromDatabase(updatedReview, lang)
   }
 }

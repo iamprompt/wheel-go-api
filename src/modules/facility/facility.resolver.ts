@@ -9,29 +9,32 @@ export class FacilityResolver {
   constructor(private readonly facilityService: FacilityService) {}
 
   @Query(() => [Facility])
-  async facilities(@ActiveLang() language: string) {
-    return await this.facilityService.find(language)
+  async getFacilities(@ActiveLang() lang: string) {
+    return await this.facilityService.find(lang)
   }
 
   @Query(() => Facility)
-  async facility(@Args('id') id: string, @ActiveLang() language: string) {
-    return await this.facilityService.findById(id, language)
+  async getFacilityById(
+    @Args('id') id: string,
+    @ActiveLang() lang: string
+  ): Promise<Facility> {
+    return await this.facilityService.findById(id, lang)
   }
 
   @Mutation(() => Facility)
   async createFacility(
     @Args('data') data: CreateFacilityInput,
-    @ActiveLang() language: string
+    @ActiveLang() lang: string
   ) {
-    return await this.facilityService.create(data, language)
+    return await this.facilityService.create(data, lang)
   }
 
   @Mutation(() => Facility)
   async updateFacility(
     @Args('id') id: string,
     @Args('data') data: CreateFacilityInput,
-    @ActiveLang() language: string
+    @ActiveLang() lang: string
   ) {
-    return await this.facilityService.update(id, data, language)
+    return await this.facilityService.update(id, data, lang)
   }
 }

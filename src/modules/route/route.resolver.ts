@@ -9,29 +9,32 @@ export class RouteResolver {
   constructor(private readonly routeService: RouteService) {}
 
   @Query(() => [Route])
-  async routes(@ActiveLang() language: string) {
-    return this.routeService.find(language)
+  async getRoutes(@ActiveLang() lang: string): Promise<Route[]> {
+    return this.routeService.find(lang)
   }
 
   @Query(() => Route)
-  async route(@Args('id') id: string, @ActiveLang() language: string) {
-    return this.routeService.findById(id, language)
+  async getRouteById(
+    @Args('id') id: string,
+    @ActiveLang() lang: string
+  ): Promise<Route> {
+    return this.routeService.findById(id, lang)
   }
 
   @Mutation(() => Route)
   async createRoute(
     @Args('data') data: CreateRouteInput,
-    @ActiveLang() language: string
-  ) {
-    return this.routeService.create(data, language)
+    @ActiveLang() lang: string
+  ): Promise<Route> {
+    return this.routeService.create(data, lang)
   }
 
   @Mutation(() => Route)
   async updateRoute(
     @Args('id') id: string,
     @Args('data') data: CreateRouteInput,
-    @ActiveLang() language: string
-  ) {
-    return this.routeService.update(id, data, language)
+    @ActiveLang() lang: string
+  ): Promise<Route> {
+    return this.routeService.update(id, data, lang)
   }
 }

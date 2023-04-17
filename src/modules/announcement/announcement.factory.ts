@@ -21,7 +21,7 @@ type ReturnAnnouncementOrArray<
 export class AnnouncementFactory {
   static createFromDatabase<
     T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null
-  >(announcements: T, language = 'th'): ReturnAnnouncementOrArray<T> {
+  >(announcements: T, lang = 'th'): ReturnAnnouncementOrArray<T> {
     if (!announcements) {
       return undefined
     }
@@ -29,18 +29,18 @@ export class AnnouncementFactory {
     if (Array.isArray(announcements)) {
       return <ReturnAnnouncementOrArray<T>>(
         announcements.map((announcement) =>
-          AnnouncementFactory.createFromDatabase(announcement, language)
+          AnnouncementFactory.createFromDatabase(announcement, lang)
         )
       )
     }
 
     return <ReturnAnnouncementOrArray<T>>{
       id: announcements._id.toString(),
-      title: announcements.title[language],
-      content: announcements.content[language],
+      title: announcements.title[lang],
+      content: announcements.content[lang],
       metadata: announcements.metadata,
       images: MediaFactory.createFromDatabase(announcements.images),
-      place: PlaceFactory.createFromDatabase(announcements.place, language),
+      place: PlaceFactory.createFromDatabase(announcements.place, lang),
       location: LocationFactory.createFromDatabase(announcements.location),
       tags: announcements.tags,
       user: UserFactory.createFromDatabase(announcements.user),

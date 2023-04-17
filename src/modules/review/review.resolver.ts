@@ -9,32 +9,32 @@ export class ReviewResolver {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Query(() => [Review])
-  async reviews(@ActiveLang() language: string): Promise<Review[]> {
-    return this.reviewService.find(language)
+  async getReviews(@ActiveLang() lang: string): Promise<Review[]> {
+    return this.reviewService.find(lang)
   }
 
   @Query(() => Review)
-  async review(
+  async getReviewById(
     @Args('id', { type: () => ID }) id: string,
-    @ActiveLang() language: string
+    @ActiveLang() lang: string
   ): Promise<Review> {
-    return this.reviewService.findById(id, language)
+    return this.reviewService.findById(id, lang)
   }
 
   @Mutation(() => Review)
   async createReview(
     @Args('review') review: CreateReviewInput,
-    @ActiveLang() language: string
+    @ActiveLang() lang: string
   ): Promise<Review> {
-    return this.reviewService.create(review, language)
+    return this.reviewService.create(review, lang)
   }
 
   @Mutation(() => Review)
   async updateReview(
     @Args('id', { type: () => ID }) id: string,
     @Args('review') review: CreateReviewInput,
-    @ActiveLang() language: string
+    @ActiveLang() lang: string
   ): Promise<Review> {
-    return this.reviewService.update(id, review, language)
+    return this.reviewService.update(id, review, lang)
   }
 }

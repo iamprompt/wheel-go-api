@@ -20,7 +20,7 @@ type ReturnReviewOrArray<
 export class ReviewFactory {
   static createFromDatabase<
     T extends ReviewDocument | ReviewDocument[] | undefined | null
-  >(data: T, language = 'th'): ReturnReviewOrArray<T> {
+  >(data: T, lang = 'th'): ReturnReviewOrArray<T> {
     if (!data) {
       return undefined
     }
@@ -31,7 +31,7 @@ export class ReviewFactory {
 
     return <ReturnReviewOrArray<T>>{
       id: data._id.toString(),
-      place: PlaceFactory.createFromDatabase(data.place, language),
+      place: PlaceFactory.createFromDatabase(data.place, lang),
       user: UserFactory.createFromDatabase(data.user),
       rating: data.rating,
       comment: data.comment,
