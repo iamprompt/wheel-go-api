@@ -4,21 +4,24 @@ import { RatingObjectInput } from '~/modules/object/dto/ratingObject.dto'
 
 @InputType()
 export class CreateReviewInput {
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
+  place: string
+
+  @Field(() => String, { nullable: true })
   user: string
 
-  @Field(() => RatingObjectInput)
+  @Field(() => RatingObjectInput, { nullable: true })
   rating: RatingObjectInput
 
-  @Field()
+  @Field({ nullable: true })
   comment: string
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   images: string[]
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   tags: string[]
 
-  @Field(() => OfficialReviewObjectInput)
+  @Field(() => OfficialReviewObjectInput, { nullable: true })
   official: OfficialReviewObjectInput
 }

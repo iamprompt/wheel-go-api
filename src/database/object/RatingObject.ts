@@ -9,11 +9,11 @@ export const RatingObject = {
 }
 
 export interface Rating {
-  overall: number
-  ramp: number
-  assistance: number
-  elevator: number
-  parking: number
-  surface: number
-  toilet: number
+  overall?: number
+  ramp?: number
+  assistance?: number
+  elevator?: number
+  parking?: number
+  surface?: number
+  toilet?: number
 }
