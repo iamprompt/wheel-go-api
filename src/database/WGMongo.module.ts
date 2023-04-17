@@ -7,13 +7,13 @@ import { Media, MediaSchema } from './media/media.schema'
 import { MediaRepository } from './media/media.services'
 import { Place, PlaceSchema } from './places/place.schema'
 import { PlaceRepository } from './places/place.services'
-import { Facility, FacilitySchema } from './facilities/facility.schema'
+import { Facility, FacilitySchema } from './facility/facility.schema'
 import {
   Announcement,
   AnnouncementSchema,
 } from './announcements/announcement.schema'
 import { Review, ReviewSchema } from './reviews/review.schema'
-import { FacilityRepository } from './facilities/facility.services'
+import { FacilityRepository } from './facility/facility.services'
 import { AnnouncementRepository } from './announcements/announcement.service'
 import { ReviewRepository } from './reviews/review.service'
 import { Route, RouteSchema } from './routes/route.schema'

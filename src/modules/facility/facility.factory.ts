@@ -6,7 +6,7 @@ import { createRefToSave } from '~/utils/factory'
 import {
   Facility as FacilityDB,
   FacilityDocument,
-} from '~/database/facilities/facility.schema'
+} from '~/database/facility/facility.schema'
 
 type ReturnFacilityOrArray<
   T extends FacilityDocument | FacilityDocument[] | undefined | null
