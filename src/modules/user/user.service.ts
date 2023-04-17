@@ -14,6 +14,11 @@ export class UserService {
     return UserFactory.createFromDatabase(users, lang)
   }
 
+  async findById(id: string, lang = 'th'): Promise<User> {
+    const user = await this.userRepository.findById(id)
+    return UserFactory.createFromDatabase(user, lang)
+  }
+
   async findByEmail(email: string, lang = 'th'): Promise<User> {
     const user = await this.userRepository.findByEmail(email)
     return UserFactory.createFromDatabase(user, lang)
