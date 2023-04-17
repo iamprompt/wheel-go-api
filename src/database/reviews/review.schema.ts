@@ -1,17 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import { User } from '../users/user.schema'
+import { User, UserDocument } from '../users/user.schema'
 import type { Rating } from '../object/RatingObject'
 import { RatingObject } from '../object/RatingObject'
-import { Media } from '../media/media.schema'
+import { Media, MediaDocument } from '../media/media.schema'
 import type { OfficialReview } from '../object/OfficialReviewObject'
 import { OfficialReviewObject } from '../object/OfficialReviewObject'
 
 @Schema({ collection: 'reviews' })
 export class Review {
   @Prop({ type: Types.ObjectId, ref: User.name })
-  user: User
+  user: UserDocument
 
   @Prop({ type: RatingObject })
   rating: Rating
@@ -20,7 +20,7 @@ export class Review {
   comment: string
 
   @Prop({ type: [{ type: Types.ObjectId, ref: Media.name }] })
-  images: Media[]
+  images: MediaDocument[]
 
   @Prop({ type: [{ type: String }] })
   tags: string[]

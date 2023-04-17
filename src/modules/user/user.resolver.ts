@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { Logger, UseGuards } from '@nestjs/common'
+import { UseGuards } from '@nestjs/common'
 import { User } from './user.schema'
 import { UserService } from './user.service'
 import { CreateUserInput } from './dto/createUser.dto'
@@ -28,8 +28,6 @@ export class UserResolver {
   @Mutation(() => Boolean)
   @HasRoles('ADMIN')
   async createUser(@Args('data') data: CreateUserInput) {
-    Logger.log(data)
-
     return this.userService.createUser(data)
   }
 

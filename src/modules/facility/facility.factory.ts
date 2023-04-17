@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common'
 import { LocationFactory } from '../object/factory/location.factory'
 import { PlaceFactory } from '../place/place.factory'
 import { CreateFacilityInput } from './dto/createFacility.dto'
@@ -30,8 +29,6 @@ export class FacilityFactory {
         data.map((d) => FacilityFactory.createFromDatabase(d))
       )
     }
-
-    Logger.log(data)
 
     return <ReturnFacilityOrArray<T>>{
       id: data._id.toString(),

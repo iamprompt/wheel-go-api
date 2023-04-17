@@ -8,10 +8,19 @@ import { Review } from './review.schema'
 export class ReviewRepository {
   constructor(
     @InjectModel(Review.name)
-    private readonly reviewModel: Model<ReviewDocument>
+    private readonly ReviewModel: Model<ReviewDocument>
   ) {}
 
-  async findAll(): Promise<Review[]> {
-    return this.reviewModel.find().exec()
+  async findAll(): Promise<ReviewDocument[]> {
+    return this.ReviewModel.find().exec()
+  }
+
+  async findOne(id: string): Promise<ReviewDocument> {
+    return this.ReviewModel.findById(id).exec()
+  }
+
+  async create(review: Review): Promise<ReviewDocument> {
+    const createdReview = new this.ReviewModel(review)
+    return createdReview.save()
   }
 }
