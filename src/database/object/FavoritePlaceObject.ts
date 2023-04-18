@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose'
-import type { Place } from '../places/place.schema'
+import type { PlaceDocument } from '../places/place.schema'
 
 export const FavoritePlaceObject = {
   place: { types: Schema.Types.ObjectId, ref: 'Place' },
@@ -7,6 +7,6 @@ export const FavoritePlaceObject = {
 }
 
 export interface FavoritePlace {
-  place: Place
+  place: PlaceDocument
   addedAt: Date
 }

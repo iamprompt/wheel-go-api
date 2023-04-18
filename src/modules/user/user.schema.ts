@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { UserMetadata } from '../object/userMeta.schema'
 
 @ObjectType()
 export class User {
@@ -19,6 +20,9 @@ export class User {
 
   @Field({ nullable: true })
   email: string
+
+  @Field(() => UserMetadata, { nullable: true })
+  metadata: UserMetadata
 
   @Field({ nullable: true })
   createdAt: Date

@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { UserMetaInput } from '~/modules/object/dto/userMeta.dto'
 
 @InputType()
 export class UpdateUserInput {
@@ -13,4 +14,7 @@ export class UpdateUserInput {
 
   @Field({ nullable: true })
   role: string
+
+  @Field(() => UserMetaInput, { nullable: true })
+  metadata: UserMetaInput
 }

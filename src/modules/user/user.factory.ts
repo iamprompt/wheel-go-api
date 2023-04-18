@@ -1,6 +1,8 @@
+import { PlaceFactory } from '../place/place.factory'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { User } from './user.schema'
+import { createRefToSave } from '~/utils/factory'
 import { User as UserDB, UserDocument } from '~/database/users/user.schema'
 
 type ReturnUserOrArray<
@@ -32,6 +34,13 @@ export class UserFactory {
       username: user.username,
       email: user.email,
       role: user.role,
+      metadata: {
+        ...user.metadata,
+        favorites: user.metadata.favorites.map((f) => ({
+          addedAt: f.addedAt,
+          place: PlaceFactory.createFromDatabase(f.place),
+        })),
+      },
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     }
@@ -47,6 +56,15 @@ export class UserFactory {
       email: user.email || undefined,
       role: user.role,
       password: user.password || undefined,
+      metadata: {
+        ...user.metadata,
+        // @ts-expect-error Only ObjectId is required
+        favorites:
+          user.metadata?.favorites?.map((f) => ({
+            addedAt: f.addedAt,
+            place: createRefToSave(f.place),
+          })) || [],
+      },
     }
   }
 }

@@ -7,4 +7,10 @@ export class PlaceMetadata {
 
   @Field({ nullable: true })
   phone?: string
+
+  @Field(() => [String], { nullable: true })
+  busLine?: string[]
+
+  @Field(() => [String], { nullable: true })
+  tramLine?: string[]
 }
