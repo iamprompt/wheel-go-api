@@ -38,7 +38,7 @@ export class UserFactory {
         ...user.metadata,
         favorites: user.metadata.favorites.map((f) => ({
           addedAt: f.addedAt,
-          place: PlaceFactory.createFromDatabase(f.place),
+          place: PlaceFactory.createFromDatabase(f.place, lang),
         })),
       },
       createdAt: user.createdAt,
