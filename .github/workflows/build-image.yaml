@@ -41,7 +41,9 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Deploy to Admin Portainer
-        if: ${{ secrets.PORTAINER_WEBHOOK_URL != '' }}
+        env:
+          PORTAINER_WEBHOOK_URL: ${{ secrets.PORTAINER_WEBHOOK_URL }}
+        if: ${{ env.PORTAINER_WEBHOOK_URL != '' }}
         run: |
           curl -X POST ${{ secrets.PORTAINER_WEBHOOK_URL }} \
             -H "Content-Type: application/json" \
