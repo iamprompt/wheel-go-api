@@ -27,7 +27,7 @@ export class UserResolver {
     return this.userService.findById(id)
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   // @HasRoles('ADMIN')
   async createUser(@Args('data') data: CreateUserInput) {
     return this.userService.create(data)
