@@ -2,14 +2,16 @@ import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Location } from '../object/location.schema'
 import { Place } from '../place/place.schema'
 import { User } from '../user/user.schema'
+import { STATUS } from '~/const/status'
+import { ROUTE_TYPES } from '~/const/routeTypes'
 
 @ObjectType()
 export class Route {
   @Field(() => ID!)
   id: string
 
-  @Field({ nullable: true })
-  type: string
+  @Field(() => ROUTE_TYPES, { nullable: true })
+  type: ROUTE_TYPES
 
   @Field(() => [Location], { nullable: true })
   paths: Location[]
@@ -32,6 +34,6 @@ export class Route {
   @Field(() => Number, { nullable: true })
   duration: number
 
-  @Field({ nullable: true })
-  status: string
+  @Field(() => STATUS, { nullable: true })
+  status: STATUS
 }

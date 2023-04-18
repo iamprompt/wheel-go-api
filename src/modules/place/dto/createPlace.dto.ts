@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { STATUS } from '~/const/status'
 import { LanguageObjectInput } from '~/modules/object/dto/language.dto'
 import { LocationInput } from '~/modules/object/dto/location.dto'
 import { PlaceMetaInput } from '~/modules/object/dto/placeMeta.dto'
@@ -26,6 +27,6 @@ export class CreatePlaceInput {
   @Field(() => PlaceMetaInput, { nullable: true })
   metadata: PlaceMetaInput
 
-  @Field(() => String, { nullable: true, defaultValue: 'draft' })
-  status: string
+  @Field(() => STATUS, { nullable: true, defaultValue: STATUS.DRAFT })
+  status: STATUS
 }

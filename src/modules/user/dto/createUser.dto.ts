@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { ROLES } from '~/const/userRoles'
 import { UserMetaInput } from '~/modules/object/dto/userMeta.dto'
 
 @InputType()
@@ -21,6 +22,6 @@ export class CreateUserInput {
   @Field(() => UserMetaInput, { nullable: true })
   metadata: UserMetaInput
 
-  @Field({ nullable: true, defaultValue: 'USER' })
-  role: string
+  @Field(() => ROLES, { nullable: true, defaultValue: ROLES.USER })
+  role: ROLES
 }

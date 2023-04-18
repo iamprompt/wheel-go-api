@@ -9,6 +9,7 @@ import { Media, MediaDocument } from '../media/media.schema'
 import type { PlaceMetadata } from '../object/PlaceMetadataObject'
 import { PlaceMetadataObject } from '../object/PlaceMetadataObject'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
+import { STATUS } from '~/const/status'
 
 @Schema({ collection: 'places', timestamps: TimestampConfig })
 export class Place {
@@ -33,7 +34,11 @@ export class Place {
   @Prop({ type: PlaceMetadataObject })
   metadata: PlaceMetadata
 
-  @Prop()
+  @Prop({
+    type: String,
+    default: STATUS.DRAFT,
+    enum: Object.values(STATUS),
+  })
   status: string
 }
 

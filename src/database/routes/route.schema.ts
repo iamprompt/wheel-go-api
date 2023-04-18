@@ -5,10 +5,12 @@ import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
 import { User, UserDocument } from '../users/user.schema'
 import { Place, PlaceDocument } from '../places/place.schema'
+import { ROUTE_TYPES } from '~/const/routeTypes'
+import { STATUS } from '~/const/status'
 
 @Schema({ collection: 'routes' })
 export class Route {
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, enum: Object.values(ROUTE_TYPES) })
   type: string
 
   @Prop({ type: [LocationObject] })
@@ -34,8 +36,8 @@ export class Route {
 
   @Prop({
     type: String,
-    default: 'draft',
-    enum: ['draft', 'published', 'archived'],
+    enum: Object.values(STATUS),
+    default: STATUS.DRAFT,
   })
   status: string
 }

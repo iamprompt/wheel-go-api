@@ -4,6 +4,7 @@ import { Media } from '../media/media.schema'
 import { User } from '../user/user.schema'
 import { AnnouncementMetadata } from '../object/announcementMeta.schema'
 import { Location } from '../object/location.schema'
+import { STATUS } from '~/const/status'
 
 @ObjectType()
 export class Announcement {
@@ -34,6 +35,6 @@ export class Announcement {
   @Field(() => User, { nullable: true })
   user: User
 
-  @Field()
-  status: string
+  @Field(() => STATUS, { defaultValue: STATUS.DRAFT })
+  status: STATUS
 }

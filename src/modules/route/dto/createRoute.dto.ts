@@ -1,10 +1,12 @@
 import { Field, Float, InputType } from '@nestjs/graphql'
+import { ROUTE_TYPES } from '~/const/routeTypes'
+import { STATUS } from '~/const/status'
 import { LocationInput } from '~/modules/object/dto/location.dto'
 
 @InputType()
 export class CreateRouteInput {
-  @Field(() => String, { nullable: true })
-  type?: string
+  @Field(() => ROUTE_TYPES, { nullable: true })
+  type?: ROUTE_TYPES
 
   @Field(() => [LocationInput], { nullable: true })
   paths?: LocationInput[]
@@ -27,6 +29,6 @@ export class CreateRouteInput {
   @Field(() => Float, { nullable: true })
   duration?: number
 
-  @Field(() => String, { nullable: true })
-  status?: string
+  @Field(() => STATUS, { nullable: true })
+  status?: STATUS
 }

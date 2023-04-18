@@ -8,6 +8,7 @@ import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
 import type { FacilityMetadata } from '../object/FacilityMetadataObject'
 import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
+import { STATUS } from '~/const/status'
 
 @Schema({ collection: 'facilities' })
 export class Facility {
@@ -28,8 +29,8 @@ export class Facility {
 
   @Prop({
     type: String,
-    default: 'draft',
-    enum: ['draft', 'published', 'archived'],
+    default: STATUS.DRAFT,
+    enum: Object.values(STATUS),
   })
   status: string
 }

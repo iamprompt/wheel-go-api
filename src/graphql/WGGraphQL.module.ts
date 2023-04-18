@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Modules from '~/modules'
+import './enum'
 
 @Module({
   imports: [

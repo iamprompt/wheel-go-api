@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { UserMetadata } from '../object/userMeta.schema'
+import { ROLES } from '~/const/userRoles'
 
 @ObjectType()
 export class User {
@@ -15,8 +16,8 @@ export class User {
   @Field({ nullable: true })
   username: string
 
-  @Field({ nullable: true })
-  role: string
+  @Field(() => ROLES, { nullable: true })
+  role: ROLES
 
   @Field({ nullable: true })
   email: string

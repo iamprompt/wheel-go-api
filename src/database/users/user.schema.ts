@@ -4,6 +4,7 @@ import { genSaltSync, hashSync } from 'bcrypt'
 import type { UserMetadata } from '../object/UserMetadataObject'
 import { UserMetadataObject } from '../object/UserMetadataObject'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
+import { ROLES } from '~/const/userRoles'
 
 @Schema({ collection: 'users', timestamps: TimestampConfig })
 export class User {
@@ -25,7 +26,7 @@ export class User {
   @Prop(Date)
   birthdate?: Date
 
-  @Prop()
+  @Prop({ type: String, enum: Object.values(ROLES), default: ROLES.USER })
   role: string
 
   @Prop({ type: UserMetadataObject })

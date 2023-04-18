@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { STATUS } from '~/const/status'
 import { AnnouncementMetaInput } from '~/modules/object/dto/announcementMeta.dto'
 import { LanguageObjectInput } from '~/modules/object/dto/language.dto'
 import { LocationInput } from '~/modules/object/dto/location.dto'
@@ -29,6 +30,6 @@ export class CreateAnnouncementInput {
   @Field(() => String, { nullable: true })
   user?: string
 
-  @Field({ nullable: true })
-  status?: string
+  @Field(() => STATUS, { nullable: true })
+  status?: STATUS
 }

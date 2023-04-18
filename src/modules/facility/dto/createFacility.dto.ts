@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { STATUS } from '~/const/status'
 import { FacilityMetaInput } from '~/modules/object/dto/facilityMeta.dto'
 import { LanguageObjectInput } from '~/modules/object/dto/language.dto'
 import { LocationInput } from '~/modules/object/dto/location.dto'
@@ -20,6 +21,6 @@ export class CreateFacilityInput {
   @Field(() => FacilityMetaInput, { nullable: true })
   metadata: FacilityMetaInput
 
-  @Field(() => String, { nullable: true, defaultValue: 'draft' })
-  status: string
+  @Field(() => STATUS, { nullable: true, defaultValue: STATUS.DRAFT })
+  status: STATUS
 }

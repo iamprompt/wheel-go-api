@@ -2,22 +2,16 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { User, UserSchema } from './users/user.schema'
-import { UserRepository } from './users/user.service'
 import { Media, MediaSchema } from './media/media.schema'
-import { MediaRepository } from './media/media.services'
 import { Place, PlaceSchema } from './places/place.schema'
-import { PlaceRepository } from './places/place.services'
 import { Facility, FacilitySchema } from './facility/facility.schema'
 import {
   Announcement,
   AnnouncementSchema,
 } from './announcements/announcement.schema'
 import { Review, ReviewSchema } from './reviews/review.schema'
-import { FacilityRepository } from './facility/facility.services'
-import { AnnouncementRepository } from './announcements/announcement.service'
-import { ReviewRepository } from './reviews/review.service'
 import { Route, RouteSchema } from './routes/route.schema'
-import { RouteRepository } from './routes/route.service'
+import * as WGRepository from './mongo.service'
 import { WGConfigModule } from '~/config/WGConfig.module'
 import type { Config } from '~/config/configuration'
 
@@ -41,23 +35,7 @@ import type { Config } from '~/config/configuration'
       { name: Route.name, schema: RouteSchema },
     ]),
   ],
-  providers: [
-    PlaceRepository,
-    UserRepository,
-    MediaRepository,
-    FacilityRepository,
-    AnnouncementRepository,
-    ReviewRepository,
-    RouteRepository,
-  ],
-  exports: [
-    PlaceRepository,
-    UserRepository,
-    MediaRepository,
-    FacilityRepository,
-    AnnouncementRepository,
-    ReviewRepository,
-    RouteRepository,
-  ],
+  providers: [...Object.values(WGRepository)],
+  exports: [...Object.values(WGRepository)],
 })
 export class WGMongoModule {}
