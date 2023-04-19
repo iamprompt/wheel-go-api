@@ -1,4 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql'
+import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
 import { CONCERN_TYPES } from '~/const/concernTypes'
 import { FACILITY_TYPES } from '~/const/facilityTypes'
 import { PLACE_TYPES } from '~/const/placeTypes'
@@ -55,4 +56,8 @@ registerEnumType(FACILITY_TYPES, {
 
 registerEnumType(CONCERN_TYPES, {
   name: 'CONCERN_TYPES',
+})
+
+registerEnumType(ACCESSIBILITY_STATUS, {
+  name: 'ACCESSIBILITY_STATUS',
 })

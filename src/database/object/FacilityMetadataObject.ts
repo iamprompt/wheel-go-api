@@ -4,6 +4,6 @@ export const FacilityMetadataObject = {
 }
 
 export interface FacilityMetadata {
-  length: number
-  rise: number
+  length?: number
+  rise?: number
 }

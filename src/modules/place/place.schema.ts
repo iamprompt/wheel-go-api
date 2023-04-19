@@ -11,26 +11,26 @@ export class Place {
   id: string
 
   @Field(() => PLACE_TYPES, { nullable: true })
-  type: PLACE_TYPES
+  type?: PLACE_TYPES
 
-  @Field()
-  name: string
+  @Field({ nullable: true })
+  name?: string
 
-  @Field()
-  address: string
+  @Field({ nullable: true })
+  address?: string
 
-  @Field(() => Location)
-  location: Location
+  @Field(() => Location, { nullable: true })
+  location?: Location
 
-  @Field(() => [Media])
-  images: Media[]
+  @Field(() => [Media], { nullable: true })
+  images?: Media[]
 
-  @Field()
-  internalCode: string
+  @Field({ nullable: true })
+  internalCode?: string
 
-  @Field(() => PlaceMetadata)
-  metadata: PlaceMetadata
+  @Field(() => PlaceMetadata, { nullable: true })
+  metadata?: PlaceMetadata
 
   @Field(() => STATUS, { nullable: true })
-  status: STATUS
+  status?: STATUS
 }

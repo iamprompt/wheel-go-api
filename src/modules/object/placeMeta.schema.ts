@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
 
 @ObjectType()
 export class PlaceMetadata {
@@ -9,8 +10,11 @@ export class PlaceMetadata {
   phone?: string
 
   @Field(() => [String], { nullable: true })
-  busLine?: string[]
+  busLines?: string[]
 
   @Field(() => [String], { nullable: true })
-  tramLine?: string[]
+  tramLines?: string[]
+
+  @Field(() => ACCESSIBILITY_STATUS, { nullable: true })
+  accessibility?: ACCESSIBILITY_STATUS
 }

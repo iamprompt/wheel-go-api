@@ -1,4 +1,5 @@
 import { Media } from './media.schema'
+import configuration from '~/config/configuration'
 import { Media as MediaDB, MediaDocument } from '~/database/media/media.schema'
 
 type ReturnMediaOrArray<
@@ -29,7 +30,10 @@ export class MediaFactory {
       filesize: data.filesize,
       height: data.height,
       mimetype: data.mimetype,
-      url: `http://localhost:3000${data.path}`,
+      url: new URL(
+        data.path,
+        configuration().SERVER_URL || 'http://localhost:3000'
+      ).toString(),
       width: data.width,
     }
   }

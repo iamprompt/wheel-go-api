@@ -4,6 +4,6 @@ export const LangObjectDefinition = {
 }
 
 export interface LangObject {
-  th: string
-  en: string
+  th?: string
+  en?: string
 }

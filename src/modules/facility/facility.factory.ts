@@ -32,7 +32,7 @@ export class FacilityFactory {
 
     return <ReturnFacilityOrArray<T>>{
       id: data._id.toString(),
-      type: data.type[language],
+      type: data.type,
       parent: PlaceFactory.createFromDatabase(data.parent),
       detail: data.detail[language],
       location: LocationFactory.createFromDatabase(data.location),

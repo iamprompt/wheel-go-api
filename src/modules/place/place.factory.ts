@@ -30,8 +30,8 @@ export class PlaceFactory {
     return <ReturnPlaceOrArray<T>>{
       id: place._id.toString(),
       type: place.type,
-      name: place.name[lang],
-      address: place.address[lang],
+      name: place.name?.[lang],
+      address: place.address?.[lang],
       location: LocationFactory.createFromDatabase(place.location),
       images: MediaFactory.createFromDatabase(place.images),
       internalCode: place.internalCode,

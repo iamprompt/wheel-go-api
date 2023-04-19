@@ -18,6 +18,8 @@ WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 
+RUN mkdir -p /uploads
+
 VOLUME [ "/uploads" ]
 
 CMD ["node", "dist/main.js"]

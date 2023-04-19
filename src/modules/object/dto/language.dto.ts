@@ -3,8 +3,8 @@ import { Field, InputType } from '@nestjs/graphql'
 @InputType()
 export class LanguageObjectInput {
   @Field({ nullable: true })
-  th: string
+  th?: string
 
   @Field({ nullable: true })
-  en: string
+  en?: string
 }

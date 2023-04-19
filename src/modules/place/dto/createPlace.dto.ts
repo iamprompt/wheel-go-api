@@ -8,26 +8,26 @@ import { PlaceMetaInput } from '~/modules/object/dto/placeMeta.dto'
 @InputType()
 export class CreatePlaceInput {
   @Field(() => PLACE_TYPES, { nullable: true })
-  type: PLACE_TYPES
+  type?: PLACE_TYPES
 
   @Field(() => LanguageObjectInput, { nullable: true })
-  name: LanguageObjectInput
+  name?: LanguageObjectInput
 
   @Field(() => LanguageObjectInput, { nullable: true })
-  address: LanguageObjectInput
+  address?: LanguageObjectInput
 
   @Field(() => LocationInput, { nullable: true })
-  location: LocationInput
+  location?: LocationInput
 
   @Field(() => [String], { nullable: true })
-  images: string[]
+  images?: string[]
 
   @Field(() => String, { nullable: true })
-  internalCode: string
+  internalCode?: string
 
   @Field(() => PlaceMetaInput, { nullable: true })
-  metadata: PlaceMetaInput
+  metadata?: PlaceMetaInput
 
   @Field(() => STATUS, { nullable: true, defaultValue: STATUS.DRAFT })
-  status: STATUS
+  status?: STATUS
 }

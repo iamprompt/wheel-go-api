@@ -1,16 +1,20 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
 
 @InputType()
 export class PlaceMetaInput {
   @Field({ nullable: true })
-  website: string
+  website?: string
 
   @Field({ nullable: true })
-  phone: string
+  phone?: string
 
   @Field(() => [String], { nullable: true })
-  busLine: string[]
+  busLines?: string[]
 
   @Field(() => [String], { nullable: true })
-  tramLine: string[]
+  tramLines?: string[]
+
+  @Field(() => ACCESSIBILITY_STATUS, { nullable: true })
+  accessibility?: ACCESSIBILITY_STATUS
 }

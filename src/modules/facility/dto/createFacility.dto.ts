@@ -9,23 +9,23 @@ import { LocationInput } from '~/modules/object/dto/location.dto'
 @InputType()
 export class CreateFacilityInput {
   @Field(() => FACILITY_TYPES, { nullable: true })
-  type: FACILITY_TYPES
+  type?: FACILITY_TYPES
 
   @Field()
-  parent: string
+  parent?: string
 
   @Field(() => LanguageObjectInput, { nullable: true })
-  detail: LanguageObjectInput
+  detail?: LanguageObjectInput
 
   @Field(() => LocationInput, { nullable: true })
-  location: LocationInput
+  location?: LocationInput
 
   @Field(() => FacilityMetaInput, { nullable: true })
-  metadata: FacilityMetaInput
+  metadata?: FacilityMetaInput
 
   @Field(() => CONCERN_TYPES, { nullable: true })
-  concern: CONCERN_TYPES
+  concern?: CONCERN_TYPES
 
   @Field(() => STATUS, { nullable: true, defaultValue: STATUS.DRAFT })
-  status: STATUS
+  status?: STATUS
 }
