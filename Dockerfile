@@ -16,6 +16,7 @@ RUN pnpm prune --prod
 FROM base AS runtime
 WORKDIR /app
 COPY --from=build /app/dist ./dist
+COPY ./data ./data
 COPY --from=build /app/node_modules ./node_modules
 
 RUN mkdir -p /uploads

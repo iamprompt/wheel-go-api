@@ -58,27 +58,27 @@ async function migrate() {
 
   // Import Airtable CSV - Curb Cuts
   Logger.log('Importing Airtable CSV - Curb Cuts')
-  const curbCutsRaw = await readFile('./src/data/curbcuts-raw.csv', 'utf8')
+  const curbCutsRaw = await readFile('./data/curbcuts-raw.csv', 'utf8')
   const curbCuts = parse<CurbCutRaw>(curbCutsRaw, { header: true }).data
   Logger.log('Found', curbCuts.length, 'curb cuts')
   Logger.log('Example curb cut:', curbCuts[0])
 
   // Import Airtable CSV - Transports
   Logger.log('Importing Airtable CSV - Transports')
-  const transportRaw = await readFile('./src/data/transports-raw.csv', 'utf8')
+  const transportRaw = await readFile('./data/transports-raw.csv', 'utf8')
   const transports = parse<TransportRaw>(transportRaw, { header: true }).data
   Logger.log(`Found ${transports.length} transport`)
   Logger.log(`Example transport: ${transports[0]}`)
 
   Logger.log('Importing Airtable CSV - Places')
-  const placesRaw = await readFile('./src/data/places-raw.csv', 'utf8')
+  const placesRaw = await readFile('./data/places-raw.csv', 'utf8')
   const places = parse<PlaceRaw>(placesRaw, { header: true }).data
   Logger.log(`Found ${places.length} places`)
   Logger.log(`Example place: ${places[0]}`)
 
   // Import Airtable CSV - Facilities
   Logger.log('Importing Airtable CSV - Facilities')
-  const facilitiesRaw = await readFile('./src/data/facilities-raw.csv', 'utf8')
+  const facilitiesRaw = await readFile('./data/facilities-raw.csv', 'utf8')
   const facilities = parse<FacilityRaw>(facilitiesRaw, { header: true }).data
   Logger.log(`Found ${facilities.length} facilities`)
   Logger.log(`Example facility: ${facilities[0]}`)
