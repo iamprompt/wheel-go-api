@@ -1,4 +1,7 @@
 import { registerEnumType } from '@nestjs/graphql'
+import { CONCERN_TYPES } from '~/const/concernTypes'
+import { FACILITY_TYPES } from '~/const/facilityTypes'
+import { PLACE_TYPES } from '~/const/placeTypes'
 import { ROUTE_TYPES } from '~/const/routeTypes'
 import { STATUS } from '~/const/status'
 import { ROLES } from '~/const/userRoles'
@@ -12,9 +15,6 @@ registerEnumType(STATUS, {
     },
     PUBLISHED: {
       description: 'Published',
-    },
-    DELETED: {
-      description: 'Deleted',
     },
   },
 })
@@ -43,4 +43,16 @@ registerEnumType(ROLES, {
       description: 'User',
     },
   },
+})
+
+registerEnumType(PLACE_TYPES, {
+  name: 'PLACE_TYPES',
+})
+
+registerEnumType(FACILITY_TYPES, {
+  name: 'FACILITY_TYPES',
+})
+
+registerEnumType(CONCERN_TYPES, {
+  name: 'CONCERN_TYPES',
 })

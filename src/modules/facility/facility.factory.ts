@@ -37,6 +37,7 @@ export class FacilityFactory {
       detail: data.detail[language],
       location: LocationFactory.createFromDatabase(data.location),
       metadata: data.metadata,
+      concern: data.concern,
       status: data.status,
     }
   }
@@ -48,6 +49,7 @@ export class FacilityFactory {
       parent: createRefToSave(data.parent),
       detail: data.detail,
       location: LocationFactory.createToSave(data.location),
+      concern: data.concern,
       metadata: data.metadata,
       status: data.status,
     }

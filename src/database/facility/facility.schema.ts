@@ -9,14 +9,19 @@ import { LocationObject } from '../object/LocationObject'
 import type { FacilityMetadata } from '../object/FacilityMetadataObject'
 import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
 import { STATUS } from '~/const/status'
+import { CONCERN_TYPES } from '~/const/concernTypes'
+import { FACILITY_TYPES } from '~/const/facilityTypes'
 
 @Schema({ collection: 'facilities' })
 export class Facility {
   @Prop({ type: Types.ObjectId, ref: Place.name })
   parent: PlaceDocument
 
-  @Prop()
-  type: string
+  @Prop({
+    type: String,
+    enum: Object.values(FACILITY_TYPES),
+  })
+  type: FACILITY_TYPES
 
   @Prop({ type: LangObjectDefinition })
   detail: LangObject
@@ -26,6 +31,12 @@ export class Facility {
 
   @Prop({ type: FacilityMetadataObject })
   metadata: FacilityMetadata
+
+  @Prop({
+    type: String,
+    enum: Object.values(CONCERN_TYPES),
+  })
+  concern: CONCERN_TYPES
 
   @Prop({
     type: String,

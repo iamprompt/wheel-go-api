@@ -10,11 +10,15 @@ import type { PlaceMetadata } from '../object/PlaceMetadataObject'
 import { PlaceMetadataObject } from '../object/PlaceMetadataObject'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { STATUS } from '~/const/status'
+import { PLACE_TYPES } from '~/const/placeTypes'
 
 @Schema({ collection: 'places', timestamps: TimestampConfig })
 export class Place {
-  @Prop()
-  type: string
+  @Prop({
+    type: String,
+    enum: Object.values(PLACE_TYPES),
+  })
+  type: PLACE_TYPES
 
   @Prop({ type: LangObjectDefinition })
   name: LangObject

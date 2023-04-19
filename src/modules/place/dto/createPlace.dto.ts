@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+import { PLACE_TYPES } from '~/const/placeTypes'
 import { STATUS } from '~/const/status'
 import { LanguageObjectInput } from '~/modules/object/dto/language.dto'
 import { LocationInput } from '~/modules/object/dto/location.dto'
@@ -6,8 +7,8 @@ import { PlaceMetaInput } from '~/modules/object/dto/placeMeta.dto'
 
 @InputType()
 export class CreatePlaceInput {
-  @Field(() => String, { nullable: true })
-  type: string
+  @Field(() => PLACE_TYPES, { nullable: true })
+  type: PLACE_TYPES
 
   @Field(() => LanguageObjectInput, { nullable: true })
   name: LanguageObjectInput

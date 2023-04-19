@@ -11,7 +11,7 @@ import { STATUS } from '~/const/status'
 @Schema({ collection: 'routes' })
 export class Route {
   @Prop({ type: String, enum: Object.values(ROUTE_TYPES) })
-  type: string
+  type: ROUTE_TYPES
 
   @Prop({ type: [LocationObject] })
   paths: Location[]
