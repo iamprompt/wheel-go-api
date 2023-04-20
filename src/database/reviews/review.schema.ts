@@ -8,8 +8,9 @@ import { Media, MediaDocument } from '../media/media.schema'
 import type { OfficialReview } from '../object/OfficialReviewObject'
 import { OfficialReviewObject } from '../object/OfficialReviewObject'
 import { Place, PlaceDocument } from '../places/place.schema'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
-@Schema({ collection: 'reviews' })
+@Schema({ collection: 'reviews', timestamps: TimestampConfig })
 export class Review {
   @Prop({ type: Types.ObjectId, ref: Place.name })
   place: PlaceDocument
@@ -33,5 +34,5 @@ export class Review {
   official: OfficialReview
 }
 
-export type ReviewDocument = HydratedDocument<Review>
+export type ReviewDocument = HydratedDocument<Review, Timestamp>
 export const ReviewSchema = SchemaFactory.createForClass(Review)

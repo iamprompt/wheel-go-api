@@ -35,6 +35,8 @@ export class MediaFactory {
         configuration().SERVER_URL || 'http://localhost:3000'
       ).toString(),
       width: data.width,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     }
   }
 

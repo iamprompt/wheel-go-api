@@ -36,4 +36,10 @@ export class Route {
 
   @Field(() => STATUS, { nullable: true })
   status: STATUS
+
+  @Field({ nullable: true })
+  createdAt: Date
+
+  @Field({ nullable: true })
+  updatedAt: Date
 }

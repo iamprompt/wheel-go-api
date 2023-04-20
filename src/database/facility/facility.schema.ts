@@ -8,11 +8,12 @@ import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
 import type { FacilityMetadata } from '../object/FacilityMetadataObject'
 import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { STATUS } from '~/const/status'
 import { CONCERN_TYPES } from '~/const/concernTypes'
 import { FACILITY_TYPES } from '~/const/facilityTypes'
 
-@Schema({ collection: 'facilities' })
+@Schema({ collection: 'facilities', timestamps: TimestampConfig })
 export class Facility {
   @Prop({ type: Types.ObjectId, ref: Place.name })
   parent: PlaceDocument
@@ -46,5 +47,5 @@ export class Facility {
   status: string
 }
 
-export type FacilityDocument = HydratedDocument<Facility>
+export type FacilityDocument = HydratedDocument<Facility, Timestamp>
 export const FacilitySchema = SchemaFactory.createForClass(Facility)

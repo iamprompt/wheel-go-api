@@ -32,4 +32,10 @@ export class Facility {
 
   @Field(() => STATUS, { nullable: true })
   status?: STATUS
+
+  @Field({ nullable: true })
+  createdAt: Date
+
+  @Field({ nullable: true })
+  updatedAt: Date
 }

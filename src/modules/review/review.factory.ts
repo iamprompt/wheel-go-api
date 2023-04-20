@@ -38,6 +38,8 @@ export class ReviewFactory {
       images: MediaFactory.createFromDatabase(data.images),
       tags: data.tags,
       official: data.official,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     }
   }
 

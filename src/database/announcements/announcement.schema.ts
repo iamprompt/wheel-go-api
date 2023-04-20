@@ -10,9 +10,10 @@ import type { AnnouncementMetadata } from '../object/AnnouncementMetadataObject'
 import { AnnouncementMetadataObject } from '../object/AnnouncementMetadataObject'
 import { User, UserDocument } from '../users/user.schema'
 import { Media, MediaDocument } from '../media/media.schema'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { STATUS } from '~/const/status'
 
-@Schema({ collection: 'announcements' })
+@Schema({ collection: 'announcements', timestamps: TimestampConfig })
 export class Announcement {
   @Prop({ type: LangObjectDefinition })
   title: LangObject
@@ -46,5 +47,5 @@ export class Announcement {
   status: string
 }
 
-export type AnnouncementDocument = HydratedDocument<Announcement>
+export type AnnouncementDocument = HydratedDocument<Announcement, Timestamp>
 export const AnnouncementSchema = SchemaFactory.createForClass(Announcement)

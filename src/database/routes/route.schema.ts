@@ -5,10 +5,11 @@ import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
 import { User, UserDocument } from '../users/user.schema'
 import { Place, PlaceDocument } from '../places/place.schema'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { ROUTE_TYPES } from '~/const/routeTypes'
 import { STATUS } from '~/const/status'
 
-@Schema({ collection: 'routes' })
+@Schema({ collection: 'routes', timestamps: TimestampConfig })
 export class Route {
   @Prop({ type: String, enum: Object.values(ROUTE_TYPES) })
   type: ROUTE_TYPES
@@ -42,5 +43,5 @@ export class Route {
   status: string
 }
 
-export type RouteDocument = HydratedDocument<Route>
+export type RouteDocument = HydratedDocument<Route, Timestamp>
 export const RouteSchema = SchemaFactory.createForClass(Route)

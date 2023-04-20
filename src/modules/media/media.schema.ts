@@ -22,4 +22,10 @@ export class Media {
 
   @Field({ nullable: true })
   url: string
+
+  @Field({ nullable: true })
+  createdAt: Date
+
+  @Field({ nullable: true })
+  updatedAt: Date
 }

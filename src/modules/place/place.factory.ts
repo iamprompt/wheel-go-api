@@ -37,6 +37,8 @@ export class PlaceFactory {
       internalCode: place.internalCode,
       metadata: place.metadata,
       status: place.status,
+      createdAt: place.createdAt,
+      updatedAt: place.updatedAt,
     }
   }
 

@@ -38,4 +38,10 @@ export class Announcement {
 
   @Field(() => STATUS, { defaultValue: STATUS.DRAFT })
   status: STATUS
+
+  @Field({ nullable: true })
+  createdAt: Date
+
+  @Field({ nullable: true })
+  updatedAt: Date
 }

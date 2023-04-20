@@ -45,6 +45,8 @@ export class AnnouncementFactory {
       tags: announcements.tags,
       user: UserFactory.createFromDatabase(announcements.user),
       status: announcements.status,
+      createdAt: announcements.createdAt,
+      updatedAt: announcements.updatedAt,
     }
   }
 

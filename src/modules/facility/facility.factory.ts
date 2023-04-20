@@ -39,6 +39,8 @@ export class FacilityFactory {
       metadata: data.metadata,
       concern: data.concern,
       status: data.status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     }
   }
 

@@ -37,6 +37,8 @@ export class RouteFactory {
       distance: data.distance,
       duration: data.duration,
       status: data.status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     }
   }
 
