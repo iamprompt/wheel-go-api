@@ -36,8 +36,8 @@ export class AnnouncementFactory {
 
     return <ReturnAnnouncementOrArray<T>>{
       id: announcements._id.toString(),
-      title: announcements.title[lang],
-      content: announcements.content[lang],
+      title: announcements.title,
+      content: announcements.content,
       metadata: announcements.metadata,
       images: MediaFactory.createFromDatabase(announcements.images),
       place: PlaceFactory.createFromDatabase(announcements.place, lang),

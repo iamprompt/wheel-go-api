@@ -212,7 +212,7 @@ async function migrate() {
       `Created new place: ${newPlace.name} (${i + 1}/${places.length})`
     )
 
-    placeIds[newPlace.name] = newPlace.id
+    placeIds[newPlace.name.en] = newPlace.id
   }
 
   Logger.log('Creating Facilities in database')

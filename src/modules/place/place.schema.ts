@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Location } from '../object/location.schema'
 import { PlaceMetadata } from '../object/placeMeta.schema'
 import { Media } from '../media/media.schema'
+import { LanguageObject } from '../object/language.schema'
 import { STATUS } from '~/const/status'
 import { PLACE_TYPES } from '~/const/placeTypes'
 
@@ -13,11 +14,11 @@ export class Place {
   @Field(() => PLACE_TYPES, { nullable: true })
   type?: PLACE_TYPES
 
-  @Field({ nullable: true })
-  name?: string
+  @Field(() => LanguageObject, { nullable: true })
+  name?: LanguageObject
 
-  @Field({ nullable: true })
-  address?: string
+  @Field(() => LanguageObject, { nullable: true })
+  address?: LanguageObject
 
   @Field(() => Location, { nullable: true })
   location?: Location

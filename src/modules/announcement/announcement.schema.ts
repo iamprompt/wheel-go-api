@@ -4,6 +4,7 @@ import { Media } from '../media/media.schema'
 import { User } from '../user/user.schema'
 import { AnnouncementMetadata } from '../object/announcementMeta.schema'
 import { Location } from '../object/location.schema'
+import { LanguageObject } from '../object/language.schema'
 import { STATUS } from '~/const/status'
 
 @ObjectType()
@@ -11,11 +12,11 @@ export class Announcement {
   @Field(() => ID!)
   id: string
 
-  @Field({ nullable: true })
-  title: string
+  @Field(() => LanguageObject, { nullable: true })
+  title: LanguageObject
 
-  @Field({ nullable: true })
-  content: string
+  @Field(() => LanguageObject, { nullable: true })
+  content: LanguageObject
 
   @Field(() => Place, { nullable: true })
   place: Place

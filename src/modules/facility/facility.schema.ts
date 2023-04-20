@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Place } from '../place/place.schema'
 import { Location } from '../object/location.schema'
 import { FacilityMetadata } from '../object/facilityMeta.schema'
+import { LanguageObject } from '../object/language.schema'
 import { STATUS } from '~/const/status'
 import { FACILITY_TYPES } from '~/const/facilityTypes'
 import { CONCERN_TYPES } from '~/const/concernTypes'
@@ -17,8 +18,8 @@ export class Facility {
   @Field(() => Place, { nullable: true })
   parent?: Place
 
-  @Field({ nullable: true })
-  detail?: string
+  @Field(() => LanguageObject, { nullable: true })
+  detail?: LanguageObject
 
   @Field(() => Location, { nullable: true })
   location?: Location
