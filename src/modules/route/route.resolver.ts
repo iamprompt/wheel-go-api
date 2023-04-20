@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { Route } from './route.schema'
 import { RouteService } from './route.service'
 import { CreateRouteInput } from './dto/createRoute.dto'
+import { GetRoutesInput } from './dto/getRoutes.dto'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
 
 @Resolver()
@@ -9,8 +10,11 @@ export class RouteResolver {
   constructor(private readonly routeService: RouteService) {}
 
   @Query(() => [Route])
-  async getRoutes(@ActiveLang() lang: string): Promise<Route[]> {
-    return this.routeService.find(lang)
+  async getRoutes(
+    @ActiveLang() lang: string,
+    @Args('options', { nullable: true }) options?: GetRoutesInput
+  ): Promise<Route[]> {
+    return this.routeService.find(options, lang)
   }
 
   @Query(() => Route)

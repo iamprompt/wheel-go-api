@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
 import type { FacilityDocument } from './facility.schema'
 import { Facility } from './facility.schema'
+import { GetFacilitiesInput } from '~/modules/facility/dto/getFacilities.dto'
 
 @Injectable()
 export class FacilityRepository {
@@ -22,8 +23,34 @@ export class FacilityRepository {
     },
   ]
 
-  async find(): Promise<FacilityDocument[]> {
-    return await this.FacilityModel.find()
+  async find(options: GetFacilitiesInput): Promise<FacilityDocument[]> {
+    return await this.FacilityModel.find({
+      ...(options.keyword
+        ? {
+            $or: [
+              { 'detail.th': { $regex: options.keyword, $options: 'i' } },
+              { 'detail.en': { $regex: options.keyword, $options: 'i' } },
+            ],
+          }
+        : {}),
+      ...(options.types ? { type: { $in: options.types } } : {}),
+      ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
+      ...(options.location
+        ? {
+            location: {
+              $near: {
+                $geometry: {
+                  type: 'Point',
+                  coordinates: [options.location.lng, options.location.lat],
+                },
+                $maxDistance: options.radius || 10000,
+                $minDistance: 0,
+              },
+            },
+          }
+        : {}),
+    })
+      .limit(options.limit || 1000)
       .populate(this.FacilityPopulateOptions)
       .exec()
   }

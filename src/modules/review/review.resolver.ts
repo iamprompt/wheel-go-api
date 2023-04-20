@@ -2,6 +2,7 @@ import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { Review } from './review.schema'
 import { ReviewService } from './review.service'
 import { CreateReviewInput } from './dto/createReview.dto'
+import { GetReviewsInput } from './dto/getReviews.dto'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
 
 @Resolver()
@@ -9,8 +10,11 @@ export class ReviewResolver {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Query(() => [Review])
-  async getReviews(@ActiveLang() lang: string): Promise<Review[]> {
-    return this.reviewService.find(lang)
+  async getReviews(
+    @ActiveLang() lang: string,
+    @Args('options', { nullable: true }) options?: GetReviewsInput
+  ): Promise<Review[]> {
+    return this.reviewService.find(options, lang)
   }
 
   @Query(() => Review)

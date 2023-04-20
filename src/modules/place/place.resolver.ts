@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { PlaceService } from './place.service'
 import { Place } from './place.schema'
+import { GetPlacesInput } from './dto/getPlaces.dto'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
 
 @Resolver()
@@ -9,8 +10,11 @@ export class PlaceResolver {
   constructor(private readonly placeService: PlaceService) {}
 
   @Query(() => [Place])
-  async getPlaces(@ActiveLang() lang: string) {
-    return this.placeService.find(lang)
+  async getPlaces(
+    @ActiveLang() lang: string,
+    @Args('options', { nullable: true }) options?: GetPlacesInput
+  ) {
+    return this.placeService.find(options, lang)
   }
 
   @Query(() => Place)

@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { FacilityFactory } from './facility.factory'
 import { CreateFacilityInput } from './dto/createFacility.dto'
+import { GetFacilitiesInput } from './dto/getFacilities.dto'
 import { FacilityRepository } from '~/database/facility/facility.services'
 
 @Injectable()
 export class FacilityService {
   constructor(private readonly facilityRepository: FacilityRepository) {}
 
-  async find(lang = 'th') {
-    const facilities = await this.facilityRepository.find()
+  async find(options: GetFacilitiesInput, lang = 'th') {
+    const facilities = await this.facilityRepository.find(options)
     return FacilityFactory.createFromDatabase(facilities, lang)
   }
 

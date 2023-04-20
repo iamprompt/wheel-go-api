@@ -49,3 +49,5 @@ export class Announcement {
 
 export type AnnouncementDocument = HydratedDocument<Announcement, Timestamp>
 export const AnnouncementSchema = SchemaFactory.createForClass(Announcement)
+
+AnnouncementSchema.index({ location: '2dsphere' })

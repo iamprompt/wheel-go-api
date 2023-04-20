@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { AnnouncementFactory } from './announcement.factory'
 import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
+import { GetAnnouncementsInput } from './dto/getAnnouncements.dto'
 import { AnnouncementRepository } from '~/database/announcements/announcement.service'
 
 @Injectable()
@@ -9,8 +10,8 @@ export class AnnouncementService {
     private readonly announcementRepository: AnnouncementRepository
   ) {}
 
-  async find(lang = 'th') {
-    const announcements = await this.announcementRepository.find()
+  async find(options: GetAnnouncementsInput = {}, lang = 'th') {
+    const announcements = await this.announcementRepository.find(options)
     return AnnouncementFactory.createFromDatabase(announcements, lang)
   }
 

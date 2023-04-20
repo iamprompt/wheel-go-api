@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { RouteFactory } from './route.factory'
 import { CreateRouteInput } from './dto/createRoute.dto'
+import { GetRoutesInput } from './dto/getRoutes.dto'
 import { RouteRepository } from '~/database/routes/route.service'
 
 @Injectable()
 export class RouteService {
   constructor(private readonly routeRepository: RouteRepository) {}
 
-  async find(lang = 'th') {
-    const routes = await this.routeRepository.find()
+  async find(options: GetRoutesInput = {}, lang = 'th') {
+    const routes = await this.routeRepository.find(options)
     return RouteFactory.createFromDatabase(routes, lang)
   }
 

@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
 import type { PlaceDocument } from './place.schema'
 import { Place } from './place.schema'
+import { GetPlacesInput } from '~/modules/place/dto/getPlaces.dto'
 
 @Injectable()
 export class PlaceRepository {
@@ -17,8 +18,37 @@ export class PlaceRepository {
       },
     ]
 
-  async find(): Promise<PlaceDocument[]> {
-    return this.PlaceModel.find().populate(this.PlacePopulateOptions).exec()
+  async find(options: GetPlacesInput = {}): Promise<PlaceDocument[]> {
+    Logger.log(options)
+    return this.PlaceModel.find({
+      ...(options.keyword
+        ? {
+            $or: [
+              { 'name.th': { $regex: options.keyword, $options: 'i' } },
+              { 'name.en': { $regex: options.keyword, $options: 'i' } },
+            ],
+          }
+        : {}),
+      ...(options.types ? { type: { $in: options.types } } : {}),
+      ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
+      ...(options.location
+        ? {
+            location: {
+              $near: {
+                $geometry: {
+                  type: 'Point',
+                  coordinates: [options.location.lng, options.location.lat],
+                },
+                $maxDistance: options.radius || 10000,
+                $minDistance: 0,
+              },
+            },
+          }
+        : {}),
+    })
+      .limit(options.limit || 1000)
+      .populate(this.PlacePopulateOptions)
+      .exec()
   }
 
   async findById(id: string): Promise<PlaceDocument> {

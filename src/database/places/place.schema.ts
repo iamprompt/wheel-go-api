@@ -48,3 +48,5 @@ export class Place {
 
 export type PlaceDocument = HydratedDocument<Place, Timestamp>
 export const PlaceSchema = SchemaFactory.createForClass(Place)
+
+PlaceSchema.index({ location: '2dsphere' })

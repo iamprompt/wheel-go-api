@@ -4,6 +4,7 @@ import { User } from '../user/user.schema'
 import { AnnouncementService } from './announcement.service'
 import { Announcement } from './announcement.schema'
 import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
+import { GetAnnouncementsInput } from './dto/getAnnouncements.dto'
 import { CurrentUser } from '~/decorators/currentUser.decorator'
 import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
 import { RolesGuard } from '~/guards/RolesGuard'
@@ -15,8 +16,11 @@ export class AnnouncementResolver {
   constructor(private readonly announcementService: AnnouncementService) {}
 
   @Query(() => [Announcement])
-  async getAnnouncements(@ActiveLang() lang: string) {
-    return this.announcementService.find(lang)
+  async getAnnouncements(
+    @ActiveLang() lang: string,
+    @Args('options', { nullable: true }) options?: GetAnnouncementsInput
+  ) {
+    return this.announcementService.find(options, lang)
   }
 
   @Query(() => Announcement)

@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { PlaceFactory } from './place.factory'
 import { Place } from './place.schema'
+import { GetPlacesInput } from './dto/getPlaces.dto'
 import { PlaceRepository } from '~/database/places/place.services'
 
 @Injectable()
 export class PlaceService {
   constructor(private readonly placeRepository: PlaceRepository) {}
 
-  async find(lang = 'th'): Promise<Place[]> {
-    const places = await this.placeRepository.find()
+  async find(options: GetPlacesInput = {}, lang = 'th'): Promise<Place[]> {
+    const places = await this.placeRepository.find(options)
     return PlaceFactory.createFromDatabase(places, lang)
   }
 

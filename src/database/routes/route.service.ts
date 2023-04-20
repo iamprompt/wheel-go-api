@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
+import { ObjectId } from 'mongodb'
 import type { RouteDocument } from './route.schema'
 import { Route } from './route.schema'
+import { GetRoutesInput } from '~/modules/route/dto/getRoutes.dto'
 
 @Injectable()
 export class RouteRepository {
@@ -13,8 +15,24 @@ export class RouteRepository {
 
   PopulateOptions: Parameters<(typeof this.RouteModel)['populate']>['0'] = []
 
-  async find(): Promise<RouteDocument[]> {
-    return this.RouteModel.find().populate(this.PopulateOptions).exec()
+  async find(options: GetRoutesInput): Promise<RouteDocument[]> {
+    return this.RouteModel.find({
+      // Find reviews that match the origin object id and destination object id
+      $or: [
+        {
+          origin: new ObjectId(options.origin),
+          destination: new ObjectId(options.destination),
+        },
+        {
+          origin: new ObjectId(options.destination),
+          destination: new ObjectId(options.origin),
+        },
+      ],
+      ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
+    })
+      .limit(options.limit || 1000)
+      .populate(this.PopulateOptions)
+      .exec()
   }
 
   async findById(id: string): Promise<RouteDocument> {

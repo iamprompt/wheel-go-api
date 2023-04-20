@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
 import type { ReviewDocument } from './review.schema'
 import { Review } from './review.schema'
+import { GetReviewsInput } from '~/modules/review/dto/getReviews.dto'
 
 @Injectable()
 export class ReviewRepository {
@@ -28,8 +29,13 @@ export class ReviewRepository {
     },
   ]
 
-  async find(): Promise<ReviewDocument[]> {
-    return this.ReviewModel.find().populate(this.ReviewPopulateOptions).exec()
+  async find(options: GetReviewsInput = {}): Promise<ReviewDocument[]> {
+    return this.ReviewModel.find({
+      ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
+    })
+      .limit(options.limit || 1000)
+      .populate(this.ReviewPopulateOptions)
+      .exec()
   }
 
   async findById(id: string): Promise<ReviewDocument> {

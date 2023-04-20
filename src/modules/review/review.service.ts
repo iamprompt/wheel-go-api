@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common'
 import { Review } from './review.schema'
 import { ReviewFactory } from './review.factory'
 import { CreateReviewInput } from './dto/createReview.dto'
+import { GetReviewsInput } from './dto/getReviews.dto'
 import { ReviewRepository } from '~/database/reviews/review.service'
 
 @Injectable()
 export class ReviewService {
   constructor(private readonly reviewRepository: ReviewRepository) {}
 
-  async find(lang = 'th'): Promise<Review[]> {
-    const reviews = await this.reviewRepository.find()
+  async find(options: GetReviewsInput = {}, lang = 'th'): Promise<Review[]> {
+    const reviews = await this.reviewRepository.find(options)
     return ReviewFactory.createFromDatabase(reviews, lang)
   }
 
