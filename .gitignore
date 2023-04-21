@@ -40,3 +40,4 @@ schema.gql
 !.env.example
 
 /uploads/
+!uploads/.gitkeep
