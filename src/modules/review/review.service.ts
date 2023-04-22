@@ -19,6 +19,11 @@ export class ReviewService {
     return ReviewFactory.createFromDatabase(review, lang)
   }
 
+  async findByPlaceId(placeId: string, lang = 'th'): Promise<Review[]> {
+    const reviews = await this.reviewRepository.findByPlaceId(placeId)
+    return ReviewFactory.createFromDatabase(reviews, lang)
+  }
+
   async create(review: CreateReviewInput, lang = 'th'): Promise<Review> {
     const reviewToSave = ReviewFactory.createToSave(review)
     const createdReview = await this.reviewRepository.create(reviewToSave)

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
+import { ObjectId } from 'mongodb'
 import type { ReviewDocument } from './review.schema'
 import { Review } from './review.schema'
 import { GetReviewsInput } from '~/modules/review/dto/getReviews.dto'
@@ -40,6 +41,12 @@ export class ReviewRepository {
 
   async findById(id: string): Promise<ReviewDocument> {
     return this.ReviewModel.findById(id)
+      .populate(this.ReviewPopulateOptions)
+      .exec()
+  }
+
+  async findByPlaceId(placeId: string): Promise<ReviewDocument[]> {
+    return this.ReviewModel.find({ place: new ObjectId(placeId) })
       .populate(this.ReviewPopulateOptions)
       .exec()
   }

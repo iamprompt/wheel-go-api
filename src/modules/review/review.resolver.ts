@@ -25,6 +25,14 @@ export class ReviewResolver {
     return this.reviewService.findById(id, lang)
   }
 
+  @Query(() => [Review])
+  async getReviewsByPlaceId(
+    @Args('placeId', { type: () => ID }) placeId: string,
+    @ActiveLang() lang: string
+  ): Promise<Review[]> {
+    return this.reviewService.findByPlaceId(placeId, lang)
+  }
+
   @Mutation(() => Review)
   async createReview(
     @Args('review') review: CreateReviewInput,
