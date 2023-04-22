@@ -38,6 +38,7 @@ export class FacilityFactory {
       location: LocationFactory.createFromDatabase(data.location),
       metadata: data.metadata,
       concern: data.concern,
+      isWarning: data.isWarning,
       status: data.status,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
@@ -52,6 +53,7 @@ export class FacilityFactory {
       detail: data.detail,
       location: LocationFactory.createToSave(data.location),
       concern: data.concern,
+      isWarning: data.isWarning,
       metadata: data.metadata,
       status: data.status,
     }

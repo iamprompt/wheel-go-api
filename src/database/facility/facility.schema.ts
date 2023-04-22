@@ -39,6 +39,9 @@ export class Facility {
   })
   concern: CONCERN_TYPES
 
+  @Prop({ type: Boolean, default: false })
+  isWarning: boolean
+
   @Prop({
     type: String,
     default: STATUS.DRAFT,

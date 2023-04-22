@@ -26,6 +26,9 @@ export class CreateFacilityInput {
   @Field(() => CONCERN_TYPES, { nullable: true })
   concern?: CONCERN_TYPES
 
+  @Field(() => Boolean, { nullable: true })
+  isWarning?: boolean
+
   @Field(() => STATUS, { nullable: true, defaultValue: STATUS.DRAFT })
   status?: STATUS
 }

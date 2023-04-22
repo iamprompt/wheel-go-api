@@ -27,6 +27,9 @@ export class Facility {
   @Field(() => CONCERN_TYPES, { nullable: true })
   concern?: CONCERN_TYPES
 
+  @Field(() => Boolean, { nullable: true })
+  isWarning?: boolean
+
   @Field(() => FacilityMetadata, { nullable: true })
   metadata?: FacilityMetadata
 
