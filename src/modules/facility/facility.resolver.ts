@@ -25,6 +25,14 @@ export class FacilityResolver {
     return await this.facilityService.findById(id, lang)
   }
 
+  @Query(() => [Facility])
+  async getFacilitiesByPlaceId(
+    @Args('placeId') placeId: string,
+    @ActiveLang() lang: string
+  ) {
+    return await this.facilityService.findByPlaceId(placeId, lang)
+  }
+
   @Mutation(() => Facility)
   async createFacility(
     @Args('data') data: CreateFacilityInput,

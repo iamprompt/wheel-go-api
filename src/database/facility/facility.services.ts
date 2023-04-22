@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
+import { ObjectId } from 'mongodb'
 import type { FacilityDocument } from './facility.schema'
 import { Facility } from './facility.schema'
 import { GetFacilitiesInput } from '~/modules/facility/dto/getFacilities.dto'
@@ -57,6 +58,12 @@ export class FacilityRepository {
 
   async findById(id: string): Promise<FacilityDocument> {
     return this.FacilityModel.findById(id)
+      .populate(this.FacilityPopulateOptions)
+      .exec()
+  }
+
+  async findByParentId(parentId: string): Promise<FacilityDocument[]> {
+    return this.FacilityModel.find({ parent: new ObjectId(parentId) })
       .populate(this.FacilityPopulateOptions)
       .exec()
   }

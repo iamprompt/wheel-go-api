@@ -18,6 +18,11 @@ export class FacilityService {
     return FacilityFactory.createFromDatabase(facility, lang)
   }
 
+  async findByPlaceId(placeId: string, lang = 'th') {
+    const facilities = await this.facilityRepository.findByParentId(placeId)
+    return FacilityFactory.createFromDatabase(facilities, lang)
+  }
+
   async create(data: CreateFacilityInput, lang = 'th') {
     const facilityToSave = FacilityFactory.createToSave(data)
     const facility = await this.facilityRepository.create(facilityToSave)
