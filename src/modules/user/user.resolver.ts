@@ -7,7 +7,6 @@ import { UpdateUserInput } from './dto/updateUser.dto'
 import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
 import { RolesGuard } from '~/guards/RolesGuard'
 import { CurrentUser } from '~/decorators/currentUser.decorator'
-import { HasRoles } from '~/decorators/hasRoles.decorator'
 
 @Resolver(() => User)
 @UseGuards(GqlAuthGuard, RolesGuard)
@@ -20,7 +19,7 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  @HasRoles('ADMIN')
+  // @HasRoles('ADMIN')
   async getUsers() {
     return this.userService.find()
   }
