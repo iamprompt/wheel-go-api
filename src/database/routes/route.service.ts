@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb'
 import type { RouteDocument } from './route.schema'
 import { Route } from './route.schema'
 import { GetRoutesInput } from '~/modules/route/dto/getRoutes.dto'
+import { ROUTE_TYPES } from '~/const/routeTypes'
 
 @Injectable()
 export class RouteRepository {
@@ -38,6 +39,15 @@ export class RouteRepository {
   async findById(id: string): Promise<RouteDocument> {
     return (await this.RouteModel.findById(id))
       .populated(this.PopulateOptions)
+      .exec()
+  }
+
+  async findRoutesByUserId(
+    userId: string,
+    type: ROUTE_TYPES = ROUTE_TYPES.TRACED
+  ): Promise<RouteDocument[]> {
+    return this.RouteModel.find({ user: new ObjectId(userId), type })
+      .populate(this.PopulateOptions)
       .exec()
   }
 

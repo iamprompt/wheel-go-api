@@ -51,6 +51,12 @@ export class ReviewRepository {
       .exec()
   }
 
+  async findByUserId(userId: string): Promise<ReviewDocument[]> {
+    return this.ReviewModel.find({ user: new ObjectId(userId) })
+      .populate(this.ReviewPopulateOptions)
+      .exec()
+  }
+
   async create(review: Review): Promise<ReviewDocument> {
     const createdReview = new this.ReviewModel(review)
     return (await createdReview.save()).populate(this.ReviewPopulateOptions)

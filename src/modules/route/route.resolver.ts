@@ -1,9 +1,13 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { UseGuards } from '@nestjs/common'
+import { User } from '../user/user.schema'
 import { Route } from './route.schema'
 import { RouteService } from './route.service'
 import { CreateRouteInput } from './dto/createRoute.dto'
 import { GetRoutesInput } from './dto/getRoutes.dto'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
+import { CurrentUser } from '~/decorators/currentUser.decorator'
 
 @Resolver()
 export class RouteResolver {
@@ -23,6 +27,15 @@ export class RouteResolver {
     @ActiveLang() lang: string
   ): Promise<Route> {
     return this.routeService.findById(id, lang)
+  }
+
+  @Query(() => [Route])
+  @UseGuards(GqlAuthGuard)
+  async getMyTracedRoutes(
+    @ActiveLang() lang: string,
+    @CurrentUser() user: User
+  ): Promise<Route[]> {
+    return this.routeService.findMyTracedRoutes(user.id, lang)
   }
 
   @Mutation(() => Route)

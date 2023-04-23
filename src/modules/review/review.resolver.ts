@@ -1,9 +1,13 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { UseGuards } from '@nestjs/common'
+import { User } from '../user/user.schema'
 import { Review } from './review.schema'
 import { ReviewService } from './review.service'
 import { CreateReviewInput } from './dto/createReview.dto'
 import { GetReviewsInput } from './dto/getReviews.dto'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { CurrentUser } from '~/decorators/currentUser.decorator'
+import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
 
 @Resolver()
 export class ReviewResolver {
@@ -31,6 +35,15 @@ export class ReviewResolver {
     @ActiveLang() lang: string
   ): Promise<Review[]> {
     return this.reviewService.findByPlaceId(placeId, lang)
+  }
+
+  @Query(() => [Review])
+  @UseGuards(GqlAuthGuard)
+  async getMyReviews(
+    @CurrentUser() user: User,
+    @ActiveLang() lang: string
+  ): Promise<Review[]> {
+    return this.reviewService.findByUserId(user.id, lang)
   }
 
   @Mutation(() => Review)

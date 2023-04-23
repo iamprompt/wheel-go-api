@@ -3,6 +3,7 @@ import { RouteFactory } from './route.factory'
 import { CreateRouteInput } from './dto/createRoute.dto'
 import { GetRoutesInput } from './dto/getRoutes.dto'
 import { RouteRepository } from '~/database/routes/route.service'
+import { ROUTE_TYPES } from '~/const/routeTypes'
 
 @Injectable()
 export class RouteService {
@@ -16,6 +17,14 @@ export class RouteService {
   async findById(id: string, lang = 'th') {
     const route = await this.routeRepository.findById(id)
     return RouteFactory.createFromDatabase(route, lang)
+  }
+
+  async findMyTracedRoutes(userId: string, lang = 'th') {
+    const routes = await this.routeRepository.findRoutesByUserId(
+      userId,
+      ROUTE_TYPES.TRACED
+    )
+    return RouteFactory.createFromDatabase(routes, lang)
   }
 
   async create(route: CreateRouteInput, lang = 'th') {
