@@ -45,4 +45,11 @@ export class UserService {
     const user = await this.userRepository.removeFavoritePlace(userId, placeId)
     return UserFactory.createFromDatabase(user)
   }
+
+  async isFavoritePlace(userId: string, placeId: string): Promise<boolean> {
+    const user = await this.userRepository.findById(userId)
+    return user.metadata.favorites.some(
+      (favorite) => favorite.place.id === placeId
+    )
+  }
 }

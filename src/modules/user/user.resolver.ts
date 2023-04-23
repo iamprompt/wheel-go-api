@@ -60,4 +60,12 @@ export class UserResolver {
   ): Promise<User> {
     return this.userService.removeFavoritePlace(user.id, placeId)
   }
+
+  @Query(() => Boolean)
+  async isFavoritePlace(
+    @Args('placeId') placeId: string,
+    @CurrentUser() user: User
+  ): Promise<boolean> {
+    return this.userService.isFavoritePlace(user.id, placeId)
+  }
 }
