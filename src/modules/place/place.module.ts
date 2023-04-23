@@ -6,5 +6,6 @@ import { WGMongoModule } from '~/database/WGMongo.module'
 @Module({
   imports: [WGMongoModule],
   providers: [PlaceResolver, PlaceService],
+  exports: [PlaceService],
 })
 export class PlaceModule {}

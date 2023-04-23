@@ -6,5 +6,6 @@ import { WGMongoModule } from '~/database/WGMongo.module'
 @Module({
   imports: [WGMongoModule],
   providers: [FacilityResolver, FacilityService],
+  exports: [FacilityService],
 })
 export class FacilityModule {}
