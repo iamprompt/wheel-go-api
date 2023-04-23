@@ -35,4 +35,14 @@ export class UserService {
     const updateResult = await this.userRepository.update(id, userToUpdate)
     return UserFactory.createFromDatabase(updateResult, lang)
   }
+
+  async addFavoritePlace(userId: string, placeId: string): Promise<User> {
+    const user = await this.userRepository.addFavoritePlace(userId, placeId)
+    return UserFactory.createFromDatabase(user)
+  }
+
+  async removeFavoritePlace(userId: string, placeId: string): Promise<User> {
+    const user = await this.userRepository.removeFavoritePlace(userId, placeId)
+    return UserFactory.createFromDatabase(user)
+  }
 }

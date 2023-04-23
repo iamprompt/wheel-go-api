@@ -45,4 +45,20 @@ export class UserResolver {
   ) {
     return this.userService.update(id || user.id, data)
   }
+
+  @Mutation(() => User)
+  async addFavoritePlace(
+    @Args('placeId') placeId: string,
+    @CurrentUser() user: User
+  ): Promise<User> {
+    return this.userService.addFavoritePlace(user.id, placeId)
+  }
+
+  @Mutation(() => User)
+  async removeFavoritePlace(
+    @Args('placeId') placeId: string,
+    @CurrentUser() user: User
+  ): Promise<User> {
+    return this.userService.removeFavoritePlace(user.id, placeId)
+  }
 }
