@@ -5,6 +5,7 @@ import { FacilityAvailability } from '../object/facilityAvailability.schema'
 import { FacilityService } from '../facility/facility.service'
 import { RatingSummary } from './rating.schema'
 import { FACILITY_STATUS } from '~/const/facilityStatus'
+import { FACILITY_TYPES } from '~/const/facilityTypes'
 
 @Injectable()
 export class RatingService {
@@ -63,16 +64,13 @@ export class RatingService {
     return {
       id: place.id,
       overall: totalRating.overall / reviewCount || 0,
-      facilities: Object.entries(totalRating.facilities).reduce(
-        (acc, [key, value]) => {
-          acc[key] = {
-            status: facilitiesStatus[key] || FACILITY_STATUS.UNKNOWN,
-            rating: value.rating / reviewCount || 0,
-          }
-          return acc
-        },
-        {}
-      ),
+      facilities: Object.keys(FACILITY_TYPES).reduce((acc, key) => {
+        acc[key] = {
+          status: facilitiesStatus[key] || FACILITY_STATUS.UNAVAILABLE,
+          rating: totalRating.facilities[key]?.rating / reviewCount || 0,
+        }
+        return acc
+      }, {}),
       reviewCount: reviewCount || 0,
     }
   }
