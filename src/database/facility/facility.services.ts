@@ -36,6 +36,7 @@ export class FacilityRepository {
         : {}),
       ...(options.types ? { type: { $in: options.types } } : {}),
       ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
+      ...(options.excludeTypes ? { type: { $nin: options.excludeTypes } } : {}),
       ...(options.location
         ? {
             location: {

@@ -45,6 +45,7 @@ export class PlaceRepository {
             },
           }
         : {}),
+      ...(options.excludeTypes ? { type: { $nin: options.excludeTypes } } : {}),
     })
       .limit(options.limit || 1000)
       .populate(this.PlacePopulateOptions)

@@ -13,6 +13,9 @@ export class GetPlacesInput {
   @Field(() => [PLACE_TYPES], { nullable: true })
   types?: PLACE_TYPES[]
 
+  @Field(() => [PLACE_TYPES], { nullable: true })
+  excludeTypes?: PLACE_TYPES[]
+
   @Field(() => LocationInput, { nullable: true })
   location?: LocationInput
 

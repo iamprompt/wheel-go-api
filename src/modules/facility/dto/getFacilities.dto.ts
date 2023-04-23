@@ -13,6 +13,9 @@ export class GetFacilitiesInput {
   @Field(() => [FACILITY_TYPES], { nullable: true })
   types?: FACILITY_TYPES[]
 
+  @Field(() => [FACILITY_TYPES], { nullable: true })
+  excludeTypes?: FACILITY_TYPES[]
+
   @Field(() => LocationInput, { nullable: true })
   location?: LocationInput
 
