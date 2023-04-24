@@ -49,4 +49,14 @@ export class FacilityResolver {
   ) {
     return await this.facilityService.update(id, data, lang)
   }
+
+  @Mutation(() => Boolean)
+  async deleteFacility(@Args('id') id: string) {
+    try {
+      await this.facilityService.delete(id)
+      return true
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }

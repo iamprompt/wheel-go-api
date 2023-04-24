@@ -67,4 +67,8 @@ export class RouteRepository {
 
     return updatedRoute.populate(this.PopulateOptions)
   }
+
+  async delete(id: string): Promise<RouteDocument> {
+    return this.RouteModel.findByIdAndDelete(id).exec()
+  }
 }

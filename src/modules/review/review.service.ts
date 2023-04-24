@@ -44,4 +44,8 @@ export class ReviewService {
     const updatedReview = await this.reviewRepository.update(id, reviewToSave)
     return ReviewFactory.createFromDatabase(updatedReview, lang)
   }
+
+  async delete(id: string) {
+    return this.reviewRepository.delete(id)
+  }
 }

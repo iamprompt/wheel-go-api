@@ -54,4 +54,15 @@ export class RouteResolver {
   ): Promise<Route> {
     return this.routeService.update(id, data, lang)
   }
+
+  @Mutation(() => Boolean)
+  async deleteRoute(@Args('id') id: string): Promise<boolean> {
+    try {
+      await this.routeService.delete(id)
+      return true
+    } catch (error) {
+      throw new Error(error)
+    }
+    return
+  }
 }

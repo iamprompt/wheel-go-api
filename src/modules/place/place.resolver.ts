@@ -38,4 +38,14 @@ export class PlaceResolver {
   ) {
     return this.placeService.update(id, data, lang)
   }
+
+  @Mutation(() => Boolean)
+  async deletePlace(@Args('id') id: string) {
+    try {
+      await this.placeService.delete(id)
+      return true
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }

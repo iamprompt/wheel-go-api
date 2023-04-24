@@ -38,4 +38,8 @@ export class RouteService {
     const result = await this.routeRepository.update(id, routeToSave)
     return RouteFactory.createFromDatabase(result, lang)
   }
+
+  async delete(id: string) {
+    return this.routeRepository.delete(id)
+  }
 }

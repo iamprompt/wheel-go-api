@@ -80,4 +80,14 @@ export class PlaceRepository {
 
     return updatedPlace.populate(this.PlacePopulateOptions)
   }
+
+  async delete(id: string): Promise<PlaceDocument> {
+    const deletedPlace = await this.PlaceModel.findByIdAndDelete(id)
+
+    if (!deletedPlace) {
+      throw new Error('Place not found')
+    }
+
+    return deletedPlace.populate(this.PlacePopulateOptions)
+  }
 }

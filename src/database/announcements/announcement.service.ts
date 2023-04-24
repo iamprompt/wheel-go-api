@@ -73,4 +73,8 @@ export class AnnouncementRepository {
 
     return updatedAnnouncement.populate(['user', 'place', 'images'])
   }
+
+  async delete(id: string): Promise<AnnouncementDocument> {
+    return this.AnnouncementModel.findByIdAndDelete(id)
+  }
 }

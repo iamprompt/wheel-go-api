@@ -34,4 +34,8 @@ export class PlaceService {
     const result = await this.placeRepository.update(id, place)
     return PlaceFactory.createFromDatabase(result, lang)
   }
+
+  async delete(id: string) {
+    return this.placeRepository.delete(id)
+  }
 }

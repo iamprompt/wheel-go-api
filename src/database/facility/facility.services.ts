@@ -83,4 +83,9 @@ export class FacilityRepository {
     )
     return updatedFacility.populate(this.FacilityPopulateOptions)
   }
+
+  async delete(id: string): Promise<FacilityDocument> {
+    const deletedFacility = await this.FacilityModel.findByIdAndDelete(id)
+    return deletedFacility.populate(this.FacilityPopulateOptions)
+  }
 }

@@ -51,4 +51,8 @@ export class AnnouncementService {
 
     return AnnouncementFactory.createFromDatabase(result, lang)
   }
+
+  async delete(id: string) {
+    return this.announcementRepository.delete(id)
+  }
 }

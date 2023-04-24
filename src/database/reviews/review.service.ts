@@ -73,4 +73,14 @@ export class ReviewRepository {
 
     return updatedReview.populate(this.ReviewPopulateOptions)
   }
+
+  async delete(id: string): Promise<ReviewDocument> {
+    const deletedReview = await this.ReviewModel.findByIdAndDelete(id)
+
+    if (!deletedReview) {
+      throw new Error('Review not found')
+    }
+
+    return deletedReview.populate(this.ReviewPopulateOptions)
+  }
 }

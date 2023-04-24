@@ -62,4 +62,16 @@ export class ReviewResolver {
   ): Promise<Review> {
     return this.reviewService.update(id, review, lang)
   }
+
+  @Mutation(() => Boolean)
+  async deleteReview(
+    @Args('id', { type: () => ID }) id: string
+  ): Promise<boolean> {
+    try {
+      await this.reviewService.delete(id)
+      return true
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }

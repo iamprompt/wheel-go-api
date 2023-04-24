@@ -34,4 +34,8 @@ export class FacilityService {
     const facility = await this.facilityRepository.update(id, facilityToUpdate)
     return FacilityFactory.createFromDatabase(facility, lang)
   }
+
+  async delete(id: string) {
+    return this.facilityRepository.delete(id)
+  }
 }

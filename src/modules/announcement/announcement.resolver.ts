@@ -53,4 +53,16 @@ export class AnnouncementResolver {
   ) {
     return this.announcementService.update(id, data, user.id, lang)
   }
+
+  @Mutation(() => Boolean)
+  @HasRoles('ADMIN')
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  async deleteAnnouncement(@Args('id', { type: () => String }) id: string) {
+    try {
+      await this.announcementService.delete(id)
+      return true
+    } catch (error) {
+      return false
+    }
+  }
 }
