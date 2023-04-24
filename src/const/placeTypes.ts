@@ -8,4 +8,5 @@ export enum PLACE_TYPES {
   RESIDENCE = 'RESIDENCE',
   PARKING = 'PARKING',
   CURBCUT = 'CURBCUT',
+  SPORT = 'SPORT',
 }
