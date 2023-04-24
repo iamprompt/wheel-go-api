@@ -47,11 +47,19 @@ export class ReviewResolver {
   }
 
   @Mutation(() => Review)
+  @UseGuards(GqlAuthGuard)
   async createReview(
     @Args('review') review: CreateReviewInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
+    @CurrentUser() user: User
   ): Promise<Review> {
-    return this.reviewService.create(review, lang)
+    return this.reviewService.create(
+      {
+        ...review,
+        user: user.id,
+      },
+      lang
+    )
   }
 
   @Mutation(() => Review)
