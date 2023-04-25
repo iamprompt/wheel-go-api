@@ -27,8 +27,11 @@ export class RouteService {
     return RouteFactory.createFromDatabase(routes, lang)
   }
 
-  async create(route: CreateRouteInput, lang = 'th') {
-    const routeToSave = RouteFactory.createToSave(route)
+  async create(route: CreateRouteInput, userId: string, lang = 'th') {
+    const routeToSave = RouteFactory.createToSave({
+      ...route,
+      user: route.user ? route.user : userId,
+    })
     const result = await this.routeRepository.create(routeToSave)
     return RouteFactory.createFromDatabase(result, lang)
   }

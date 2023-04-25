@@ -39,11 +39,13 @@ export class RouteResolver {
   }
 
   @Mutation(() => Route)
+  @UseGuards(GqlAuthGuard)
   async createRoute(
     @Args('data') data: CreateRouteInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
+    @CurrentUser() user: User
   ): Promise<Route> {
-    return this.routeService.create(data, lang)
+    return this.routeService.create(data, user.id, lang)
   }
 
   @Mutation(() => Route)
