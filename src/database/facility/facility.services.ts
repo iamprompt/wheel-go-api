@@ -24,7 +24,7 @@ export class FacilityRepository {
     },
   ]
 
-  async find(options: GetFacilitiesInput): Promise<FacilityDocument[]> {
+  async find(options: GetFacilitiesInput = {}): Promise<FacilityDocument[]> {
     return await this.FacilityModel.find({
       ...(options.keyword
         ? {

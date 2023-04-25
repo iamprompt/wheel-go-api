@@ -27,7 +27,7 @@ export class Facility {
   @Prop({ type: LangObjectDefinition })
   detail: LangObject
 
-  @Prop({ type: LocationObject })
+  @Prop(LocationObject)
   location: Location
 
   @Prop({ type: FacilityMetadataObject })
