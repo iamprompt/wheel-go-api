@@ -28,7 +28,7 @@ export class UserFactory {
     }
 
     return <ReturnUserOrArray<T>>{
-      id: user.id,
+      id: user._id.toString(),
       firstname: user.firstname,
       lastname: user.lastname,
       username: user.username,

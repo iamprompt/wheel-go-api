@@ -11,7 +11,11 @@ import { STATUS } from '~/const/status'
 
 @Schema({ collection: 'routes', timestamps: TimestampConfig })
 export class Route {
-  @Prop({ type: String, enum: Object.values(ROUTE_TYPES) })
+  @Prop({
+    type: String,
+    enum: Object.values(ROUTE_TYPES),
+    default: ROUTE_TYPES.TRACED,
+  })
   type: ROUTE_TYPES
 
   @Prop({ type: [LocationObject] })

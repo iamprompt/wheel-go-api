@@ -37,9 +37,7 @@ export class RouteRepository {
   }
 
   async findById(id: string): Promise<RouteDocument> {
-    return (await this.RouteModel.findById(id))
-      .populated(this.PopulateOptions)
-      .exec()
+    return this.RouteModel.findById(id).populate(this.PopulateOptions).exec()
   }
 
   async findRoutesByUserId(

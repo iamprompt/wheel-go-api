@@ -26,7 +26,8 @@ export class RouteResolver {
     @Args('id') id: string,
     @ActiveLang() lang: string
   ): Promise<Route> {
-    return this.routeService.findById(id, lang)
+    const route = await this.routeService.findById(id, lang)
+    return route
   }
 
   @Query(() => [Route])
@@ -35,7 +36,8 @@ export class RouteResolver {
     @ActiveLang() lang: string,
     @CurrentUser() user: User
   ): Promise<Route[]> {
-    return this.routeService.findMyTracedRoutes(user.id, lang)
+    const routes = await this.routeService.findMyTracedRoutes(user.id, lang)
+    return routes
   }
 
   @Mutation(() => Route)
