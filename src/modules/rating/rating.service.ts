@@ -57,7 +57,7 @@ export class RatingService {
     const facilitiesStatus = facilities.reduce((acc, facility) => {
       acc[facility.type] = facility.isWarning
         ? FACILITY_STATUS.WARNING
-        : FACILITY_STATUS.AVAILABLE
+        : acc[facility.type] || FACILITY_STATUS.AVAILABLE
       return acc
     }, {})
 
@@ -65,6 +65,13 @@ export class RatingService {
       id: place.id,
       overall: totalRating.overall / reviewCount || 0,
       facilities: Object.keys(FACILITY_TYPES).reduce((acc, key) => {
+        if (
+          key === FACILITY_TYPES.SURFACE &&
+          facilitiesStatus[key] === undefined
+        ) {
+          return acc
+        }
+
         acc[key] = {
           status: facilitiesStatus[key] || FACILITY_STATUS.UNAVAILABLE,
           rating: totalRating.facilities[key]?.rating / reviewCount || 0,
