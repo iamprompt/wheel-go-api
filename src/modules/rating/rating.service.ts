@@ -61,6 +61,14 @@ export class RatingService {
       return acc
     }, {})
 
+    const tags = reviews.reduce((acc, review) => {
+      review.tags.forEach((tag) => {
+        acc[tag] = acc[tag] || 0
+        acc[tag]++
+      })
+      return acc
+    }, {} as Record<string, number>)
+
     return {
       id: place.id,
       overall: totalRating.overall / reviewCount || 0,
@@ -78,6 +86,10 @@ export class RatingService {
         }
         return acc
       }, {}),
+      tags: Object.entries(tags).map(([key, value]) => ({
+        tag: key,
+        count: value,
+      })),
       reviewCount: reviewCount || 0,
     }
   }
