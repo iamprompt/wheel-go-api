@@ -1,11 +1,15 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { UserMetadata } from '../object/userMeta.schema'
+import { Media } from '../media/media.schema'
 import { ROLES } from '~/const/userRoles'
 
 @ObjectType()
 export class User {
   @Field(() => ID!)
   id: string
+
+  @Field(() => Media, { nullable: true })
+  profileImage: Media
 
   @Field({ nullable: true })
   firstname: string

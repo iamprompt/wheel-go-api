@@ -1,4 +1,5 @@
 import { PlaceFactory } from '../place/place.factory'
+import { MediaFactory } from '../media/media.factory'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { User } from './user.schema'
@@ -42,6 +43,7 @@ export class UserFactory {
             place: PlaceFactory.createFromDatabase(f.place, lang),
           })) || [],
       },
+      profileImage: MediaFactory.createFromDatabase(user.profileImage),
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     }
@@ -57,6 +59,8 @@ export class UserFactory {
       email: user.email || undefined,
       role: user.role,
       password: user.password || undefined,
+      // @ts-expect-error Only ObjectId is required
+      profileImage: createRefToSave(user.profileImage),
       metadata: {
         ...user.metadata,
         // @ts-expect-error Only ObjectId is required

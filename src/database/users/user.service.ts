@@ -18,6 +18,9 @@ export class UserRepository {
         path: 'place',
       },
     },
+    {
+      path: 'profileImage',
+    },
   ]
 
   async find(): Promise<UserDocument[]> {

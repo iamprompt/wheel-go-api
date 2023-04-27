@@ -11,16 +11,19 @@ export class CreateUserInput {
   password: string
 
   @Field({ nullable: true })
-  firstname: string
+  profileImage?: string
 
   @Field({ nullable: true })
-  lastname: string
+  firstname?: string
 
   @Field({ nullable: true })
-  username: string
+  lastname?: string
+
+  @Field({ nullable: true })
+  username?: string
 
   @Field(() => UserMetaInput, { nullable: true })
-  metadata: UserMetaInput
+  metadata?: UserMetaInput
 
   @Field(() => ROLES, { nullable: true, defaultValue: ROLES.USER })
   role: ROLES

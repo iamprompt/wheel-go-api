@@ -1,13 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import type { HydratedDocument } from 'mongoose'
+import { HydratedDocument, Types } from 'mongoose'
 import { genSaltSync, hashSync } from 'bcrypt'
 import type { UserMetadata } from '../object/UserMetadataObject'
 import { UserMetadataObject } from '../object/UserMetadataObject'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
+import { Media, MediaDocument } from '../media/media.schema'
 import { ROLES } from '~/const/userRoles'
 
 @Schema({ collection: 'users', timestamps: TimestampConfig })
 export class User {
+  @Prop({ type: Types.ObjectId, ref: Media.name })
+  profileImage?: MediaDocument
+
   @Prop()
   firstname: string
 

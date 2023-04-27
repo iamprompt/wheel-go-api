@@ -5,17 +5,20 @@ import { UserMetaInput } from '~/modules/object/dto/userMeta.dto'
 @InputType()
 export class UpdateUserInput {
   @Field({ nullable: true })
-  firstname: string
+  profileImage?: string
 
   @Field({ nullable: true })
-  lastname: string
+  firstname?: string
 
   @Field({ nullable: true })
-  username: string
+  lastname?: string
+
+  @Field({ nullable: true })
+  username?: string
 
   @Field(() => ROLES, { nullable: true })
   role: ROLES
 
   @Field(() => UserMetaInput, { nullable: true })
-  metadata: UserMetaInput
+  metadata?: UserMetaInput
 }
