@@ -40,7 +40,7 @@ export class UserRepository {
   }
 
   async update(id: string, data: Partial<User>): Promise<UserDocument> {
-    const user = await this.UserModel.findById(id).exec()
+    const user = await this.UserModel.findById(id)
     if (!user) {
       throw new HttpException('User not found', 404)
     }

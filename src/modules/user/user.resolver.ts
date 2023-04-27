@@ -42,7 +42,7 @@ export class UserResolver {
     @Args('data') data: UpdateUserInput,
     @CurrentUser() user: User
   ) {
-    return this.userService.update(id || user.id, data)
+    return this.userService.update(user.id, data)
   }
 
   @Mutation(() => User)
