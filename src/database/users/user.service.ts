@@ -45,12 +45,10 @@ export class UserRepository {
       throw new HttpException('User not found', 404)
     }
 
-    const updateResult = await (
-      await this.UserModel.findByIdAndUpdate(id, data, {
-        returnDocument: 'after',
-      })
-    )
-      .populated(this.UserPopulateOptions)
+    const updateResult = await this.UserModel.findByIdAndUpdate(id, data, {
+      returnDocument: 'after',
+    })
+      .populate(this.UserPopulateOptions)
       .exec()
 
     return updateResult
