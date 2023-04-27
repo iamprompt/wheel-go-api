@@ -2,6 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { UnauthorizedException } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { AuthResponse } from './auth.schema'
+import { ERROR_MESSAGES } from '~/const/errorMessage'
 
 @Resolver()
 export class AuthResolver {
@@ -14,7 +15,9 @@ export class AuthResolver {
   ) {
     const user = await this.authService.validateUser(email, password)
     if (!user) {
-      return new UnauthorizedException()
+      throw new UnauthorizedException(ERROR_MESSAGES.INVALID_CREDENTIALS.code, {
+        description: ERROR_MESSAGES.INVALID_CREDENTIALS.message,
+      })
     }
     return this.authService.sign(user)
   }

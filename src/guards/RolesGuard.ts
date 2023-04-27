@@ -1,11 +1,12 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
+  ForbiddenException,
   Injectable,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { ERROR_MESSAGES } from '~/const/errorMessage'
 import { User } from '~/modules/user/user.schema'
 
 @Injectable()
@@ -28,7 +29,9 @@ export class RolesGuard implements CanActivate {
     const hasRole = roles.includes(user.role)
 
     if (!hasRole) {
-      throw new HttpException('Forbidden', 403)
+      throw new ForbiddenException(ERROR_MESSAGES.NO_PERMISSION.code, {
+        description: ERROR_MESSAGES.NO_PERMISSION.message,
+      })
     }
 
     return true

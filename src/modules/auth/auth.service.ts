@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -10,6 +11,7 @@ import { UserFactory } from '../user/user.factory'
 import { User } from '../user/user.schema'
 import { Config } from '~/config/configuration'
 import { UserRepository } from '~/database/users/user.service'
+import { ERROR_MESSAGES } from '~/const/errorMessage'
 
 @Injectable()
 export class AuthService {
@@ -25,12 +27,16 @@ export class AuthService {
       const isPasswordValid = await compare(password, user.password)
 
       if (!isPasswordValid) {
-        return null
+        throw new UnauthorizedException(ERROR_MESSAGES.INVALID_PASSWORD.code, {
+          description: ERROR_MESSAGES.INVALID_PASSWORD.message,
+        })
       }
 
       return UserFactory.createFromDatabase(user)
     }
-    return null
+    throw new UnauthorizedException(ERROR_MESSAGES.INVALID_EMAIL.code, {
+      description: ERROR_MESSAGES.INVALID_EMAIL.message,
+    })
   }
 
   async sign(user: User) {
@@ -61,13 +67,17 @@ export class AuthService {
 
       const user = await this.userRepository.findByEmail(payload.email)
       if (!user) {
-        return new UnauthorizedException()
+        throw new NotFoundException(ERROR_MESSAGES.USER_NOT_FOUND.code, {
+          description: ERROR_MESSAGES.USER_NOT_FOUND.message,
+        })
       }
 
       const formattedUser = UserFactory.createFromDatabase(user)
       return this.sign(formattedUser)
     } catch (error) {
-      return new BadRequestException(error.message)
+      throw new BadRequestException(ERROR_MESSAGES.INVALID_REFRESH_TOKEN.code, {
+        description: ERROR_MESSAGES.INVALID_REFRESH_TOKEN.message,
+      })
     }
   }
 }
