@@ -36,7 +36,8 @@ export class UserFactory {
       email: user.email,
       role: user.role,
       metadata: {
-        ...user.metadata,
+        impairmentLevel: user.metadata?.impairmentLevel,
+        equipment: user.metadata?.equipment,
         favorites:
           user.metadata?.favorites.map((f) => ({
             addedAt: f.addedAt,
