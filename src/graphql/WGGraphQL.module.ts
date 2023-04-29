@@ -15,7 +15,19 @@ import './enum'
       useFactory: async (_configService: ConfigService) => ({
         autoSchemaFile: 'schema.gql',
         playground: false,
-        plugins: [ApolloServerPluginLandingPageLocalDefault()],
+        plugins: [
+          ApolloServerPluginLandingPageLocalDefault({
+            embed: {
+              runTelemetry: false,
+              endpointIsEditable: false,
+              initialState: {
+                sharedHeaders: {
+                  Authorization: 'Bearer {{accessToken}}',
+                },
+              },
+            },
+          }),
+        ],
         context: ({ req }) => ({ req }),
         csrfPrevention: false,
       }),

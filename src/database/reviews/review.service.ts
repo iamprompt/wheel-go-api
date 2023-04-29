@@ -45,6 +45,10 @@ export class ReviewRepository {
       .exec()
   }
 
+  async countByUserId(userId: string): Promise<number> {
+    return this.ReviewModel.countDocuments({ user: new ObjectId(userId) })
+  }
+
   async findByPlaceId(placeId: string): Promise<ReviewDocument[]> {
     return this.ReviewModel.find({ place: new ObjectId(placeId) })
       .populate(this.ReviewPopulateOptions)

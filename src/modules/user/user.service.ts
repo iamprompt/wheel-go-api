@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common'
+import { UserSummary } from '../object/userSummary.schema'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { UserFactory } from './user.factory'
 import { User } from './user.schema'
 import { UserRepository } from '~/database/users/user.service'
+import { ReviewRepository, RouteRepository } from '~/database/mongo.service'
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly reviewRepository: ReviewRepository,
+    private readonly routeRepository: RouteRepository
+  ) {}
 
   async find(lang = 'th'): Promise<User[]> {
     const users = await this.userRepository.find()
@@ -51,5 +57,19 @@ export class UserService {
     return user.metadata.favorites.some(
       (favorite) => favorite.place.id === placeId
     )
+  }
+
+  async getUserSummaryById(id: string): Promise<UserSummary> {
+    const user = await this.findById(id)
+    const reviewsNo = await this.reviewRepository.countByUserId(id)
+    const routesNo = await this.routeRepository.countByUserId(id)
+    const distance = await this.routeRepository.sumDistanceByUserId(id)
+
+    return {
+      reviews: reviewsNo,
+      distance,
+      routes: routesNo,
+      joinedAt: user.createdAt,
+    }
   }
 }

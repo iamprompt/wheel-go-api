@@ -69,4 +69,16 @@ export class RouteRepository {
   async delete(id: string): Promise<RouteDocument> {
     return this.RouteModel.findByIdAndDelete(id).exec()
   }
+
+  async countByUserId(userId: string): Promise<number> {
+    return this.RouteModel.countDocuments({ user: new ObjectId(userId) })
+  }
+
+  async sumDistanceByUserId(userId: string): Promise<number> {
+    const routes = await this.RouteModel.find({
+      user: new ObjectId(userId),
+    }).exec()
+
+    return routes.reduce((acc, curr) => acc + curr.distance || 0, 0)
+  }
 }
