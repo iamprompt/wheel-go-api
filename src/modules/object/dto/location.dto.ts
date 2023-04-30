@@ -1,10 +1,10 @@
-import { Field, Float, InputType } from '@nestjs/graphql'
+import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
 export class LocationInput {
-  @Field(() => Float, { nullable: true })
-  lat: number
+  @Field({ nullable: true })
+  lat: string
 
-  @Field(() => Float, { nullable: true })
-  lng: number
+  @Field({ nullable: true })
+  lng: string
 }

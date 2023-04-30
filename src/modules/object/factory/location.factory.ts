@@ -53,9 +53,18 @@ export class LocationFactory {
       )
     }
 
+    const { lat, lng } = data
+
+    const isInvalidLat = !lat || isNaN(Number(lat))
+    const isInvalidLng = !lng || isNaN(Number(lng))
+
+    if (isInvalidLat || isInvalidLng) {
+      return undefined
+    }
+
     return <ReturnCreateLocationOrArray<T>>{
       type: 'Point',
-      coordinates: [data.lng, data.lat],
+      coordinates: [Number(data.lng), Number(data.lat)],
     }
   }
 }

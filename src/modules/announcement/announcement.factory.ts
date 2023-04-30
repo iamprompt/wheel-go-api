@@ -61,7 +61,7 @@ export class AnnouncementFactory {
       // @ts-expect-error Only ObjectId is required
       images: createRefToSave(data.images),
       // @ts-expect-error Only ObjectId is required
-      place: createRefToSave(data.place),
+      place: data.place === '' ? undefined : createRefToSave(data.place),
       location: LocationFactory.createToSave(data.location),
       tags: data.tags,
       // @ts-expect-error Only _id is required
