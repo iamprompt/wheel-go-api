@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import { ObjectId } from 'mongodb'
 import { ActivityLog, ActivityLogDocument } from './activityLog.schema'
 
 @Injectable()
@@ -29,7 +30,7 @@ export class ActivityLogRepository {
   }
 
   async findByUserId(userId: string): Promise<ActivityLogDocument[]> {
-    return this.ActivityLogModel.find({ user: userId })
+    return this.ActivityLogModel.find({ user: new ObjectId(userId) })
       .populate(this.populateOptions)
       .exec()
   }
