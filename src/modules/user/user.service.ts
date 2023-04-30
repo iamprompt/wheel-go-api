@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common'
 import { UserSummary } from '../object/userSummary.schema'
+import { ActivityLogService } from '../activityLog/activityLog.service'
+import { ExperiencePoint } from '../object/exp.schema'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { UserFactory } from './user.factory'
 import { User } from './user.schema'
 import { UserRepository } from '~/database/users/user.service'
 import { ReviewRepository, RouteRepository } from '~/database/mongo.service'
+import { determineExpLevel } from '~/utils/exp'
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly reviewRepository: ReviewRepository,
-    private readonly routeRepository: RouteRepository
+    private readonly routeRepository: RouteRepository,
+    private readonly activityLogService: ActivityLogService
   ) {}
 
   async find(lang = 'th'): Promise<User[]> {
@@ -70,6 +74,21 @@ export class UserService {
       distance,
       routes: routesNo,
       joinedAt: user.createdAt,
+    }
+  }
+
+  async getExperiencePointByUserId(id: string): Promise<ExperiencePoint> {
+    const activities = await this.activityLogService.findByUserId(id)
+    const experiencePoint = activities.reduce((acc, activity) => {
+      return acc + activity.point
+    }, 0)
+
+    const level = determineExpLevel(experiencePoint)
+
+    return {
+      level: level.currentlevel,
+      point: experiencePoint,
+      nextLevelPoint: level.nextLevelExp,
     }
   }
 }

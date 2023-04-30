@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
 import { UserSummary } from '../object/userSummary.schema'
+import { ExperiencePoint } from '../object/exp.schema'
 import { User } from './user.schema'
 import { UserService } from './user.service'
 import { CreateUserInput } from './dto/createUser.dto'
@@ -73,5 +74,12 @@ export class UserResolver {
   @Query(() => UserSummary)
   async getMySummary(@CurrentUser() user: User): Promise<UserSummary> {
     return this.userService.getUserSummaryById(user.id)
+  }
+
+  @Query(() => ExperiencePoint)
+  async getMyExperiencePoint(
+    @CurrentUser() user: User
+  ): Promise<ExperiencePoint> {
+    return this.userService.getExperiencePointByUserId(user.id)
   }
 }

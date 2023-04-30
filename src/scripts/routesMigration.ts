@@ -42,7 +42,7 @@ async function migrate() {
         'utf8'
       )
       const { data } = parse<[number, number]>(file, {
-        transform: (value, field) => {
+        transform: (value, _field) => {
           return Number.isNaN(Number(value)) ? value : Number(value)
         },
       })

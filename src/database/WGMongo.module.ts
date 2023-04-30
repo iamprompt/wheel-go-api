@@ -12,6 +12,11 @@ import {
 import { Review, ReviewSchema } from './reviews/review.schema'
 import { Route, RouteSchema } from './routes/route.schema'
 import * as WGRepository from './mongo.service'
+import {
+  ActivityLog,
+  ActivityLogSchema,
+} from './activityLogs/activityLog.schema'
+import { Badge, BadgeSchema } from './badge/badge.schema'
 import { WGConfigModule } from '~/config/WGConfig.module'
 import type { Config } from '~/config/configuration'
 
@@ -33,6 +38,8 @@ import type { Config } from '~/config/configuration'
       { name: Announcement.name, schema: AnnouncementSchema },
       { name: Review.name, schema: ReviewSchema },
       { name: Route.name, schema: RouteSchema },
+      { name: ActivityLog.name, schema: ActivityLogSchema },
+      { name: Badge.name, schema: BadgeSchema },
     ]),
   ],
   providers: [...Object.values(WGRepository)],

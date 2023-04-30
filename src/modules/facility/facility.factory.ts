@@ -19,7 +19,7 @@ type ReturnFacilityOrArray<
 export class FacilityFactory {
   static createFromDatabase<
     T extends FacilityDocument | FacilityDocument[] | undefined | null
-  >(data: T, lang = 'th'): ReturnFacilityOrArray<T> {
+  >(data: T, _lang = 'th'): ReturnFacilityOrArray<T> {
     if (!data) {
       return undefined
     }
