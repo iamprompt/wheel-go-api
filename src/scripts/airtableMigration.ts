@@ -234,6 +234,7 @@ async function migrate() {
         length: facility.length ? Number(facility.length) : undefined,
       },
       status: STATUS.PUBLISHED,
+      isWarning: facility.facility_en === 'Surface',
     })
     Logger.log(
       `Created new facility: ${newFacility.id} (${i + 1}/${facilities.length})`
