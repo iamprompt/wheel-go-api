@@ -100,8 +100,8 @@ async function migrate() {
       type: PLACE_TYPES.CURBCUT,
       internalCode: curbCut.id,
       location: {
-        lat: Number(curbCut.lat_lng.split(',')[0]),
-        lng: Number(curbCut.lat_lng.split(',')[1]),
+        lat: Number(curbCut.lat_lng.split(',')[0]).toString(),
+        lng: Number(curbCut.lat_lng.split(',')[1]).toString(),
       },
       metadata: {
         accessibility: curbcutStatus,
@@ -133,8 +133,8 @@ async function migrate() {
         th: transport.place_th,
       },
       location: {
-        lat: Number(transport.lat_lng.split(',')[0]),
-        lng: Number(transport.lat_lng.split(',')[1]),
+        lat: Number(transport.lat_lng.split(',')[0]).toString(),
+        lng: Number(transport.lat_lng.split(',')[1]).toString(),
       },
       metadata: {
         accessibility: accessibilityStatus,
@@ -192,8 +192,8 @@ async function migrate() {
         location:
           place.lat_lng && place.lat_lng !== ''
             ? {
-                lat: Number(place.lat_lng.split(',')[0]),
-                lng: Number(place.lat_lng.split(',')[1]),
+                lat: Number(place.lat_lng.split(',')[0]).toString(),
+                lng: Number(place.lat_lng.split(',')[1]).toString(),
               }
             : undefined,
         internalCode: place.place_code?.trim(),
@@ -225,10 +225,10 @@ async function migrate() {
 
     const newFacilityLocation = {
       lat: !isNaN(newFacilityLocationCast.lat)
-        ? newFacilityLocationCast.lat
+        ? newFacilityLocationCast.lat.toString()
         : undefined,
       lng: !isNaN(newFacilityLocationCast.lng)
-        ? newFacilityLocationCast.lng
+        ? newFacilityLocationCast.lng.toString()
         : undefined,
     }
 
