@@ -1,6 +1,7 @@
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { Buffer } from 'node:buffer'
+import { randomUUID } from 'node:crypto'
 import { HttpException, Injectable, Logger } from '@nestjs/common'
 import { FileUpload } from 'graphql-upload'
 import sharp from 'sharp'
@@ -28,9 +29,13 @@ export class MediaService {
   }
 
   async upload(file: FileUpload): Promise<Media> {
-    const { createReadStream, filename } = file
+    const { createReadStream, filename: originalFilename } = file
 
+    const fileExt = originalFilename.split('.').pop()
+    const filename = `${randomUUID()}.${fileExt}`
     Logger.log(`Uploading file: ${filename}`)
+
+    // Rename the file to a unique name
 
     // Read the file into a buffer
     const stream = createReadStream()
