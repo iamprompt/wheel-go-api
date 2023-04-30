@@ -23,4 +23,8 @@ export const ERROR_MESSAGES = {
     message: 'No permission',
     code: 'NO_PERMISSION',
   },
+  EXISTING_EMAIL: {
+    message: 'Email already exists',
+    code: 'EXISTING_EMAIL',
+  },
 }

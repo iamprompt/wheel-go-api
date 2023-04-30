@@ -9,9 +9,11 @@ import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcrypt'
 import { UserFactory } from '../user/user.factory'
 import { User } from '../user/user.schema'
+import { RegisterInput } from '../object/dto/register.dto'
 import { Config } from '~/config/configuration'
 import { UserRepository } from '~/database/users/user.service'
 import { ERROR_MESSAGES } from '~/const/errorMessage'
+import { ROLES } from '~/const/userRoles'
 
 @Injectable()
 export class AuthService {
@@ -79,5 +81,25 @@ export class AuthService {
         description: ERROR_MESSAGES.INVALID_REFRESH_TOKEN.message,
       })
     }
+  }
+
+  async register(data: RegisterInput) {
+    const user = await this.userRepository.findByEmail(data.email)
+    if (user) {
+      throw new BadRequestException(ERROR_MESSAGES.EXISTING_EMAIL.code, {
+        description: ERROR_MESSAGES.EXISTING_EMAIL.message,
+      })
+    }
+
+    const newUser = await this.userRepository.create({
+      ...data,
+      role: ROLES.USER,
+      metadata: {
+        impairmentLevel: data.metadata?.impairmentLevel,
+        equipment: data.metadata?.equipment,
+        favorites: [],
+      },
+    })
+    return UserFactory.createFromDatabase(newUser)
   }
 }
