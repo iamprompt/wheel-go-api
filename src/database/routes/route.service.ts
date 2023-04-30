@@ -14,7 +14,10 @@ export class RouteRepository {
     private readonly RouteModel: Model<RouteDocument>
   ) {}
 
-  PopulateOptions: Parameters<(typeof this.RouteModel)['populate']>['0'] = []
+  PopulateOptions: Parameters<(typeof this.RouteModel)['populate']>['0'] = [
+    'origin',
+    'destination',
+  ]
 
   async find(options: GetRoutesInput): Promise<RouteDocument[]> {
     return this.RouteModel.find({
