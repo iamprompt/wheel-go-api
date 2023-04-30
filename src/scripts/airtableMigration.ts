@@ -223,6 +223,10 @@ async function migrate() {
         th: facility.detail_th,
         en: facility.detail_en,
       },
+      location: {
+        lat: Number(facility.facility_lat_lng.split(',')[0]),
+        lng: Number(facility.facility_lat_lng.split(',')[1]),
+      },
       parent: placeIds[facility.place_en.trim()],
       type: facility.facility_en.trim().toUpperCase() as any,
       metadata: {
