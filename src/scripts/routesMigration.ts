@@ -51,8 +51,8 @@ async function migrate() {
         .filter((item) => item.length === 2)
         .map((item) => {
           return {
-            lat: item[0],
-            lng: item[1],
+            lat: item[0].toString(),
+            lng: item[1].toString(),
           }
         })
 
