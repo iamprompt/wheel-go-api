@@ -19,16 +19,20 @@ export class RouteRepository {
   async find(options: GetRoutesInput): Promise<RouteDocument[]> {
     return this.RouteModel.find({
       // Find reviews that match the origin object id and destination object id
-      $or: [
-        {
-          origin: new ObjectId(options.origin),
-          destination: new ObjectId(options.destination),
-        },
-        {
-          origin: new ObjectId(options.destination),
-          destination: new ObjectId(options.origin),
-        },
-      ],
+      ...(options.origin || options.destination
+        ? {
+            $or: [
+              {
+                origin: new ObjectId(options.origin),
+                destination: new ObjectId(options.destination),
+              },
+              {
+                origin: new ObjectId(options.destination),
+                destination: new ObjectId(options.origin),
+              },
+            ],
+          }
+        : {}),
       ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
     })
       .limit(options.limit || 1000)

@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:airtable": "ts-node -r tsconfig-paths/register ./src/scripts/airtableMigration.ts"
+    "migration:airtable": "ts-node -r tsconfig-paths/register ./src/scripts/airtableMigration.ts",
+    "migration:routes": "ts-node -r tsconfig-paths/register ./src/scripts/routesMigration.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.7.0",
@@ -36,6 +37,7 @@
     "bcrypt": "^5.1.0",
     "dayjs": "^1.11.7",
     "fs-capacitor": "^8.0.0",
+    "geolib": "^3.3.3",
     "graphql": "^16.6.0",
     "graphql-upload": "^13.0.0",
     "mongodb": "^5.3.0",
