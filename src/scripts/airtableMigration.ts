@@ -218,15 +218,29 @@ async function migrate() {
   Logger.log('Creating Facilities in database')
   for (const [i, facility] of facilities.entries()) {
     Logger.log(`Creating facility ${i + 1} of ${facilities.length}`)
+    const newFacilityLocationCast = {
+      lat: Number(facility.facility_lat_lng.split(',')[0]),
+      lng: Number(facility.facility_lat_lng.split(',')[1]),
+    }
+
+    const newFacilityLocation = {
+      lat: !isNaN(newFacilityLocationCast.lat)
+        ? newFacilityLocationCast.lat
+        : undefined,
+      lng: !isNaN(newFacilityLocationCast.lng)
+        ? newFacilityLocationCast.lng
+        : undefined,
+    }
+
     const newFacility = await facilityService.create({
       detail: {
         th: facility.detail_th,
         en: facility.detail_en,
       },
-      location: {
-        lat: Number(facility.facility_lat_lng.split(',')[0]),
-        lng: Number(facility.facility_lat_lng.split(',')[1]),
-      },
+      location:
+        newFacilityLocation.lat && newFacilityLocation.lng
+          ? newFacilityLocation
+          : undefined,
       parent: placeIds[facility.place_en.trim()],
       type: facility.facility_en.trim().toUpperCase() as any,
       metadata: {
