@@ -21,7 +21,7 @@ export class PlaceResolver {
     @Args('options', { nullable: true }) options?: GetPlacesInput,
     @CurrentUser() user?: User
   ) {
-    return this.placeService.find(options, lang, user.role === ROLES.ADMIN)
+    return this.placeService.find(options, lang, user?.role === ROLES.ADMIN)
   }
 
   @Query(() => Place)
@@ -31,7 +31,7 @@ export class PlaceResolver {
     @ActiveLang() lang: string,
     @CurrentUser() user?: User
   ) {
-    return this.placeService.findById(id, lang, user.role === ROLES.ADMIN)
+    return this.placeService.findById(id, lang, user?.role === ROLES.ADMIN)
   }
 
   @Mutation(() => Place)
