@@ -4,20 +4,23 @@ import { LanguageObject } from './language.schema'
 @ObjectType()
 export class BadgeCondition {
   @Field(() => LanguageObject, { nullable: true })
-  name?: LanguageObject
+  name: LanguageObject
 
   @Field(() => LanguageObject, { nullable: true })
-  icon?: LanguageObject
+  description: LanguageObject
 
   @Field(() => String, { nullable: true })
-  color?: string
+  icon: string
 
   @Field(() => String, { nullable: true })
-  type?: string
+  color: string
+
+  @Field(() => String, { nullable: true })
+  type: string
 
   @Field(() => Number, { nullable: true })
-  count?: number
+  count: number
 
   @Field(() => [String], { nullable: true })
-  filter?: string[]
+  filter: string[]
 }

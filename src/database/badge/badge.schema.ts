@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument } from 'mongoose'
-import { Timestamp } from 'mongodb'
-import { TimestampConfig } from '../utils/timestamp'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { LangObject, LangObjectDefinition } from '../object/LangObject'
 import {
   BadgeCondition,

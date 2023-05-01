@@ -22,4 +22,19 @@ export class BadgeRepository {
   async findById(id: string): Promise<BadgeDocument> {
     return this.BadgeModel.findById(id).exec()
   }
+
+  async update(id: string, badge: Badge): Promise<BadgeDocument> {
+    const updatedBadge = await this.BadgeModel.findByIdAndUpdate(
+      id,
+      badge
+    ).exec()
+
+    return updatedBadge
+  }
+
+  async delete(id: string): Promise<BadgeDocument> {
+    const deletedBadge = await this.BadgeModel.findByIdAndDelete(id).exec()
+
+    return deletedBadge
+  }
 }
