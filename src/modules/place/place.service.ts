@@ -9,15 +9,19 @@ import { PlaceRepository } from '~/database/places/place.services'
 export class PlaceService {
   constructor(private readonly placeRepository: PlaceRepository) {}
 
-  async find(options: GetPlacesInput = {}, lang = 'th'): Promise<Place[]> {
-    const places = await this.placeRepository.find(options)
+  async find(
+    options: GetPlacesInput = {},
+    lang = 'th',
+    draft = false
+  ): Promise<Place[]> {
+    const places = await this.placeRepository.find(options, draft)
     const formattedPlaces = PlaceFactory.createFromDatabase(places, lang)
 
     return formattedPlaces
   }
 
-  async findById(id: string, lang = 'th'): Promise<Place> {
-    const place = await this.placeRepository.findById(id)
+  async findById(id: string, lang = 'th', draft = false): Promise<Place> {
+    const place = await this.placeRepository.findById(id, draft)
     const formattedPlace = PlaceFactory.createFromDatabase(place, lang)
     return formattedPlace
   }

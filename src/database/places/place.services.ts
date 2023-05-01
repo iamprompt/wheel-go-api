@@ -1,9 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import type { Model } from 'mongoose'
 import type { PlaceDocument } from './place.schema'
 import { Place } from './place.schema'
 import { GetPlacesInput } from '~/modules/place/dto/getPlaces.dto'
+import { STATUS } from '~/const/status'
 
 @Injectable()
 export class PlaceRepository {
@@ -11,16 +12,17 @@ export class PlaceRepository {
     @InjectModel(Place.name) private readonly PlaceModel: Model<PlaceDocument>
   ) {}
 
-  PlacePopulateOptions: Parameters<(typeof this.PlaceModel)['populate']>['0'] =
-    [
-      {
-        path: 'images',
-      },
-    ]
+  populateOptions: Parameters<(typeof this.PlaceModel)['populate']>['0'] = [
+    {
+      path: 'images',
+    },
+  ]
 
-  async find(options: GetPlacesInput = {}): Promise<PlaceDocument[]> {
-    Logger.log(options)
-    return this.PlaceModel.find({
+  async find(
+    options: GetPlacesInput = {},
+    draft = false
+  ): Promise<PlaceDocument[]> {
+    let query = this.PlaceModel.find({
       ...(options.keyword
         ? {
             $or: [
@@ -48,29 +50,32 @@ export class PlaceRepository {
       ...(options.excludeTypes ? { type: { $nin: options.excludeTypes } } : {}),
     })
       .limit(options.limit || 1000)
-      .populate(this.PlacePopulateOptions)
-      .exec()
+      .populate(this.populateOptions)
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.exec()
   }
 
-  async findById(id: string): Promise<PlaceDocument | null> {
+  async findById(id: string, draft = false): Promise<PlaceDocument | null> {
     if (!id) {
       throw new Error('Place not found')
     }
 
-    const place = await this.PlaceModel.findById(id)
-      .populate(this.PlacePopulateOptions)
-      .exec()
+    let query = this.PlaceModel.findById(id).populate(this.populateOptions)
 
-    if (!place) {
-      throw new Error('Place not found')
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
     }
 
-    return place
+    return query.exec()
   }
 
   async create(data: Place): Promise<PlaceDocument> {
     const createdPlace = new this.PlaceModel<Place>(data)
-    return (await createdPlace.save()).populate(this.PlacePopulateOptions)
+    return (await createdPlace.save()).populate(this.populateOptions)
   }
 
   async update(id: string, data: Place): Promise<PlaceDocument> {
@@ -82,7 +87,7 @@ export class PlaceRepository {
       throw new Error('Place not found')
     }
 
-    return updatedPlace.populate(this.PlacePopulateOptions)
+    return updatedPlace.populate(this.populateOptions)
   }
 
   async delete(id: string): Promise<PlaceDocument> {
@@ -92,6 +97,6 @@ export class PlaceRepository {
       throw new Error('Place not found')
     }
 
-    return deletedPlace.populate(this.PlacePopulateOptions)
+    return deletedPlace.populate(this.populateOptions)
   }
 }

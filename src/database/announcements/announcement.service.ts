@@ -4,6 +4,7 @@ import type { Model } from 'mongoose'
 import type { AnnouncementDocument } from './announcement.schema'
 import { Announcement } from './announcement.schema'
 import { GetAnnouncementsInput } from '~/modules/announcement/dto/getAnnouncements.dto'
+import { STATUS } from '~/const/status'
 
 @Injectable()
 export class AnnouncementRepository {
@@ -12,10 +13,15 @@ export class AnnouncementRepository {
     private readonly AnnouncementModel: Model<AnnouncementDocument>
   ) {}
 
+  populateOptions: Parameters<
+    (typeof this.AnnouncementModel)['populate']
+  >['0'] = ['user', 'place', 'images']
+
   async find(
-    options: GetAnnouncementsInput = {}
+    options: GetAnnouncementsInput = {},
+    draft = false
   ): Promise<AnnouncementDocument[]> {
-    return this.AnnouncementModel.find({
+    let query = this.AnnouncementModel.find({
       ...(options.keyword
         ? {
             $or: [
@@ -44,15 +50,25 @@ export class AnnouncementRepository {
         : {}),
     })
       .limit(options.limit || 1000)
-      .populate(['user', 'place', 'images'])
-      .sort({ createdAt: -1 })
-      .exec()
+      .populate(this.populateOptions)
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
-  async findById(id: string): Promise<AnnouncementDocument> {
-    return this.AnnouncementModel.findById(id)
-      .populate(['user', 'place', 'images'])
-      .exec()
+  async findById(id: string, draft = false): Promise<AnnouncementDocument> {
+    let query = this.AnnouncementModel.findById(id).populate(
+      this.populateOptions
+    )
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.exec()
   }
 
   async create(announcement: Announcement): Promise<AnnouncementDocument> {

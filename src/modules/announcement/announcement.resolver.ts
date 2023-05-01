@@ -10,25 +10,39 @@ import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
 import { RolesGuard } from '~/guards/RolesGuard'
 import { HasRoles } from '~/decorators/hasRoles.decorator'
 import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { GqlOptionalAuthGuard } from '~/guards/GqlOptionalAuthGuard'
+import { ROLES } from '~/const/userRoles'
 
 @Resolver()
 export class AnnouncementResolver {
   constructor(private readonly announcementService: AnnouncementService) {}
 
   @Query(() => [Announcement])
+  @UseGuards(GqlOptionalAuthGuard)
   async getAnnouncements(
     @ActiveLang() lang: string,
-    @Args('options', { nullable: true }) options?: GetAnnouncementsInput
+    @Args('options', { nullable: true }) options?: GetAnnouncementsInput,
+    @CurrentUser() user?: User
   ) {
-    return this.announcementService.find(options, lang)
+    return this.announcementService.find(
+      options,
+      lang,
+      user?.role === ROLES.ADMIN
+    )
   }
 
   @Query(() => Announcement)
+  @UseGuards(GqlOptionalAuthGuard)
   async getAnnouncementById(
     @Args('id', { type: () => String }) id: string,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
+    @CurrentUser() user?: User
   ) {
-    return this.announcementService.findById(id, lang)
+    return this.announcementService.findById(
+      id,
+      lang,
+      user?.role === ROLES.ADMIN
+    )
   }
 
   @Mutation(() => Announcement)

@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb'
 import type { ReviewDocument } from './review.schema'
 import { Review } from './review.schema'
 import { GetReviewsInput } from '~/modules/review/dto/getReviews.dto'
+import { STATUS } from '~/const/status'
 
 @Injectable()
 export class ReviewRepository {
@@ -30,38 +31,64 @@ export class ReviewRepository {
     },
   ]
 
-  async find(options: GetReviewsInput = {}): Promise<ReviewDocument[]> {
-    return this.ReviewModel.find({
+  async find(
+    options: GetReviewsInput = {},
+    draft = true
+  ): Promise<ReviewDocument[]> {
+    let query = this.ReviewModel.find({
       ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
     })
       .limit(options.limit || 1000)
       .populate(this.ReviewPopulateOptions)
-      .sort({ createdAt: -1 })
-      .exec()
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
-  async findById(id: string): Promise<ReviewDocument> {
-    return this.ReviewModel.findById(id)
-      .populate(this.ReviewPopulateOptions)
-      .exec()
+  async findById(id: string, draft = true): Promise<ReviewDocument> {
+    let query = this.ReviewModel.findById(id).populate(
+      this.ReviewPopulateOptions
+    )
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.exec()
   }
 
   async countByUserId(userId: string): Promise<number> {
     return this.ReviewModel.countDocuments({ user: new ObjectId(userId) })
   }
 
-  async findByPlaceId(placeId: string): Promise<ReviewDocument[]> {
-    return this.ReviewModel.find({ place: new ObjectId(placeId) })
-      .populate(this.ReviewPopulateOptions)
-      .sort({ createdAt: -1 })
-      .exec()
+  async findByPlaceId(
+    placeId: string,
+    draft = true
+  ): Promise<ReviewDocument[]> {
+    let query = this.ReviewModel.find({
+      place: new ObjectId(placeId),
+    }).populate(this.ReviewPopulateOptions)
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
-  async findByUserId(userId: string): Promise<ReviewDocument[]> {
-    return this.ReviewModel.find({ user: new ObjectId(userId) })
-      .populate(this.ReviewPopulateOptions)
-      .sort({ createdAt: -1 })
-      .exec()
+  async findByUserId(userId: string, draft = true): Promise<ReviewDocument[]> {
+    let query = this.ReviewModel.find({ user: new ObjectId(userId) }).populate(
+      this.ReviewPopulateOptions
+    )
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
   async create(review: Review): Promise<ReviewDocument> {

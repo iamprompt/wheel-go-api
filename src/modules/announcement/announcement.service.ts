@@ -10,13 +10,13 @@ export class AnnouncementService {
     private readonly announcementRepository: AnnouncementRepository
   ) {}
 
-  async find(options: GetAnnouncementsInput = {}, lang = 'th') {
-    const announcements = await this.announcementRepository.find(options)
+  async find(options: GetAnnouncementsInput = {}, lang = 'th', draft = false) {
+    const announcements = await this.announcementRepository.find(options, draft)
     return AnnouncementFactory.createFromDatabase(announcements, lang)
   }
 
-  async findById(id: string, lang = 'th') {
-    const announcement = await this.announcementRepository.findById(id)
+  async findById(id: string, lang = 'th', draft = false) {
+    const announcement = await this.announcementRepository.findById(id, draft)
     return AnnouncementFactory.createFromDatabase(announcement, lang)
   }
 

@@ -6,6 +6,7 @@ import type { RouteDocument } from './route.schema'
 import { Route } from './route.schema'
 import { GetRoutesInput } from '~/modules/route/dto/getRoutes.dto'
 import { ROUTE_TYPES } from '~/const/routeTypes'
+import { STATUS } from '~/const/status'
 
 @Injectable()
 export class RouteRepository {
@@ -19,8 +20,8 @@ export class RouteRepository {
     'destination',
   ]
 
-  async find(options: GetRoutesInput): Promise<RouteDocument[]> {
-    return this.RouteModel.find({
+  async find(options: GetRoutesInput, draft = true): Promise<RouteDocument[]> {
+    let query = this.RouteModel.find({
       // Find reviews that match the origin object id and destination object id
       ...(options.origin || options.destination
         ? {
@@ -40,22 +41,39 @@ export class RouteRepository {
     })
       .limit(options.limit || 1000)
       .populate(this.PopulateOptions)
-      .sort({ createdAt: -1 })
-      .exec()
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
-  async findById(id: string): Promise<RouteDocument> {
-    return this.RouteModel.findById(id).populate(this.PopulateOptions).exec()
+  async findById(id: string, draft = true): Promise<RouteDocument> {
+    let query = this.RouteModel.findById(id).populate(this.PopulateOptions)
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.exec()
   }
 
   async findRoutesByUserId(
     userId: string,
-    type: ROUTE_TYPES = ROUTE_TYPES.TRACED
+    type: ROUTE_TYPES = ROUTE_TYPES.TRACED,
+    draft = true
   ): Promise<RouteDocument[]> {
-    return this.RouteModel.find({ user: new ObjectId(userId), type })
-      .populate(this.PopulateOptions)
-      .sort({ createdAt: -1 })
-      .exec()
+    let query = this.RouteModel.find({
+      user: new ObjectId(userId),
+      type,
+    }).populate(this.PopulateOptions)
+
+    if (!draft) {
+      query = query.where('status').equals(STATUS.PUBLISHED)
+    }
+
+    return query.sort({ createdAt: -1 }).exec()
   }
 
   async create(route: Route): Promise<RouteDocument> {
