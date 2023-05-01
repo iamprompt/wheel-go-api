@@ -93,4 +93,8 @@ export class RatingService {
       reviewCount: reviewCount || 0,
     }
   }
+
+  async getPlaceRatings(ids: string[]): Promise<RatingSummary[]> {
+    return Promise.all(ids.map((id) => this.getPlaceRating(id)))
+  }
 }

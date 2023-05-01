@@ -10,4 +10,11 @@ export class RatingResolver {
   async getRatingSummaryByPlaceId(@Args('id') id: string) {
     return this.ratingService.getPlaceRating(id)
   }
+
+  @Query(() => [RatingSummary])
+  async getRatingSummaryByPlaceIds(
+    @Args('ids', { type: () => [String] }) ids: string[]
+  ) {
+    return this.ratingService.getPlaceRatings(ids)
+  }
 }

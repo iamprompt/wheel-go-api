@@ -52,7 +52,11 @@ export class PlaceRepository {
       .exec()
   }
 
-  async findById(id: string): Promise<PlaceDocument> {
+  async findById(id: string): Promise<PlaceDocument | null> {
+    if (!id) {
+      throw new Error('Place not found')
+    }
+
     const place = await this.PlaceModel.findById(id)
       .populate(this.PlacePopulateOptions)
       .exec()
