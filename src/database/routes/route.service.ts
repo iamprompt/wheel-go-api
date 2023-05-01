@@ -40,6 +40,7 @@ export class RouteRepository {
     })
       .limit(options.limit || 1000)
       .populate(this.PopulateOptions)
+      .sort({ createdAt: -1 })
       .exec()
   }
 
@@ -53,6 +54,7 @@ export class RouteRepository {
   ): Promise<RouteDocument[]> {
     return this.RouteModel.find({ user: new ObjectId(userId), type })
       .populate(this.PopulateOptions)
+      .sort({ createdAt: -1 })
       .exec()
   }
 

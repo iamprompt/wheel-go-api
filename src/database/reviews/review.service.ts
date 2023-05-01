@@ -36,6 +36,7 @@ export class ReviewRepository {
     })
       .limit(options.limit || 1000)
       .populate(this.ReviewPopulateOptions)
+      .sort({ createdAt: -1 })
       .exec()
   }
 
@@ -52,12 +53,14 @@ export class ReviewRepository {
   async findByPlaceId(placeId: string): Promise<ReviewDocument[]> {
     return this.ReviewModel.find({ place: new ObjectId(placeId) })
       .populate(this.ReviewPopulateOptions)
+      .sort({ createdAt: -1 })
       .exec()
   }
 
   async findByUserId(userId: string): Promise<ReviewDocument[]> {
     return this.ReviewModel.find({ user: new ObjectId(userId) })
       .populate(this.ReviewPopulateOptions)
+      .sort({ createdAt: -1 })
       .exec()
   }
 

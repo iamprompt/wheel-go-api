@@ -11,7 +11,7 @@ export class MediaRepository {
   ) {}
 
   async find(): Promise<MediaDocument[]> {
-    return this.MediaModel.find().exec()
+    return this.MediaModel.find().sort({ createdAt: -1 }).exec()
   }
 
   async findById(id: string): Promise<MediaDocument> {

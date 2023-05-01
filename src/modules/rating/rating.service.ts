@@ -77,6 +77,11 @@ export class RatingService {
           key === FACILITY_TYPES.SURFACE &&
           facilitiesStatus[key] === undefined
         ) {
+          acc[key] = {
+            status: FACILITY_STATUS.AVAILABLE,
+            rating: totalRating.facilities[key]?.rating / reviewCount || 0,
+          }
+
           return acc
         }
 

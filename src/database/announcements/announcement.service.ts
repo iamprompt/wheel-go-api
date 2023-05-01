@@ -45,6 +45,7 @@ export class AnnouncementRepository {
     })
       .limit(options.limit || 1000)
       .populate(['user', 'place', 'images'])
+      .sort({ createdAt: -1 })
       .exec()
   }
 
