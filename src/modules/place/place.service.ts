@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { RatingService } from '../rating/rating.service'
 import { CreatePlaceInput } from './dto/createPlace.dto'
 import { PlaceFactory } from './place.factory'
 import { Place } from './place.schema'
@@ -7,16 +8,29 @@ import { PlaceRepository } from '~/database/places/place.services'
 
 @Injectable()
 export class PlaceService {
-  constructor(private readonly placeRepository: PlaceRepository) {}
+  constructor(
+    private readonly placeRepository: PlaceRepository,
+    private readonly ratingService: RatingService
+  ) {}
 
   async find(options: GetPlacesInput = {}, lang = 'th'): Promise<Place[]> {
     const places = await this.placeRepository.find(options)
-    return PlaceFactory.createFromDatabase(places, lang)
+    const formattedPlaces = PlaceFactory.createFromDatabase(places, lang)
+
+    for (const [i, place] of formattedPlaces.entries()) {
+      const rating = await this.ratingService.getPlaceRating(place.id)
+      formattedPlaces[i].rating = rating.overall
+    }
+
+    return formattedPlaces
   }
 
   async findById(id: string, lang = 'th'): Promise<Place> {
     const place = await this.placeRepository.findById(id)
-    return PlaceFactory.createFromDatabase(place, lang)
+    const formattedPlace = PlaceFactory.createFromDatabase(place, lang)
+    const rating = await this.ratingService.getPlaceRating(formattedPlace.id)
+    formattedPlace.rating = rating.overall
+    return formattedPlace
   }
 
   async create(data: CreatePlaceInput, lang = 'th'): Promise<Place> {

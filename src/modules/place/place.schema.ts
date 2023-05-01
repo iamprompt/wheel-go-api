@@ -29,6 +29,9 @@ export class Place {
   @Field({ nullable: true })
   internalCode?: string
 
+  @Field({ nullable: true })
+  rating?: number
+
   @Field(() => PlaceMetadata, { nullable: true })
   metadata?: PlaceMetadata
 

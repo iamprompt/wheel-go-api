@@ -8,5 +8,6 @@ import { RatingService } from './rating.service'
 @Module({
   imports: [PlaceModule, ReviewModule, FacilityModule],
   providers: [RatingResolver, RatingService],
+  exports: [RatingService],
 })
 export class RatingModule {}
