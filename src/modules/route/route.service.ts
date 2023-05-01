@@ -5,6 +5,7 @@ import { CreateRouteInput } from './dto/createRoute.dto'
 import { GetRoutesInput } from './dto/getRoutes.dto'
 import { RouteRepository } from '~/database/routes/route.service'
 import { ROUTE_TYPES } from '~/const/routeTypes'
+import { ActivityType } from '~/const/activityLog'
 
 @Injectable()
 export class RouteService {
@@ -41,7 +42,7 @@ export class RouteService {
 
     await this.activityLogService.create(
       {
-        action: 'TRACE_ROUTE',
+        action: ActivityType.TRACE_ROUTE,
         route: formattedRoute.id,
         point: 100,
       },

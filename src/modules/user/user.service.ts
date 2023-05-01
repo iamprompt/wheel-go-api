@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { UserSummary } from '../object/userSummary.schema'
 import { ActivityLogService } from '../activityLog/activityLog.service'
 import { ExperiencePoint } from '../object/exp.schema'
+import { UserBadge } from '../object/userBadge.schema'
+import { BadgeService } from '../badge/badge.service'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { UserFactory } from './user.factory'
@@ -16,7 +18,8 @@ export class UserService {
     private readonly userRepository: UserRepository,
     private readonly reviewRepository: ReviewRepository,
     private readonly routeRepository: RouteRepository,
-    private readonly activityLogService: ActivityLogService
+    private readonly activityLogService: ActivityLogService,
+    private readonly badgeService: BadgeService
   ) {}
 
   async find(lang = 'th'): Promise<User[]> {
@@ -90,5 +93,31 @@ export class UserService {
       point: experiencePoint,
       nextLevelPoint: level.nextLevelExp,
     }
+  }
+
+  async addBadge(userId: string, badgeId: string): Promise<UserBadge> {
+    const user = await this.userRepository.addBadge(userId, badgeId)
+    const formattedUser = UserFactory.createFromDatabase(user)
+    return formattedUser.badges.find((badge) => badge.badge.id === badgeId)
+  }
+
+  async getBadgesByUserId(id: string): Promise<UserBadge[]> {
+    const eligibleBadges = await this.badgeService.getEligibleBadges(id)
+
+    console.log(eligibleBadges.length)
+
+    // Check if user has already earned the badge
+    const user = await this.findById(id)
+    const newEarnedBadges = eligibleBadges.filter((badge) => {
+      return !user.badges.some((userBadge) => userBadge.badge.id === badge.id)
+    })
+
+    for (const badge of newEarnedBadges) {
+      await this.userRepository.addBadge(id, badge.id)
+    }
+
+    const newUser = await this.findById(id)
+
+    return newUser.badges
   }
 }

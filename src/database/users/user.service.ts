@@ -21,6 +21,9 @@ export class UserRepository {
     {
       path: 'profileImage',
     },
+    {
+      path: 'badges.badge',
+    },
   ]
 
   async find(): Promise<UserDocument[]> {
@@ -88,6 +91,26 @@ export class UserRepository {
         $pull: {
           'metadata.favorites': {
             place: new ObjectId(placeId),
+          },
+        },
+      },
+      {
+        returnDocument: 'after',
+      }
+    ).populate(this.UserPopulateOptions)
+
+    return user
+  }
+
+  async addBadge(userId: string, badgeId: string): Promise<UserDocument> {
+    const user = await this.UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $addToSet: {
+          badges: {
+            badge: new ObjectId(badgeId),
+            isSeen: false,
+            timestamp: new Date(),
           },
         },
       },

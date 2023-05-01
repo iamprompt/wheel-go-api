@@ -1,5 +1,6 @@
 import { PlaceFactory } from '../place/place.factory'
 import { MediaFactory } from '../media/media.factory'
+import { BadgeFactory } from '../badge/badge.factory'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { User } from './user.schema'
@@ -44,6 +45,12 @@ export class UserFactory {
             place: PlaceFactory.createFromDatabase(f.place, lang),
           })) || [],
       },
+      badges:
+        user.badges?.map((badge) => ({
+          badge: BadgeFactory.createFromDatabase(badge.badge),
+          timestamp: badge.timestamp,
+          isSeen: badge.isSeen,
+        })) || [],
       profileImage: MediaFactory.createFromDatabase(user.profileImage),
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

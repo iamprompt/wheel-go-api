@@ -19,7 +19,7 @@ export class BadgeCondition {
   type: string
 
   @Field(() => Number, { nullable: true })
-  count: number
+  requiredCount: number
 
   @Field(() => [String], { nullable: true })
   filter: string[]

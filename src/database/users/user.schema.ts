@@ -5,6 +5,7 @@ import type { UserMetadata } from '../object/UserMetadataObject'
 import { UserMetadataObject } from '../object/UserMetadataObject'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
 import { Media, MediaDocument } from '../media/media.schema'
+import { UserBadge, UserBadgeObject } from '../object/UserBadgeObject'
 import { ROLES } from '~/const/userRoles'
 
 @Schema({ collection: 'users', timestamps: TimestampConfig })
@@ -35,6 +36,9 @@ export class User {
 
   @Prop({ type: UserMetadataObject })
   metadata?: UserMetadata
+
+  @Prop({ type: [UserBadgeObject] })
+  badges?: UserBadge[]
 }
 
 export type UserDocument = HydratedDocument<User, Timestamp>

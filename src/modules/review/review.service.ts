@@ -5,6 +5,7 @@ import { ReviewFactory } from './review.factory'
 import { CreateReviewInput } from './dto/createReview.dto'
 import { GetReviewsInput } from './dto/getReviews.dto'
 import { ReviewRepository } from '~/database/reviews/review.service'
+import { ActivityType } from '~/const/activityLog'
 
 @Injectable()
 export class ReviewService {
@@ -44,7 +45,7 @@ export class ReviewService {
 
     await this.activityLogService.create(
       {
-        action: 'WRITE_REVIEW',
+        action: ActivityType.WRITE_REVIEW,
         review: formattedReview.id,
         point: 100,
       },

@@ -6,7 +6,7 @@ export const BadgeConditionObject = {
   description: { type: LangObjectDefinition },
   icon: { type: String },
   color: { type: String },
-  count: { type: Number },
+  requiredCount: { type: Number },
   filter: { type: [String] },
 }
 
@@ -16,6 +16,6 @@ export interface BadgeCondition {
   icon?: string
   color?: string
   type?: string
-  count?: number
+  requiredCount?: number
   filter?: string[]
 }

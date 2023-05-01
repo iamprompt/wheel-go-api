@@ -8,19 +8,27 @@ export class ActivityLogService {
   constructor(private readonly activityLogRepository: ActivityLogRepository) {}
 
   async find() {
-    return this.activityLogRepository.find()
+    const activityLogs = await this.activityLogRepository.find()
+    return ActivityLogFactory.createFromDatabase(activityLogs)
   }
 
   async findById(id: string) {
-    return this.activityLogRepository.findById(id)
+    const activityLog = await this.activityLogRepository.findById(id)
+
+    return ActivityLogFactory.createFromDatabase(activityLog)
   }
 
   async findByUserId(userId: string) {
-    return this.activityLogRepository.findByUserId(userId)
+    const activityLogs = await this.activityLogRepository.findByUserId(userId)
+    return ActivityLogFactory.createFromDatabase(activityLogs)
   }
 
   async findByActivityType(activityType: string) {
-    return this.activityLogRepository.findByActivityType(activityType)
+    const activityLogs = await this.activityLogRepository.findByActivityType(
+      activityType
+    )
+
+    return ActivityLogFactory.createFromDatabase(activityLogs)
   }
 
   async create(activityLog: CreateActivityLogInput, userId: string) {
@@ -29,6 +37,8 @@ export class ActivityLogService {
       userId
     )
 
-    return this.activityLogRepository.create(activityLogToSave)
+    const activity = await this.activityLogRepository.create(activityLogToSave)
+
+    return ActivityLogFactory.createFromDatabase(activity)
   }
 }

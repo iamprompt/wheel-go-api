@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
 import { UserSummary } from '../object/userSummary.schema'
 import { ExperiencePoint } from '../object/exp.schema'
+import { UserBadge } from '../object/userBadge.schema'
 import { User } from './user.schema'
 import { UserService } from './user.service'
 import { CreateUserInput } from './dto/createUser.dto'
@@ -81,5 +82,10 @@ export class UserResolver {
     @CurrentUser() user: User
   ): Promise<ExperiencePoint> {
     return this.userService.getExperiencePointByUserId(user.id)
+  }
+
+  @Query(() => [UserBadge])
+  async getMyBadges(@CurrentUser() user: User): Promise<UserBadge[]> {
+    return this.userService.getBadgesByUserId(user.id)
   }
 }

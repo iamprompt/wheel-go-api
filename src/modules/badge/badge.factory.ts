@@ -32,13 +32,13 @@ export class BadgeFactory {
       description: badges.description,
       icon: badges.icon,
       color: badges.color,
-      conditions: badges.conditions.map((condition) => ({
+      conditions: badges.conditions?.map((condition) => ({
         name: condition.name,
         description: condition.description,
         icon: condition.icon,
         color: condition.color,
         type: condition.type,
-        count: condition.count,
+        requiredCount: condition.requiredCount,
         filter: condition.filter,
       })),
     }
