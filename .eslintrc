@@ -6,6 +6,7 @@
   "plugins": ["@typescript-eslint/eslint-plugin"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
+    "@antfu",
     "plugin:prettier/recommended"
   ],
   "root": true,
@@ -20,6 +21,9 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/consistent-type-imports": "off",
-    "@typescript-eslint/no-invalid-this": "off"
+    "@typescript-eslint/no-invalid-this": "off",
+    "import/order": "off",
+    "no-console": "off",
+    "sort-imports": "off"
   }
 }
