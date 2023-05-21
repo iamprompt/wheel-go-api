@@ -58,3 +58,7 @@ docker build -t wheel-go-api .
 ```bash
 docker run -p 3000:3000 wheel-go-api
 ```
+
+## GraphQL Playground + Schema
+
+- [GraphQL Playground](https://api.wheelgo.iamprompt.me/graphql)
