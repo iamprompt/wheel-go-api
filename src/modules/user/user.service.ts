@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { UserSummary } from '../object/userSummary.schema'
+
+import { determineExpLevel } from '~/utils/exp'
+import { ReviewRepository, RouteRepository } from '~/database/mongo.service'
+import { UserRepository } from '~/database/users/user.service'
 import { ActivityLogService } from '../activityLog/activityLog.service'
+import { BadgeService } from '../badge/badge.service'
 import { ExperiencePoint } from '../object/exp.schema'
 import { UserBadge } from '../object/userBadge.schema'
-import { BadgeService } from '../badge/badge.service'
+import { UserSummary } from '../object/userSummary.schema'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { UserFactory } from './user.factory'
 import { User } from './user.schema'
-import { UserRepository } from '~/database/users/user.service'
-import { ReviewRepository, RouteRepository } from '~/database/mongo.service'
-import { determineExpLevel } from '~/utils/exp'
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
     private readonly reviewRepository: ReviewRepository,
     private readonly routeRepository: RouteRepository,
     private readonly activityLogService: ActivityLogService,
-    private readonly badgeService: BadgeService
+    private readonly badgeService: BadgeService,
   ) {}
 
   async find(lang = 'th'): Promise<User[]> {
@@ -62,7 +63,7 @@ export class UserService {
   async isFavoritePlace(userId: string, placeId: string): Promise<boolean> {
     const user = await this.userRepository.findById(userId)
     return user.metadata.favorites.some(
-      (favorite) => favorite.place.id === placeId
+      (favorite) => favorite.place.id === placeId,
     )
   }
 

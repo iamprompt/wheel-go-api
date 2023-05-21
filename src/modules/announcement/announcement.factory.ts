@@ -1,17 +1,17 @@
-import { MediaFactory } from '../media/media.factory'
-import { PlaceFactory } from '../place/place.factory'
-import { UserFactory } from '../user/user.factory'
-import { LocationFactory } from '../object/factory/location.factory'
-import { Announcement } from './announcement.schema'
-import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
+import { createRefToSave } from '~/utils/factory'
 import {
   Announcement as AnnouncementDB,
   AnnouncementDocument,
 } from '~/database/announcements/announcement.schema'
-import { createRefToSave } from '~/utils/factory'
+import { MediaFactory } from '../media/media.factory'
+import { LocationFactory } from '../object/factory/location.factory'
+import { PlaceFactory } from '../place/place.factory'
+import { UserFactory } from '../user/user.factory'
+import { Announcement } from './announcement.schema'
+import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
 
 type ReturnAnnouncementOrArray<
-  T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null
+  T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null,
 > = T extends AnnouncementDocument[]
   ? Announcement[]
   : T extends AnnouncementDocument
@@ -20,7 +20,7 @@ type ReturnAnnouncementOrArray<
 
 export class AnnouncementFactory {
   static createFromDatabase<
-    T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null
+    T extends AnnouncementDocument | AnnouncementDocument[] | undefined | null,
   >(announcements: T, lang = 'th'): ReturnAnnouncementOrArray<T> {
     if (!announcements) {
       return undefined
@@ -29,7 +29,7 @@ export class AnnouncementFactory {
     if (Array.isArray(announcements)) {
       return <ReturnAnnouncementOrArray<T>>(
         announcements.map((announcement) =>
-          AnnouncementFactory.createFromDatabase(announcement, lang)
+          AnnouncementFactory.createFromDatabase(announcement, lang),
         )
       )
     }
@@ -52,7 +52,7 @@ export class AnnouncementFactory {
 
   static createToSave(
     data: CreateAnnouncementInput,
-    userId: string
+    userId: string,
   ): AnnouncementDB {
     return {
       title: data.title,

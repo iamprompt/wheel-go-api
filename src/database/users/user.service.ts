@@ -1,14 +1,16 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Model } from 'mongoose'
+
 import { ObjectId } from 'mongodb'
+import type { Model } from 'mongoose'
+
 import type { UserDocument } from './user.schema'
 import { User } from './user.schema'
 
 @Injectable()
 export class UserRepository {
   constructor(
-    @InjectModel(User.name) private readonly UserModel: Model<UserDocument>
+    @InjectModel(User.name) private readonly UserModel: Model<UserDocument>,
   ) {}
 
   UserPopulateOptions: Parameters<(typeof this.UserModel)['populate']>['0'] = [
@@ -62,7 +64,7 @@ export class UserRepository {
 
   async addFavoritePlace(
     userId: string,
-    placeId: string
+    placeId: string,
   ): Promise<UserDocument> {
     const user = await this.UserModel.findByIdAndUpdate(
       userId,
@@ -75,7 +77,7 @@ export class UserRepository {
       },
       {
         returnDocument: 'after',
-      }
+      },
     ).populate(this.UserPopulateOptions)
 
     return user
@@ -83,7 +85,7 @@ export class UserRepository {
 
   async removeFavoritePlace(
     userId: string,
-    placeId: string
+    placeId: string,
   ): Promise<UserDocument> {
     const user = await this.UserModel.findByIdAndUpdate(
       userId,
@@ -96,7 +98,7 @@ export class UserRepository {
       },
       {
         returnDocument: 'after',
-      }
+      },
     ).populate(this.UserPopulateOptions)
 
     return user
@@ -116,7 +118,7 @@ export class UserRepository {
       },
       {
         returnDocument: 'after',
-      }
+      },
     ).populate(this.UserPopulateOptions)
 
     return user

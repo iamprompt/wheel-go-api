@@ -1,9 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { User } from '../user/user.schema'
-import { RatingObject } from '../object/ratingObject.schema'
+
 import { Media } from '../media/media.schema'
 import { OfficialReviewObject } from '../object/officialReview.schema'
+import { RatingObject } from '../object/ratingObject.schema'
 import { Place } from '../place/place.schema'
+import { User } from '../user/user.schema'
 
 @ObjectType()
 export class Review {

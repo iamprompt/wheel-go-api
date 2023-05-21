@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
+
+import { WGMongoModule } from '~/database/WGMongo.module'
 import { MediaResolver } from './media.resolver'
 import { MediaService } from './media.service'
-import { WGMongoModule } from '~/database/WGMongo.module'
 
 @Module({
   imports: [WGMongoModule],

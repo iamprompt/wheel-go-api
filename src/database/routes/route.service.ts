@@ -1,18 +1,20 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Model } from 'mongoose'
+
 import { ObjectId } from 'mongodb'
-import type { RouteDocument } from './route.schema'
-import { Route } from './route.schema'
-import { GetRoutesInput } from '~/modules/route/dto/getRoutes.dto'
+import type { Model } from 'mongoose'
+
 import { ROUTE_TYPES } from '~/const/routeTypes'
 import { STATUS } from '~/const/status'
+import { GetRoutesInput } from '~/modules/route/dto/getRoutes.dto'
+import type { RouteDocument } from './route.schema'
+import { Route } from './route.schema'
 
 @Injectable()
 export class RouteRepository {
   constructor(
     @InjectModel(Route.name)
-    private readonly RouteModel: Model<RouteDocument>
+    private readonly RouteModel: Model<RouteDocument>,
   ) {}
 
   PopulateOptions: Parameters<(typeof this.RouteModel)['populate']>['0'] = [
@@ -62,7 +64,7 @@ export class RouteRepository {
   async findRoutesByUserId(
     userId: string,
     type: ROUTE_TYPES = ROUTE_TYPES.TRACED,
-    draft = true
+    draft = true,
   ): Promise<RouteDocument[]> {
     let query = this.RouteModel.find({
       user: new ObjectId(userId),

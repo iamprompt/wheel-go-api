@@ -1,4 +1,5 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql'
+
 import { FACILITY_STATUS } from '~/const/facilityStatus'
 
 @ObjectType()

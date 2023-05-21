@@ -1,13 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import type { Location } from '../object/LocationObject'
-import { LocationObject } from '../object/LocationObject'
-import { User, UserDocument } from '../users/user.schema'
-import { Place, PlaceDocument } from '../places/place.schema'
-import { Timestamp, TimestampConfig } from '../utils/timestamp'
+
 import { ROUTE_TYPES } from '~/const/routeTypes'
 import { STATUS } from '~/const/status'
+import type { Location } from '../object/LocationObject'
+import { LocationObject } from '../object/LocationObject'
+import { Place, PlaceDocument } from '../places/place.schema'
+import { User, UserDocument } from '../users/user.schema'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
 @Schema({ collection: 'routes', timestamps: TimestampConfig })
 export class Route {

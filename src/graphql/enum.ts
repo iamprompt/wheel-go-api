@@ -1,4 +1,5 @@
 import { registerEnumType } from '@nestjs/graphql'
+
 import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
 import { CONCERN_TYPES } from '~/const/concernTypes'
 import { FACILITY_STATUS } from '~/const/facilityStatus'

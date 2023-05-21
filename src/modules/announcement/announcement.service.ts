@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common'
+
+import { AnnouncementRepository } from '~/database/announcements/announcement.service'
 import { AnnouncementFactory } from './announcement.factory'
 import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
 import { GetAnnouncementsInput } from './dto/getAnnouncements.dto'
-import { AnnouncementRepository } from '~/database/announcements/announcement.service'
 
 @Injectable()
 export class AnnouncementService {
   constructor(
-    private readonly announcementRepository: AnnouncementRepository
+    private readonly announcementRepository: AnnouncementRepository,
   ) {}
 
   async find(options: GetAnnouncementsInput = {}, lang = 'th', draft = false) {
@@ -23,11 +24,11 @@ export class AnnouncementService {
   async create(
     announcement: CreateAnnouncementInput,
     userId: string,
-    lang = 'th'
+    lang = 'th',
   ) {
     const announcementToSave = AnnouncementFactory.createToSave(
       announcement,
-      userId
+      userId,
     )
     const result = await this.announcementRepository.create(announcementToSave)
 
@@ -38,15 +39,15 @@ export class AnnouncementService {
     id: string,
     announcement: CreateAnnouncementInput,
     userId?: string,
-    lang = 'th'
+    lang = 'th',
   ) {
     const announcementToSave = AnnouncementFactory.createToSave(
       announcement,
-      userId
+      userId,
     )
     const result = await this.announcementRepository.update(
       id,
-      announcementToSave
+      announcementToSave,
     )
 
     return AnnouncementFactory.createFromDatabase(result, lang)

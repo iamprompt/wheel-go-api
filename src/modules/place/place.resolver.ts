@@ -1,14 +1,15 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+
+import { ROLES } from '~/const/userRoles'
+import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { CurrentUser } from '~/decorators/currentUser.decorator'
+import { GqlOptionalAuthGuard } from '~/guards/GqlOptionalAuthGuard'
 import { User } from '../user/user.schema'
 import { CreatePlaceInput } from './dto/createPlace.dto'
-import { PlaceService } from './place.service'
-import { Place } from './place.schema'
 import { GetPlacesInput } from './dto/getPlaces.dto'
-import { ActiveLang } from '~/decorators/activeLang.decorator'
-import { GqlOptionalAuthGuard } from '~/guards/GqlOptionalAuthGuard'
-import { CurrentUser } from '~/decorators/currentUser.decorator'
-import { ROLES } from '~/const/userRoles'
+import { Place } from './place.schema'
+import { PlaceService } from './place.service'
 
 @Resolver()
 export class PlaceResolver {
@@ -19,7 +20,7 @@ export class PlaceResolver {
   async getPlaces(
     @ActiveLang() lang: string,
     @Args('options', { nullable: true }) options?: GetPlacesInput,
-    @CurrentUser() user?: User
+    @CurrentUser() user?: User,
   ) {
     return this.placeService.find(options, lang, user?.role === ROLES.ADMIN)
   }
@@ -29,7 +30,7 @@ export class PlaceResolver {
   async getPlaceById(
     @Args('id') id: string,
     @ActiveLang() lang: string,
-    @CurrentUser() user?: User
+    @CurrentUser() user?: User,
   ) {
     return this.placeService.findById(id, lang, user?.role === ROLES.ADMIN)
   }
@@ -37,7 +38,7 @@ export class PlaceResolver {
   @Mutation(() => Place)
   async createPlace(
     @Args('data') data: CreatePlaceInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return this.placeService.create(data, lang)
   }
@@ -46,7 +47,7 @@ export class PlaceResolver {
   async updatePlace(
     @Args('id') id: string,
     @Args('data') data: CreatePlaceInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return this.placeService.update(id, data, lang)
   }

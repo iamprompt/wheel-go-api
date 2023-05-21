@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import type { HydratedDocument } from 'mongoose'
+
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
 @Schema({ collection: 'media', timestamps: TimestampConfig })

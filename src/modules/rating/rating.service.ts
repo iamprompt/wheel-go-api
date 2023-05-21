@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { PlaceService } from '../place/place.service'
-import { ReviewService } from '../review/review.service'
-import { FacilityAvailability } from '../object/facilityAvailability.schema'
-import { FacilityService } from '../facility/facility.service'
-import { RatingSummary } from './rating.schema'
+
 import { FACILITY_STATUS } from '~/const/facilityStatus'
 import { FACILITY_TYPES } from '~/const/facilityTypes'
+import { FacilityService } from '../facility/facility.service'
+import { FacilityAvailability } from '../object/facilityAvailability.schema'
+import { PlaceService } from '../place/place.service'
+import { ReviewService } from '../review/review.service'
+import { RatingSummary } from './rating.schema'
 
 @Injectable()
 export class RatingService {
   constructor(
     private readonly placeService: PlaceService,
     private readonly reviewService: ReviewService,
-    private readonly facilityService: FacilityService
+    private readonly facilityService: FacilityService,
   ) {}
 
   async getPlaceRating(id: string): Promise<RatingSummary> {
@@ -49,7 +50,7 @@ export class RatingService {
       } as {
         overall: number
         facilities: Record<string, FacilityAvailability>
-      }
+      },
     )
 
     const facilities = await this.facilityService.findByPlaceId(place.id)

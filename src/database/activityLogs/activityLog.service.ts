@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+
 import { ObjectId } from 'mongodb'
+import { Model } from 'mongoose'
+
 import { ActivityLog, ActivityLogDocument } from './activityLog.schema'
 
 @Injectable()
 export class ActivityLogRepository {
   constructor(
     @InjectModel(ActivityLog.name)
-    private readonly ActivityLogModel: Model<ActivityLogDocument>
+    private readonly ActivityLogModel: Model<ActivityLogDocument>,
   ) {}
 
   populateOptions: Parameters<(typeof this.ActivityLogModel)['populate']>['0'] =
@@ -36,7 +38,7 @@ export class ActivityLogRepository {
   }
 
   async findByActivityType(
-    activityType: string
+    activityType: string,
   ): Promise<ActivityLogDocument[]> {
     return this.ActivityLogModel.find({ action: activityType })
       .populate(this.populateOptions)

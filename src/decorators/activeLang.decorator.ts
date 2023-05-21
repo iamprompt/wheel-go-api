@@ -1,4 +1,4 @@
-import { ExecutionContext, createParamDecorator } from '@nestjs/common'
+import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
 
 const WHEEL_GO_ACCEPTED_LANGUAGES = ['th', 'en']
@@ -13,5 +13,5 @@ export const ActiveLang = createParamDecorator(
     const isSupportedLang = WHEEL_GO_ACCEPTED_LANGUAGES.includes(reqLang)
 
     return isSupportedLang ? reqLang : 'th'
-  }
+  },
 )

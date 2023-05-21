@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Model } from 'mongoose'
+
 import { ObjectId } from 'mongodb'
+import type { Model } from 'mongoose'
+
+import { STATUS } from '~/const/status'
+import { GetReviewsInput } from '~/modules/review/dto/getReviews.dto'
 import type { ReviewDocument } from './review.schema'
 import { Review } from './review.schema'
-import { GetReviewsInput } from '~/modules/review/dto/getReviews.dto'
-import { STATUS } from '~/const/status'
 
 @Injectable()
 export class ReviewRepository {
   constructor(
     @InjectModel(Review.name)
-    private readonly ReviewModel: Model<ReviewDocument>
+    private readonly ReviewModel: Model<ReviewDocument>,
   ) {}
 
   ReviewPopulateOptions: Parameters<
@@ -33,7 +35,7 @@ export class ReviewRepository {
 
   async find(
     options: GetReviewsInput = {},
-    draft = true
+    draft = true,
   ): Promise<ReviewDocument[]> {
     let query = this.ReviewModel.find({
       ...(options.exclude ? { _id: { $nin: options.exclude } } : {}),
@@ -50,7 +52,7 @@ export class ReviewRepository {
 
   async findById(id: string, draft = true): Promise<ReviewDocument> {
     let query = this.ReviewModel.findById(id).populate(
-      this.ReviewPopulateOptions
+      this.ReviewPopulateOptions,
     )
 
     if (!draft) {
@@ -66,7 +68,7 @@ export class ReviewRepository {
 
   async findByPlaceId(
     placeId: string,
-    draft = true
+    draft = true,
   ): Promise<ReviewDocument[]> {
     let query = this.ReviewModel.find({
       place: new ObjectId(placeId),
@@ -81,7 +83,7 @@ export class ReviewRepository {
 
   async findByUserId(userId: string, draft = true): Promise<ReviewDocument[]> {
     let query = this.ReviewModel.find({ user: new ObjectId(userId) }).populate(
-      this.ReviewPopulateOptions
+      this.ReviewPopulateOptions,
     )
 
     if (!draft) {

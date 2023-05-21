@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { BadgeService } from './badge.service'
+
 import { Badge } from './badge.schema'
+import { BadgeService } from './badge.service'
 import { CreateBadgeInput } from './dto/createBadge.dto'
 
 @Resolver()
@@ -25,7 +26,7 @@ export class BadgeResolver {
   @Mutation(() => Badge)
   async updateBadge(
     @Args('id') id: string,
-    @Args('data') data: CreateBadgeInput
+    @Args('data') data: CreateBadgeInput,
   ): Promise<Badge> {
     return this.badgeService.update(id, data)
   }

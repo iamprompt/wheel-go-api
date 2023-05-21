@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common'
-import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+
+import { Config } from '~/config/configuration'
+import { WGMongoModule } from '~/database/WGMongo.module'
 import { AuthResolver } from './auth.resolver'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
-import { WGMongoModule } from '~/database/WGMongo.module'
-import { Config } from '~/config/configuration'
 
 @Module({
   imports: [

@@ -1,17 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import { Place, PlaceDocument } from '../places/place.schema'
+
+import { CONCERN_TYPES } from '~/const/concernTypes'
+import { FACILITY_TYPES } from '~/const/facilityTypes'
+import { STATUS } from '~/const/status'
+import type { FacilityMetadata } from '../object/FacilityMetadataObject'
+import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
 import type { LangObject } from '../object/LangObject'
 import { LangObjectDefinition } from '../object/LangObject'
 import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
-import type { FacilityMetadata } from '../object/FacilityMetadataObject'
-import { FacilityMetadataObject } from '../object/FacilityMetadataObject'
+import { Place, PlaceDocument } from '../places/place.schema'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
-import { STATUS } from '~/const/status'
-import { CONCERN_TYPES } from '~/const/concernTypes'
-import { FACILITY_TYPES } from '~/const/facilityTypes'
 
 @Schema({ collection: 'facilities', timestamps: TimestampConfig })
 export class Facility {

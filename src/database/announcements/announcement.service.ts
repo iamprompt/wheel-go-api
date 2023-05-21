@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+
 import type { Model } from 'mongoose'
+
+import { STATUS } from '~/const/status'
+import { GetAnnouncementsInput } from '~/modules/announcement/dto/getAnnouncements.dto'
 import type { AnnouncementDocument } from './announcement.schema'
 import { Announcement } from './announcement.schema'
-import { GetAnnouncementsInput } from '~/modules/announcement/dto/getAnnouncements.dto'
-import { STATUS } from '~/const/status'
 
 @Injectable()
 export class AnnouncementRepository {
   constructor(
     @InjectModel(Announcement.name)
-    private readonly AnnouncementModel: Model<AnnouncementDocument>
+    private readonly AnnouncementModel: Model<AnnouncementDocument>,
   ) {}
 
   populateOptions: Parameters<
@@ -19,7 +21,7 @@ export class AnnouncementRepository {
 
   async find(
     options: GetAnnouncementsInput = {},
-    draft = false
+    draft = false,
   ): Promise<AnnouncementDocument[]> {
     let query = this.AnnouncementModel.find({
       ...(options.keyword
@@ -61,7 +63,7 @@ export class AnnouncementRepository {
 
   async findById(id: string, draft = false): Promise<AnnouncementDocument> {
     let query = this.AnnouncementModel.findById(id).populate(
-      this.populateOptions
+      this.populateOptions,
     )
 
     if (!draft) {
@@ -80,12 +82,12 @@ export class AnnouncementRepository {
 
   async update(
     id: string,
-    announcement: Announcement
+    announcement: Announcement,
   ): Promise<AnnouncementDocument> {
     const updatedAnnouncement = await this.AnnouncementModel.findByIdAndUpdate(
       id,
       announcement,
-      { new: true }
+      { new: true },
     )
 
     return updatedAnnouncement.populate(['user', 'place', 'images'])

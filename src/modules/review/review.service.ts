@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common'
+
+import { ActivityType } from '~/const/activityLog'
+import { ReviewRepository } from '~/database/reviews/review.service'
 import { ActivityLogService } from '../activityLog/activityLog.service'
-import { Review } from './review.schema'
-import { ReviewFactory } from './review.factory'
 import { CreateReviewInput } from './dto/createReview.dto'
 import { GetReviewsInput } from './dto/getReviews.dto'
-import { ReviewRepository } from '~/database/reviews/review.service'
-import { ActivityType } from '~/const/activityLog'
+import { ReviewFactory } from './review.factory'
+import { Review } from './review.schema'
 
 @Injectable()
 export class ReviewService {
   constructor(
     private readonly reviewRepository: ReviewRepository,
-    private readonly activityLogService: ActivityLogService
+    private readonly activityLogService: ActivityLogService,
   ) {}
 
   async find(options: GetReviewsInput = {}, lang = 'th'): Promise<Review[]> {
@@ -40,7 +41,7 @@ export class ReviewService {
 
     const formattedReview = ReviewFactory.createFromDatabase(
       createdReview,
-      lang
+      lang,
     )
 
     await this.activityLogService.create(
@@ -49,7 +50,7 @@ export class ReviewService {
         review: formattedReview.id,
         point: 100,
       },
-      formattedReview.user.id
+      formattedReview.user.id,
     )
 
     return formattedReview
@@ -58,7 +59,7 @@ export class ReviewService {
   async update(
     id: string,
     review: CreateReviewInput,
-    lang = 'th'
+    lang = 'th',
   ): Promise<Review> {
     const reviewToSave = ReviewFactory.createToSave(review)
     const updatedReview = await this.reviewRepository.update(id, reviewToSave)

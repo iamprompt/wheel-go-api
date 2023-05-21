@@ -1,17 +1,18 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+
+import { ROLES } from '~/const/userRoles'
+import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { CurrentUser } from '~/decorators/currentUser.decorator'
+import { HasRoles } from '~/decorators/hasRoles.decorator'
+import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
+import { GqlOptionalAuthGuard } from '~/guards/GqlOptionalAuthGuard'
+import { RolesGuard } from '~/guards/RolesGuard'
 import { User } from '../user/user.schema'
-import { AnnouncementService } from './announcement.service'
 import { Announcement } from './announcement.schema'
+import { AnnouncementService } from './announcement.service'
 import { CreateAnnouncementInput } from './dto/createAnnouncement.dto'
 import { GetAnnouncementsInput } from './dto/getAnnouncements.dto'
-import { CurrentUser } from '~/decorators/currentUser.decorator'
-import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
-import { RolesGuard } from '~/guards/RolesGuard'
-import { HasRoles } from '~/decorators/hasRoles.decorator'
-import { ActiveLang } from '~/decorators/activeLang.decorator'
-import { GqlOptionalAuthGuard } from '~/guards/GqlOptionalAuthGuard'
-import { ROLES } from '~/const/userRoles'
 
 @Resolver()
 export class AnnouncementResolver {
@@ -22,12 +23,12 @@ export class AnnouncementResolver {
   async getAnnouncements(
     @ActiveLang() lang: string,
     @Args('options', { nullable: true }) options?: GetAnnouncementsInput,
-    @CurrentUser() user?: User
+    @CurrentUser() user?: User,
   ) {
     return this.announcementService.find(
       options,
       lang,
-      user?.role === ROLES.ADMIN
+      user?.role === ROLES.ADMIN,
     )
   }
 
@@ -36,12 +37,12 @@ export class AnnouncementResolver {
   async getAnnouncementById(
     @Args('id', { type: () => String }) id: string,
     @ActiveLang() lang: string,
-    @CurrentUser() user?: User
+    @CurrentUser() user?: User,
   ) {
     return this.announcementService.findById(
       id,
       lang,
-      user?.role === ROLES.ADMIN
+      user?.role === ROLES.ADMIN,
     )
   }
 
@@ -51,7 +52,7 @@ export class AnnouncementResolver {
   async createAnnouncement(
     @Args('data') data: CreateAnnouncementInput,
     @CurrentUser() user: User,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return this.announcementService.create(data, user.id, lang)
   }
@@ -63,7 +64,7 @@ export class AnnouncementResolver {
     @Args('id', { type: () => String }) id: string,
     @Args('data') data: CreateAnnouncementInput,
     @CurrentUser() user: User,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return this.announcementService.update(id, data, user.id, lang)
   }

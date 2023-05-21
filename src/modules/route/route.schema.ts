@@ -1,9 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
+
+import { ROUTE_TYPES } from '~/const/routeTypes'
+import { STATUS } from '~/const/status'
 import { Location } from '../object/location.schema'
 import { Place } from '../place/place.schema'
 import { User } from '../user/user.schema'
-import { STATUS } from '~/const/status'
-import { ROUTE_TYPES } from '~/const/routeTypes'
 
 @ObjectType()
 export class Route {

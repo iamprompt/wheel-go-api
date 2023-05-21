@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose'
+
 import type { PlaceDocument } from '../places/place.schema'
 
 export const FavoritePlaceObject = {

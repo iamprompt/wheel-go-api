@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
+
+import { WGMongoModule } from '~/database/WGMongo.module'
 import { AnnouncementResolver } from './announcement.resolver'
 import { AnnouncementService } from './announcement.service'
-import { WGMongoModule } from '~/database/WGMongo.module'
 
 @Module({
   imports: [WGMongoModule],

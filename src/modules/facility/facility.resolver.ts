@@ -1,9 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { FacilityService } from './facility.service'
-import { Facility } from './facility.schema'
+
+import { ActiveLang } from '~/decorators/activeLang.decorator'
 import { CreateFacilityInput } from './dto/createFacility.dto'
 import { GetFacilitiesInput } from './dto/getFacilities.dto'
-import { ActiveLang } from '~/decorators/activeLang.decorator'
+import { Facility } from './facility.schema'
+import { FacilityService } from './facility.service'
 
 @Resolver()
 export class FacilityResolver {
@@ -12,7 +13,7 @@ export class FacilityResolver {
   @Query(() => [Facility])
   async getFacilities(
     @ActiveLang() lang: string,
-    @Args('options', { nullable: true }) options?: GetFacilitiesInput
+    @Args('options', { nullable: true }) options?: GetFacilitiesInput,
   ) {
     return await this.facilityService.find(options, lang)
   }
@@ -20,7 +21,7 @@ export class FacilityResolver {
   @Query(() => Facility)
   async getFacilityById(
     @Args('id') id: string,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ): Promise<Facility> {
     return await this.facilityService.findById(id, lang)
   }
@@ -28,7 +29,7 @@ export class FacilityResolver {
   @Query(() => [Facility])
   async getFacilitiesByPlaceId(
     @Args('placeId') placeId: string,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return await this.facilityService.findByPlaceId(placeId, lang)
   }
@@ -36,7 +37,7 @@ export class FacilityResolver {
   @Mutation(() => Facility)
   async createFacility(
     @Args('data') data: CreateFacilityInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return await this.facilityService.create(data, lang)
   }
@@ -45,7 +46,7 @@ export class FacilityResolver {
   async updateFacility(
     @Args('id') id: string,
     @Args('data') data: CreateFacilityInput,
-    @ActiveLang() lang: string
+    @ActiveLang() lang: string,
   ) {
     return await this.facilityService.update(id, data, lang)
   }

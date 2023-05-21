@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
+
 import { CreateBadgeConditionInput } from '~/modules/object/dto/createBadgeConditionInput.dto'
 import { LanguageObjectInput } from '~/modules/object/dto/language.dto'
 

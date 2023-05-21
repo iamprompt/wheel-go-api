@@ -1,16 +1,16 @@
-import { ReviewFactory } from '../review/review.factory'
-import { RouteFactory } from '../route/route.factory'
-import { UserFactory } from '../user/user.factory'
-import { ActivityLog } from './activityLog.schema'
-import { CreateActivityLogInput } from './activityLog/createActivityLog.dto'
 import { createRefToSave } from '~/utils/factory'
 import {
   ActivityLog as ActivityLogDB,
   ActivityLogDocument,
 } from '~/database/activityLogs/activityLog.schema'
+import { ReviewFactory } from '../review/review.factory'
+import { RouteFactory } from '../route/route.factory'
+import { UserFactory } from '../user/user.factory'
+import { ActivityLog } from './activityLog.schema'
+import { CreateActivityLogInput } from './activityLog/createActivityLog.dto'
 
 type ReturnActivityLogOrArray<
-  T extends ActivityLogDocument | ActivityLogDocument[] | undefined | null
+  T extends ActivityLogDocument | ActivityLogDocument[] | undefined | null,
 > = T extends ActivityLogDocument[]
   ? ActivityLog[]
   : T extends ActivityLogDocument
@@ -19,7 +19,7 @@ type ReturnActivityLogOrArray<
 
 export class ActivityLogFactory {
   static createFromDatabase<
-    T extends ActivityLogDocument | ActivityLogDocument[] | undefined | null
+    T extends ActivityLogDocument | ActivityLogDocument[] | undefined | null,
   >(activityLogs: T, lang = 'th'): ReturnActivityLogOrArray<T> {
     if (!activityLogs) {
       return undefined
@@ -28,7 +28,7 @@ export class ActivityLogFactory {
     if (Array.isArray(activityLogs)) {
       return <ReturnActivityLogOrArray<T>>(
         activityLogs.map((announcement) =>
-          ActivityLogFactory.createFromDatabase(announcement, lang)
+          ActivityLogFactory.createFromDatabase(announcement, lang),
         )
       )
     }
@@ -47,7 +47,7 @@ export class ActivityLogFactory {
 
   static createToSave(
     data: CreateActivityLogInput,
-    userId: string
+    userId: string,
   ): ActivityLogDB {
     return {
       action: data.action,

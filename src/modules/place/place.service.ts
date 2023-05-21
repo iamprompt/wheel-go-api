@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common'
+
+import { PlaceRepository } from '~/database/places/place.services'
 import { CreatePlaceInput } from './dto/createPlace.dto'
+import { GetPlacesInput } from './dto/getPlaces.dto'
 import { PlaceFactory } from './place.factory'
 import { Place } from './place.schema'
-import { GetPlacesInput } from './dto/getPlaces.dto'
-import { PlaceRepository } from '~/database/places/place.services'
 
 @Injectable()
 export class PlaceService {
@@ -12,7 +13,7 @@ export class PlaceService {
   async find(
     options: GetPlacesInput = {},
     lang = 'th',
-    draft = false
+    draft = false,
   ): Promise<Place[]> {
     const places = await this.placeRepository.find(options, draft)
     const formattedPlaces = PlaceFactory.createFromDatabase(places, lang)
@@ -35,7 +36,7 @@ export class PlaceService {
   async update(
     id: string,
     data: CreatePlaceInput,
-    lang = 'th'
+    lang = 'th',
   ): Promise<Place> {
     const place = PlaceFactory.createToSave(data)
     const result = await this.placeRepository.update(id, place)

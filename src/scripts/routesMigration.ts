@@ -1,12 +1,14 @@
-import { readFile, readdir } from 'node:fs/promises'
-import { NestFactory } from '@nestjs/core'
+import { readdir, readFile } from 'node:fs/promises'
 import { Logger } from '@nestjs/common'
-import { parse } from 'papaparse'
+import { NestFactory } from '@nestjs/core'
+
 import { getPathLength } from 'geolib'
+import { parse } from 'papaparse'
+
 import { AppModule } from '~/app.module'
-import { RouteService } from '~/modules/route/route.service'
-import { STATUS } from '~/const/status'
 import { ROUTE_TYPES } from '~/const/routeTypes'
+import { STATUS } from '~/const/status'
+import { RouteService } from '~/modules/route/route.service'
 
 const ROUTES_DIRECTORY = './data/routes'
 
@@ -18,7 +20,7 @@ async function migrate() {
     withFileTypes: true,
   })
   const RoutesFolder = MainRoutesDirectory.filter((file) =>
-    file.isDirectory()
+    file.isDirectory(),
   ).map((file) => file.name)
 
   for (const folderName of RoutesFolder) {
@@ -39,7 +41,7 @@ async function migrate() {
 
       const file = await readFile(
         `${ROUTES_DIRECTORY}/${folderName}/${fileName}`,
-        'utf8'
+        'utf8',
       )
       const { data } = parse<[number, number]>(file, {
         transform: (value, _field) => {
@@ -66,7 +68,7 @@ async function migrate() {
 
       Logger.log(
         `Imported ${fileName} - ${route.id}`,
-        `RoutesMigration - ${folderName}`
+        `RoutesMigration - ${folderName}`,
       )
     }
   }

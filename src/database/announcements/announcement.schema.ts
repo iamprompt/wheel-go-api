@@ -1,17 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import { Place, PlaceDocument } from '../places/place.schema'
+
+import { STATUS } from '~/const/status'
+import { Media, MediaDocument } from '../media/media.schema'
+import type { AnnouncementMetadata } from '../object/AnnouncementMetadataObject'
+import { AnnouncementMetadataObject } from '../object/AnnouncementMetadataObject'
 import type { LangObject } from '../object/LangObject'
 import { LangObjectDefinition } from '../object/LangObject'
 import type { Location } from '../object/LocationObject'
 import { LocationObject } from '../object/LocationObject'
-import type { AnnouncementMetadata } from '../object/AnnouncementMetadataObject'
-import { AnnouncementMetadataObject } from '../object/AnnouncementMetadataObject'
+import { Place, PlaceDocument } from '../places/place.schema'
 import { User, UserDocument } from '../users/user.schema'
-import { Media, MediaDocument } from '../media/media.schema'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
-import { STATUS } from '~/const/status'
 
 @Schema({ collection: 'announcements', timestamps: TimestampConfig })
 export class Announcement {

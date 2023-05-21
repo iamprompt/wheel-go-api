@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
-import { ActivityLogService } from './activityLog.service'
+
 import { WGMongoModule } from '~/database/WGMongo.module'
+import { ActivityLogService } from './activityLog.service'
 
 @Module({
   imports: [WGMongoModule],

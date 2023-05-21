@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import { HydratedDocument, Types } from 'mongoose'
-import { Timestamp, TimestampConfig } from '../utils/timestamp'
+
 import { Review, ReviewDocument } from '../reviews/review.schema'
 import { Route, RouteDocument } from '../routes/route.schema'
 import { User, UserDocument } from '../users/user.schema'
+import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
 @Schema({ collection: 'activityLogs', timestamps: TimestampConfig })
 export class ActivityLog {

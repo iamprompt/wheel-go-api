@@ -1,9 +1,10 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { UnauthorizedException } from '@nestjs/common'
-import { RegisterInput } from '../object/dto/register.dto'
-import { AuthService } from './auth.service'
-import { AuthResponse } from './auth.schema'
+import { Args, Mutation, Resolver } from '@nestjs/graphql'
+
 import { ERROR_MESSAGES } from '~/const/errorMessage'
+import { RegisterInput } from '../object/dto/register.dto'
+import { AuthResponse } from './auth.schema'
+import { AuthService } from './auth.service'
 
 @Resolver()
 export class AuthResolver {
@@ -12,7 +13,7 @@ export class AuthResolver {
   @Mutation(() => AuthResponse)
   async login(
     @Args('email') email: string,
-    @Args('password') password: string
+    @Args('password') password: string,
   ) {
     const user = await this.authService.validateUser(email, password)
     if (!user) {

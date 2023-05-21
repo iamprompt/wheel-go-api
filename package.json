@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
+    "@ianvs/prettier-plugin-sort-imports": "4.0.0-alpha.7",
     "@nestjs/cli": "^9.4.1",
     "@nestjs/schematics": "^9.1.0",
     "@nestjs/testing": "^9.4.0",

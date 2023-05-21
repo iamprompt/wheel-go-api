@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { CreateActivityLogInput } from './activityLog/createActivityLog.dto'
-import { ActivityLogFactory } from './activityLog.factory'
+
 import { ActivityLogRepository } from '~/database/mongo.service'
+import { ActivityLogFactory } from './activityLog.factory'
+import { CreateActivityLogInput } from './activityLog/createActivityLog.dto'
 
 @Injectable()
 export class ActivityLogService {
@@ -25,7 +26,7 @@ export class ActivityLogService {
 
   async findByActivityType(activityType: string) {
     const activityLogs = await this.activityLogRepository.findByActivityType(
-      activityType
+      activityType,
     )
 
     return ActivityLogFactory.createFromDatabase(activityLogs)
@@ -34,7 +35,7 @@ export class ActivityLogService {
   async create(activityLog: CreateActivityLogInput, userId: string) {
     const activityLogToSave = ActivityLogFactory.createToSave(
       activityLog,
-      userId
+      userId,
     )
 
     const activity = await this.activityLogRepository.create(activityLogToSave)

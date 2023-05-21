@@ -1,9 +1,9 @@
+import { Badge as BadgeDB, BadgeDocument } from '~/database/badge/badge.schema'
 import { Badge } from './badge.schema'
 import { CreateBadgeInput } from './dto/createBadge.dto'
-import { Badge as BadgeDB, BadgeDocument } from '~/database/badge/badge.schema'
 
 type ReturnActivityLogOrArray<
-  T extends BadgeDocument | BadgeDocument[] | undefined | null
+  T extends BadgeDocument | BadgeDocument[] | undefined | null,
 > = T extends BadgeDocument[]
   ? Badge[]
   : T extends BadgeDocument
@@ -12,7 +12,7 @@ type ReturnActivityLogOrArray<
 
 export class BadgeFactory {
   static createFromDatabase<
-    T extends BadgeDocument | BadgeDocument[] | undefined | null
+    T extends BadgeDocument | BadgeDocument[] | undefined | null,
   >(badges: T, lang = 'th'): ReturnActivityLogOrArray<T> {
     if (!badges) {
       return undefined
@@ -21,7 +21,7 @@ export class BadgeFactory {
     if (Array.isArray(badges)) {
       return <ReturnActivityLogOrArray<T>>(
         badges.map((announcement) =>
-          BadgeFactory.createFromDatabase(announcement, lang)
+          BadgeFactory.createFromDatabase(announcement, lang),
         )
       )
     }

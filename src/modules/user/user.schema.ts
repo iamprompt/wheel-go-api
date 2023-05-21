@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { UserMetadata } from '../object/userMeta.schema'
+
+import { ROLES } from '~/const/userRoles'
 import { Media } from '../media/media.schema'
 import { UserBadge } from '../object/userBadge.schema'
-import { ROLES } from '~/const/userRoles'
+import { UserMetadata } from '../object/userMeta.schema'
 
 @ObjectType()
 export class User {

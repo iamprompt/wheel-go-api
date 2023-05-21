@@ -1,16 +1,16 @@
-import { MediaFactory } from '../media/media.factory'
-import { UserFactory } from '../user/user.factory'
-import { PlaceFactory } from '../place/place.factory'
-import { CreateReviewInput } from './dto/createReview.dto'
-import { Review } from './review.schema'
 import { createRefToSave } from '~/utils/factory'
 import {
   Review as ReviewDB,
   ReviewDocument,
 } from '~/database/reviews/review.schema'
+import { MediaFactory } from '../media/media.factory'
+import { PlaceFactory } from '../place/place.factory'
+import { UserFactory } from '../user/user.factory'
+import { CreateReviewInput } from './dto/createReview.dto'
+import { Review } from './review.schema'
 
 type ReturnReviewOrArray<
-  T extends ReviewDocument | ReviewDocument[] | undefined | null
+  T extends ReviewDocument | ReviewDocument[] | undefined | null,
 > = T extends ReviewDocument[]
   ? Review[]
   : T extends ReviewDocument
@@ -19,7 +19,7 @@ type ReturnReviewOrArray<
 
 export class ReviewFactory {
   static createFromDatabase<
-    T extends ReviewDocument | ReviewDocument[] | undefined | null
+    T extends ReviewDocument | ReviewDocument[] | undefined | null,
   >(data: T, lang = 'th'): ReturnReviewOrArray<T> {
     if (!data) {
       return undefined

@@ -1,15 +1,17 @@
 import { readFile } from 'node:fs/promises'
 import { Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { parse } from 'papaparse'
+
 import axios from 'axios'
+import { parse } from 'papaparse'
+
 import { AppModule } from '~/app.module'
-import { PlaceService } from '~/modules/place/place.service'
+import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
 import { PLACE_TYPES } from '~/const/placeTypes'
 import { STATUS } from '~/const/status'
-import { ACCESSIBILITY_STATUS } from '~/const/accessibilityStatus'
-import { MediaService } from '~/modules/media/media.service'
 import { FacilityService } from '~/modules/facility/facility.service'
+import { MediaService } from '~/modules/media/media.service'
+import { PlaceService } from '~/modules/place/place.service'
 
 interface CurbCutRaw {
   id: string
@@ -112,7 +114,7 @@ async function migrate() {
     Logger.log(
       `Created new curb cut: ${newCurbCut.internalCode} (${i + 1}/${
         curbCuts.length
-      })`
+      })`,
     )
   }
 
@@ -147,7 +149,7 @@ async function migrate() {
     Logger.log(
       `Created new transport: ${newTransport.name} (${i + 1}/${
         transports.length
-      })`
+      })`,
     )
   }
 
@@ -205,11 +207,11 @@ async function migrate() {
         },
         status: STATUS.PUBLISHED,
       },
-      'en'
+      'en',
     )
 
     Logger.log(
-      `Created new place: ${newPlace.name} (${i + 1}/${places.length})`
+      `Created new place: ${newPlace.name} (${i + 1}/${places.length})`,
     )
 
     placeIds[newPlace.name.en] = newPlace.id
@@ -251,7 +253,7 @@ async function migrate() {
       isWarning: facility.facility_en === 'Surface',
     })
     Logger.log(
-      `Created new facility: ${newFacility.id} (${i + 1}/${facilities.length})`
+      `Created new facility: ${newFacility.id} (${i + 1}/${facilities.length})`,
     )
   }
 

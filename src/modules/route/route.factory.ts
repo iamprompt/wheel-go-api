@@ -1,13 +1,13 @@
+import { createRefToSave } from '~/utils/factory'
+import { Route as RouteDB, RouteDocument } from '~/database/routes/route.schema'
 import { LocationFactory } from '../object/factory/location.factory'
 import { PlaceFactory } from '../place/place.factory'
 import { UserFactory } from '../user/user.factory'
-import { Route } from './route.schema'
 import { CreateRouteInput } from './dto/createRoute.dto'
-import { Route as RouteDB, RouteDocument } from '~/database/routes/route.schema'
-import { createRefToSave } from '~/utils/factory'
+import { Route } from './route.schema'
 
 type ReturnRouteOrArray<
-  T extends RouteDocument | RouteDocument[] | undefined | null
+  T extends RouteDocument | RouteDocument[] | undefined | null,
 > = T extends RouteDocument[]
   ? Route[]
   : T extends RouteDocument
@@ -16,7 +16,7 @@ type ReturnRouteOrArray<
 
 export class RouteFactory {
   static createFromDatabase<
-    T extends RouteDocument | RouteDocument[] | undefined | null
+    T extends RouteDocument | RouteDocument[] | undefined | null,
   >(data: T, lang = 'th'): ReturnRouteOrArray<T> {
     if (!data) {
       return undefined

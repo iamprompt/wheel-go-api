@@ -1,15 +1,16 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
-import { UserSummary } from '../object/userSummary.schema'
-import { ExperiencePoint } from '../object/exp.schema'
-import { UserBadge } from '../object/userBadge.schema'
-import { User } from './user.schema'
-import { UserService } from './user.service'
-import { CreateUserInput } from './dto/createUser.dto'
-import { UpdateUserInput } from './dto/updateUser.dto'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+
+import { CurrentUser } from '~/decorators/currentUser.decorator'
 import { GqlAuthGuard } from '~/guards/GqlAuthGuard'
 import { RolesGuard } from '~/guards/RolesGuard'
-import { CurrentUser } from '~/decorators/currentUser.decorator'
+import { ExperiencePoint } from '../object/exp.schema'
+import { UserBadge } from '../object/userBadge.schema'
+import { UserSummary } from '../object/userSummary.schema'
+import { CreateUserInput } from './dto/createUser.dto'
+import { UpdateUserInput } from './dto/updateUser.dto'
+import { User } from './user.schema'
+import { UserService } from './user.service'
 
 @Resolver(() => User)
 @UseGuards(GqlAuthGuard, RolesGuard)
@@ -43,7 +44,7 @@ export class UserResolver {
   async updateUser(
     @Args('id', { nullable: true }) id: string,
     @Args('data') data: UpdateUserInput,
-    @CurrentUser() user: User
+    @CurrentUser() user: User,
   ) {
     return this.userService.update(user.id, data)
   }
@@ -51,7 +52,7 @@ export class UserResolver {
   @Mutation(() => User)
   async addFavoritePlace(
     @Args('placeId') placeId: string,
-    @CurrentUser() user: User
+    @CurrentUser() user: User,
   ): Promise<User> {
     return this.userService.addFavoritePlace(user.id, placeId)
   }
@@ -59,7 +60,7 @@ export class UserResolver {
   @Mutation(() => User)
   async removeFavoritePlace(
     @Args('placeId') placeId: string,
-    @CurrentUser() user: User
+    @CurrentUser() user: User,
   ): Promise<User> {
     return this.userService.removeFavoritePlace(user.id, placeId)
   }
@@ -67,7 +68,7 @@ export class UserResolver {
   @Query(() => Boolean)
   async isFavoritePlace(
     @Args('placeId') placeId: string,
-    @CurrentUser() user: User
+    @CurrentUser() user: User,
   ): Promise<boolean> {
     return this.userService.isFavoritePlace(user.id, placeId)
   }
@@ -79,7 +80,7 @@ export class UserResolver {
 
   @Query(() => ExperiencePoint)
   async getMyExperiencePoint(
-    @CurrentUser() user: User
+    @CurrentUser() user: User,
   ): Promise<ExperiencePoint> {
     return this.userService.getExperiencePointByUserId(user.id)
   }

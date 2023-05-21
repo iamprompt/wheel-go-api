@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+
 import type { Model } from 'mongoose'
+
+import { STATUS } from '~/const/status'
+import { GetPlacesInput } from '~/modules/place/dto/getPlaces.dto'
 import type { PlaceDocument } from './place.schema'
 import { Place } from './place.schema'
-import { GetPlacesInput } from '~/modules/place/dto/getPlaces.dto'
-import { STATUS } from '~/const/status'
 
 @Injectable()
 export class PlaceRepository {
   constructor(
-    @InjectModel(Place.name) private readonly PlaceModel: Model<PlaceDocument>
+    @InjectModel(Place.name) private readonly PlaceModel: Model<PlaceDocument>,
   ) {}
 
   populateOptions: Parameters<(typeof this.PlaceModel)['populate']>['0'] = [
@@ -20,7 +22,7 @@ export class PlaceRepository {
 
   async find(
     options: GetPlacesInput = {},
-    draft = false
+    draft = false,
   ): Promise<PlaceDocument[]> {
     let query = this.PlaceModel.find({
       ...(options.keyword

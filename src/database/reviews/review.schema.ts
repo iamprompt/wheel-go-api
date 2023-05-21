@@ -1,13 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+
 import type { HydratedDocument } from 'mongoose'
 import { Types } from 'mongoose'
-import { User, UserDocument } from '../users/user.schema'
-import type { Rating } from '../object/RatingObject'
-import { RatingObject } from '../object/RatingObject'
+
 import { Media, MediaDocument } from '../media/media.schema'
 import type { OfficialReview } from '../object/OfficialReviewObject'
 import { OfficialReviewObject } from '../object/OfficialReviewObject'
+import type { Rating } from '../object/RatingObject'
+import { RatingObject } from '../object/RatingObject'
 import { Place, PlaceDocument } from '../places/place.schema'
+import { User, UserDocument } from '../users/user.schema'
 import { Timestamp, TimestampConfig } from '../utils/timestamp'
 
 @Schema({ collection: 'reviews', timestamps: TimestampConfig })

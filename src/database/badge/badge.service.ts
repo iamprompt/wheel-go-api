@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+
 import { Model } from 'mongoose'
+
 import { Badge, BadgeDocument } from './badge.schema'
 
 @Injectable()
 export class BadgeRepository {
   constructor(
     @InjectModel(Badge.name)
-    private readonly BadgeModel: Model<BadgeDocument>
+    private readonly BadgeModel: Model<BadgeDocument>,
   ) {}
 
   async create(badge: Badge): Promise<BadgeDocument> {
@@ -26,7 +28,7 @@ export class BadgeRepository {
   async update(id: string, badge: Badge): Promise<BadgeDocument> {
     const updatedBadge = await this.BadgeModel.findByIdAndUpdate(
       id,
-      badge
+      badge,
     ).exec()
 
     return updatedBadge

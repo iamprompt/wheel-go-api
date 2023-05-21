@@ -1,12 +1,12 @@
+import { createRefToSave } from '~/utils/factory'
+import { Place as PlaceDB, PlaceDocument } from '~/database/places/place.schema'
 import { MediaFactory } from '../media/media.factory'
 import { LocationFactory } from '../object/factory/location.factory'
-import { Place } from './place.schema'
 import { CreatePlaceInput } from './dto/createPlace.dto'
-import { Place as PlaceDB, PlaceDocument } from '~/database/places/place.schema'
-import { createRefToSave } from '~/utils/factory'
+import { Place } from './place.schema'
 
 type ReturnPlaceOrArray<
-  T extends PlaceDocument | PlaceDocument[] | undefined | null
+  T extends PlaceDocument | PlaceDocument[] | undefined | null,
 > = T extends PlaceDocument[]
   ? Place[]
   : T extends PlaceDocument
@@ -15,7 +15,7 @@ type ReturnPlaceOrArray<
 
 export class PlaceFactory {
   static createFromDatabase<
-    T extends PlaceDocument | PlaceDocument[] | undefined | null
+    T extends PlaceDocument | PlaceDocument[] | undefined | null,
   >(place: T, lang = 'th'): ReturnPlaceOrArray<T> {
     if (!place) {
       return undefined

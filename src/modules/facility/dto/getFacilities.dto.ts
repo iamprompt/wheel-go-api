@@ -1,4 +1,5 @@
 import { Field, Float, InputType } from '@nestjs/graphql'
+
 import { FACILITY_TYPES } from '~/const/facilityTypes'
 import { LocationInput } from '~/modules/object/dto/location.dto'
 

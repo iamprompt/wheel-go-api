@@ -1,9 +1,10 @@
 import { join } from 'node:path'
 import { Module } from '@nestjs/common'
 import { ServeStaticModule } from '@nestjs/serve-static'
-import { WGGraphQLModule } from './graphql/WGGraphQL.module'
+
 import { WGConfigModule } from './config/WGConfig.module'
 import { WGMongoModule } from './database/WGMongo.module'
+import { WGGraphQLModule } from './graphql/WGGraphQL.module'
 
 @Module({
   imports: [

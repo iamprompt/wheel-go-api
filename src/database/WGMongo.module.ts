@@ -1,24 +1,25 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
-import { User, UserSchema } from './users/user.schema'
-import { Media, MediaSchema } from './media/media.schema'
-import { Place, PlaceSchema } from './places/place.schema'
-import { Facility, FacilitySchema } from './facility/facility.schema'
-import {
-  Announcement,
-  AnnouncementSchema,
-} from './announcements/announcement.schema'
-import { Review, ReviewSchema } from './reviews/review.schema'
-import { Route, RouteSchema } from './routes/route.schema'
-import * as WGRepository from './mongo.service'
+
+import type { Config } from '~/config/configuration'
+import { WGConfigModule } from '~/config/WGConfig.module'
 import {
   ActivityLog,
   ActivityLogSchema,
 } from './activityLogs/activityLog.schema'
+import {
+  Announcement,
+  AnnouncementSchema,
+} from './announcements/announcement.schema'
 import { Badge, BadgeSchema } from './badge/badge.schema'
-import { WGConfigModule } from '~/config/WGConfig.module'
-import type { Config } from '~/config/configuration'
+import { Facility, FacilitySchema } from './facility/facility.schema'
+import { Media, MediaSchema } from './media/media.schema'
+import * as WGRepository from './mongo.service'
+import { Place, PlaceSchema } from './places/place.schema'
+import { Review, ReviewSchema } from './reviews/review.schema'
+import { Route, RouteSchema } from './routes/route.schema'
+import { User, UserSchema } from './users/user.schema'
 
 @Module({
   imports: [

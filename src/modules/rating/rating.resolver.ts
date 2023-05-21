@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql'
+
 import { RatingSummary } from './rating.schema'
 import { RatingService } from './rating.service'
 
@@ -13,7 +14,7 @@ export class RatingResolver {
 
   @Query(() => [RatingSummary])
   async getRatingSummaryByPlaceIds(
-    @Args('ids', { type: () => [String] }) ids: string[]
+    @Args('ids', { type: () => [String] }) ids: string[],
   ) {
     return this.ratingService.getPlaceRatings(ids)
   }

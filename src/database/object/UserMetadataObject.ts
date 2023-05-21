@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose'
+
 import { Place } from '../places/place.schema'
 import type { FavoritePlace } from './FavoritePlaceObject'
 

@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common'
+
+import { ActivityType } from '~/const/activityLog'
+import { ROUTE_TYPES } from '~/const/routeTypes'
+import { RouteRepository } from '~/database/routes/route.service'
 import { ActivityLogService } from '../activityLog/activityLog.service'
-import { RouteFactory } from './route.factory'
 import { CreateRouteInput } from './dto/createRoute.dto'
 import { GetRoutesInput } from './dto/getRoutes.dto'
-import { RouteRepository } from '~/database/routes/route.service'
-import { ROUTE_TYPES } from '~/const/routeTypes'
-import { ActivityType } from '~/const/activityLog'
+import { RouteFactory } from './route.factory'
 
 @Injectable()
 export class RouteService {
   constructor(
     private readonly routeRepository: RouteRepository,
-    private readonly activityLogService: ActivityLogService
+    private readonly activityLogService: ActivityLogService,
   ) {}
 
   async find(options: GetRoutesInput = {}, lang = 'th') {
@@ -27,7 +28,7 @@ export class RouteService {
   async findMyTracedRoutes(userId: string, lang = 'th') {
     const routes = await this.routeRepository.findRoutesByUserId(
       userId,
-      ROUTE_TYPES.TRACED
+      ROUTE_TYPES.TRACED,
     )
     return RouteFactory.createFromDatabase(routes, lang)
   }
@@ -46,7 +47,7 @@ export class RouteService {
         route: formattedRoute.id,
         point: 100,
       },
-      formattedRoute.user.id
+      formattedRoute.user.id,
     )
 
     return formattedRoute

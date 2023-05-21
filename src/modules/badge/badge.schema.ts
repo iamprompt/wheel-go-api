@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { LanguageObject } from '../object/language.schema'
+
 import { BadgeCondition } from '../object/badgeCondition.schema'
+import { LanguageObject } from '../object/language.schema'
 
 @ObjectType()
 export class Badge {

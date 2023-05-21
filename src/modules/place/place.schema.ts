@@ -1,10 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { Location } from '../object/location.schema'
-import { PlaceMetadata } from '../object/placeMeta.schema'
+
+import { PLACE_TYPES } from '~/const/placeTypes'
+import { STATUS } from '~/const/status'
 import { Media } from '../media/media.schema'
 import { LanguageObject } from '../object/language.schema'
-import { STATUS } from '~/const/status'
-import { PLACE_TYPES } from '~/const/placeTypes'
+import { Location } from '../object/location.schema'
+import { PlaceMetadata } from '../object/placeMeta.schema'
 
 @ObjectType()
 export class Place {

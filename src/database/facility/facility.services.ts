@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Model } from 'mongoose'
+
 import { ObjectId } from 'mongodb'
+import type { Model } from 'mongoose'
+
+import { GetFacilitiesInput } from '~/modules/facility/dto/getFacilities.dto'
 import type { FacilityDocument } from './facility.schema'
 import { Facility } from './facility.schema'
-import { GetFacilitiesInput } from '~/modules/facility/dto/getFacilities.dto'
 
 @Injectable()
 export class FacilityRepository {
   constructor(
     @InjectModel(Facility.name)
-    private readonly FacilityModel: Model<FacilityDocument>
+    private readonly FacilityModel: Model<FacilityDocument>,
   ) {}
 
   FacilityPopulateOptions: Parameters<
@@ -79,7 +81,7 @@ export class FacilityRepository {
     const updatedFacility = await this.FacilityModel.findByIdAndUpdate(
       id,
       data,
-      { new: true }
+      { new: true },
     )
     return updatedFacility.populate(this.FacilityPopulateOptions)
   }

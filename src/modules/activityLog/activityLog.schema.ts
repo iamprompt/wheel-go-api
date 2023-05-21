@@ -1,7 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { User } from '../user/user.schema'
+
 import { Review } from '../review/review.schema'
 import { Route } from '../route/route.schema'
+import { User } from '../user/user.schema'
 
 @ObjectType()
 export class ActivityLog {

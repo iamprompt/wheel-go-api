@@ -1,9 +1,9 @@
-import { Media } from './media.schema'
 import configuration from '~/config/configuration'
 import { Media as MediaDB, MediaDocument } from '~/database/media/media.schema'
+import { Media } from './media.schema'
 
 type ReturnMediaOrArray<
-  T extends MediaDocument | MediaDocument[] | undefined | null
+  T extends MediaDocument | MediaDocument[] | undefined | null,
 > = T extends MediaDocument[]
   ? Media[]
   : T extends MediaDocument
@@ -12,7 +12,7 @@ type ReturnMediaOrArray<
 
 export class MediaFactory {
   static createFromDatabase<
-    T extends MediaDocument | MediaDocument[] | undefined | null
+    T extends MediaDocument | MediaDocument[] | undefined | null,
   >(data: T): ReturnMediaOrArray<T> {
     if (!data) {
       return undefined
@@ -32,7 +32,7 @@ export class MediaFactory {
       mimetype: data.mimetype,
       url: new URL(
         data.path,
-        configuration().SERVER_URL || 'http://localhost:3000'
+        configuration().SERVER_URL || 'http://localhost:3000',
       ).toString(),
       width: data.width,
       createdAt: data.createdAt,
@@ -47,7 +47,7 @@ export class MediaFactory {
       height,
       format,
       size,
-    }: { width: number; height: number; format: string; size: number }
+    }: { width: number; height: number; format: string; size: number },
   ): MediaDB {
     return {
       filename,

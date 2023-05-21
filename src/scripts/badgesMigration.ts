@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
-import { NestFactory } from '@nestjs/core'
 import { Logger } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
+
 import { AppModule } from '~/app.module'
 import { BadgeService } from '~/modules/badge/badge.service'
 import { CreateBadgeInput } from '~/modules/badge/dto/createBadge.dto'

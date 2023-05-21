@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common'
-import { ActivityLogService } from '../activityLog/activityLog.service'
-import { Badge } from './badge.schema'
-import { BadgeFactory } from './badge.factory'
-import { CreateBadgeInput } from './dto/createBadge.dto'
+
 import { BadgeRepository } from '~/database/mongo.service'
+import { ActivityLogService } from '../activityLog/activityLog.service'
+import { BadgeFactory } from './badge.factory'
+import { Badge } from './badge.schema'
+import { CreateBadgeInput } from './dto/createBadge.dto'
 
 @Injectable()
 export class BadgeService {
   constructor(
     private readonly badgeRepository: BadgeRepository,
-    private readonly activityLogService: ActivityLogService
+    private readonly activityLogService: ActivityLogService,
   ) {}
 
   async find(): Promise<Badge[]> {
@@ -26,7 +27,7 @@ export class BadgeService {
 
   async create(payload: CreateBadgeInput): Promise<Badge | undefined> {
     const badge = await this.badgeRepository.create(
-      BadgeFactory.createToSave(payload)
+      BadgeFactory.createToSave(payload),
     )
 
     return BadgeFactory.createFromDatabase(badge)
@@ -34,11 +35,11 @@ export class BadgeService {
 
   async update(
     id: string,
-    payload: CreateBadgeInput
+    payload: CreateBadgeInput,
   ): Promise<Badge | undefined> {
     const badge = await this.badgeRepository.update(
       id,
-      BadgeFactory.createToSave(payload)
+      BadgeFactory.createToSave(payload),
     )
 
     return BadgeFactory.createFromDatabase(badge)

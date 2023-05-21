@@ -1,14 +1,14 @@
-import { PlaceFactory } from '../place/place.factory'
-import { MediaFactory } from '../media/media.factory'
+import { createRefToSave } from '~/utils/factory'
+import { User as UserDB, UserDocument } from '~/database/users/user.schema'
 import { BadgeFactory } from '../badge/badge.factory'
+import { MediaFactory } from '../media/media.factory'
+import { PlaceFactory } from '../place/place.factory'
 import { CreateUserInput } from './dto/createUser.dto'
 import { UpdateUserInput } from './dto/updateUser.dto'
 import { User } from './user.schema'
-import { createRefToSave } from '~/utils/factory'
-import { User as UserDB, UserDocument } from '~/database/users/user.schema'
 
 type ReturnUserOrArray<
-  T extends UserDocument | UserDocument[] | undefined | null
+  T extends UserDocument | UserDocument[] | undefined | null,
 > = T extends UserDocument[]
   ? User[]
   : T extends UserDocument
@@ -17,7 +17,7 @@ type ReturnUserOrArray<
 
 export class UserFactory {
   static createFromDatabase<
-    T extends UserDocument | UserDocument[] | undefined | null
+    T extends UserDocument | UserDocument[] | undefined | null,
   >(user: T, lang = 'th'): ReturnUserOrArray<T> {
     if (!user) {
       return undefined
@@ -58,7 +58,7 @@ export class UserFactory {
   }
 
   static createToSave(
-    user: Partial<CreateUserInput & UpdateUserInput>
+    user: Partial<CreateUserInput & UpdateUserInput>,
   ): UserDB {
     return {
       firstname: user.firstname,

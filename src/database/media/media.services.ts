@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+
 import type { Model } from 'mongoose'
+
 import type { MediaDocument } from './media.schema'
 import { Media } from './media.schema'
 
 @Injectable()
 export class MediaRepository {
   constructor(
-    @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>
+    @InjectModel(Media.name) private readonly MediaModel: Model<MediaDocument>,
   ) {}
 
   async find(): Promise<MediaDocument[]> {

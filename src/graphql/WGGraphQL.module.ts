@@ -1,8 +1,10 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
-import { GraphQLModule } from '@nestjs/graphql'
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
+
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
+
 import * as Modules from '~/modules'
 import './enum'
 

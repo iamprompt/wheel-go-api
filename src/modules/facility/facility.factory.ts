@@ -1,15 +1,15 @@
-import { LocationFactory } from '../object/factory/location.factory'
-import { PlaceFactory } from '../place/place.factory'
-import { CreateFacilityInput } from './dto/createFacility.dto'
-import { Facility } from './facility.schema'
 import { createRefToSave } from '~/utils/factory'
 import {
   Facility as FacilityDB,
   FacilityDocument,
 } from '~/database/facility/facility.schema'
+import { LocationFactory } from '../object/factory/location.factory'
+import { PlaceFactory } from '../place/place.factory'
+import { CreateFacilityInput } from './dto/createFacility.dto'
+import { Facility } from './facility.schema'
 
 type ReturnFacilityOrArray<
-  T extends FacilityDocument | FacilityDocument[] | undefined | null
+  T extends FacilityDocument | FacilityDocument[] | undefined | null,
 > = T extends FacilityDocument[]
   ? Facility[]
   : T extends FacilityDocument
@@ -18,7 +18,7 @@ type ReturnFacilityOrArray<
 
 export class FacilityFactory {
   static createFromDatabase<
-    T extends FacilityDocument | FacilityDocument[] | undefined | null
+    T extends FacilityDocument | FacilityDocument[] | undefined | null,
   >(data: T, _lang = 'th'): ReturnFacilityOrArray<T> {
     if (!data) {
       return undefined

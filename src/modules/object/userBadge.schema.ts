@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+
 import { Badge } from '../badge/badge.schema'
 
 @ObjectType()

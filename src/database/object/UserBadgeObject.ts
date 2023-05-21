@@ -1,4 +1,5 @@
 import { Types } from 'mongoose'
+
 import { Badge, BadgeDocument } from '../badge/badge.schema'
 
 export const UserBadgeObject = {

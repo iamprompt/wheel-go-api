@@ -6,21 +6,23 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
+
 import { compare } from 'bcrypt'
-import { UserFactory } from '../user/user.factory'
-import { User } from '../user/user.schema'
-import { RegisterInput } from '../object/dto/register.dto'
+
 import { Config } from '~/config/configuration'
-import { UserRepository } from '~/database/users/user.service'
 import { ERROR_MESSAGES } from '~/const/errorMessage'
 import { ROLES } from '~/const/userRoles'
+import { UserRepository } from '~/database/users/user.service'
+import { RegisterInput } from '../object/dto/register.dto'
+import { UserFactory } from '../user/user.factory'
+import { User } from '../user/user.schema'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<User> {
@@ -52,7 +54,7 @@ export class AuthService {
         expiresIn: '7d',
         secret:
           this.configService.get<Config['JWT_REFRESH_SECRET']>(
-            'JWT_REFRESH_SECRET'
+            'JWT_REFRESH_SECRET',
           ),
       }),
     }
@@ -63,7 +65,7 @@ export class AuthService {
       const payload = this.jwtService.verify(refreshToken, {
         secret:
           this.configService.get<Config['JWT_REFRESH_SECRET']>(
-            'JWT_REFRESH_SECRET'
+            'JWT_REFRESH_SECRET',
           ),
       })
 

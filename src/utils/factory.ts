@@ -8,7 +8,7 @@ type ReturnRefOrArray<T extends string | string[] | undefined | null> =
     : undefined
 
 export function createRefToSave<T extends string | string[] | undefined | null>(
-  data: T
+  data: T,
 ): ReturnRefOrArray<T> {
   if (!data) {
     return undefined

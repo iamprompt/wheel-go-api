@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { FacilityFactory } from './facility.factory'
+
+import { FacilityRepository } from '~/database/facility/facility.services'
 import { CreateFacilityInput } from './dto/createFacility.dto'
 import { GetFacilitiesInput } from './dto/getFacilities.dto'
-import { FacilityRepository } from '~/database/facility/facility.services'
+import { FacilityFactory } from './facility.factory'
 
 @Injectable()
 export class FacilityService {
