@@ -34,7 +34,7 @@ pnpm install
 3. Update environment variables
 
 ```bash
-cp .env .env.local
+cp .env.example .env
 ```
 
 Change the values in `.env.local` to match your environment.
